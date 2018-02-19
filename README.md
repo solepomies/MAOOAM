@@ -36,6 +36,8 @@ based on the papers of Pierini (2012), Barsugli and Battisti (1998). The
 coupling between the two components includes wind forcings, radiative and heat
 exchanges.
 
+![](./misc/figs/movie_10x10_GMD.gif)
+
 ------------------------------------------------------------------------
 
 ## Implementation notes ##
@@ -74,6 +76,9 @@ quasi-stationary waves and blocking, Mon. Weather Rev., 110, 1105-1145, 1982.
 weather regimes: quasi-stationary waves and blocking", Mon. Weather Rev., 113,
 2055-2056, 1985.
 
+* Barsugli, J. J. and Battisti, D. S.: The basic effects of atmosphere–ocean
+ thermal coupling on midlatitude variability, J. Atmos. Sci., 55, 477-493, 1998.
+
 * Pierini, S.: Low-frequency variability, coherence resonance, and phase
 selection in a low-order model of the wind-driven ocean circulation, J.  Phys.
 Oceanogr., 41, 1585-1604, 2011.
@@ -91,3 +96,11 @@ variability and heat transport in a loworder nonlinear coupled ocean-atmosphere
 model, Physica D: Nonlinear Phenomena, 309, 71-85, 2015. 
 
 Please see the main article for the full list of references.
+
+------------------------------------------------------------------------
+
+## Related projects ##
+
+* [DAPPER](https://github.com/nansencenter/DAPPER) - Data Assimilation Package in Python for Experimental Research.
+The MAOOAM python implementation is available within the package.
+

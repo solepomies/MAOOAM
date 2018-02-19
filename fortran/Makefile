@@ -11,8 +11,10 @@ else
   INTEGRATOR = rk2_integrator
   TL_AD_INTEGRATOR = rk2_tl_ad_integrator
 endif
-
-
+ifdef RES
+  ST=_$(RES)
+  $(warning Code will $(RES) the inner products in arrays! It may induce a huge memory usage!)
+endif
 # Define relevant compiler options for debug case and normal case for each compiler
 # Normal Case:
 IFORT_COMPILER_FLAGS = -assume byterecl -O2
@@ -68,7 +70,7 @@ endif
 
 PROGRAMS = maooam test_tl_ad
 
-MODULES = util.mod params.mod inprod_analytic.mod aotensor_def.mod ic_def.mod $(INTEGRATOR).mod stat.mod tensor.mod tl_ad_tensor.mod $(TL_AD_INTEGRATOR).mod $(IFPORT)
+MODULES = util.mod params.mod inprod_analytic$(ST).mod aotensor_def.mod ic_def.mod $(INTEGRATOR).mod stat.mod tensor.mod tl_ad_tensor.mod $(TL_AD_INTEGRATOR).mod $(IFPORT)
 MODULE_OBJECTS = $(MODULES:.mod=.o)
 
 TEST_PROGRAMS = test_inprod_analytic test_aotensor
@@ -92,17 +94,17 @@ test_aotensor.test: test_aotensor
 	./$< |sort  > tests/$<.out
 	diff tests/$<.out tests/$<.ref && echo PASS: $@ || echo FAIL: $@
 
-%.mod: %.f90  
-	$(COMPILER) $(LD_FLAGS) $(COMPILER_FLAGS) -c $<
+%.mod: %.f90
+	$(COMPILER) $(COMPILER_FLAGS) -c $< $(LD_FLAGS) 
 
 %.o: %.f90 $(MODULES)
-	$(COMPILER) $(LD_FLAGS) $(COMPILER_FLAGS) -c $<
+	$(COMPILER) $(COMPILER_FLAGS) -c $< $(LD_FLAGS) 
 
 %: %.o $(MODULE_OBJECTS)
-	$(COMPILER) $(LD_FLAGS) $(COMPILER_FLAGS) $^ -o $@ 
+	$(COMPILER) $(COMPILER_FLAGS) $^ -o $@ $(LD_FLAGS) 
 
-inprod_analytic.mod: params.mod
-aotensor_def.mod: tensor.mod inprod_analytic.mod
+inprod_analytic$(ST).mod: params.mod util.mod
+aotensor_def.mod: tensor.mod inprod_analytic$(ST).mod
 $(INTEGRATOR).mod: aotensor_def.mod
 ic_def.mod: util.mod aotensor_def.mod
 stat.mod: params.mod

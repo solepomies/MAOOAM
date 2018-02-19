@@ -33,6 +33,7 @@ MODULE tensor
   REAL(KIND=8), PARAMETER :: real_eps = 2.2204460492503131e-16
 
   PUBLIC :: sparse_mul3,sparse_mul2,copy_coo,mat_to_coo,jsparse_mul,jsparse_mul_mat,simplify
+  PUBLIC :: add_elem,add_to_tensor,print_tensor,load_tensor_from_file,write_tensor_to_file,add_check
 
 CONTAINS
     
@@ -214,10 +215,16 @@ CONTAINS
          j=tensor(i)%elems(li)%j
          k=tensor(i)%elems(li)%k
          DO lii=li-1,1,-1
-            IF ((j==tensor(i)%elems(lii)%j).AND.(k==tensor(i)%elems(lii)%k)) THEN
+            IF (((j==tensor(i)%elems(lii)%j).AND.(k==tensor(i)&
+                 &%elems(lii)%k)).OR.((j==tensor(i)%elems(lii)%k).AND.(k==tensor(i)%elems(lii)%j))) THEN
                ! Found another entry with the same i,j,k: merge both into
                ! the one listed first (of those two). 
                tensor(i)%elems(lii)%v=tensor(i)%elems(lii)%v+tensor(i)%elems(li)%v
+               IF (j>k) THEN
+                  tensor(i)%elems(lii)%j=tensor(i)%elems(li)%k
+                  tensor(i)%elems(lii)%k=tensor(i)%elems(li)%j
+               ENDIF
+               
                ! Shift the rest of the items one place down.
                DO liii=li+1,n
                   tensor(i)%elems(liii-1)%j=tensor(i)%elems(liii)%j
@@ -242,12 +249,192 @@ CONTAINS
                tensor(i)%elems(liii-1)%v=tensor(i)%elems(liii)%v
             ENDDO
             tensor(i)%nelems=tensor(i)%nelems-1
+            if (li > tensor(i)%nelems) THEN
+               EXIT
+            ENDIF
          ENDDO
       ENDDO
 
+      n=tensor(i)%nelems
+      DO li=1,n
+         ! Upper triangularize
+         j=tensor(i)%elems(li)%j
+         k=tensor(i)%elems(li)%k
+         IF (j>k) THEN
+            tensor(i)%elems(li)%j=k
+            tensor(i)%elems(li)%k=j
+         ENDIF
+      ENDDO
+
+
    ENDDO
  END SUBROUTINE simplify
+
     
+  !> Subroutine to add element to a coolist.
+  !> @param t destination tensor
+  !> @param i tensor \f$i\f$ index
+  !> @param j tensor \f$j\f$ index
+  !> @param k tensor \f$k\f$ index
+  !> @param v value to add
+  SUBROUTINE add_elem(t,i,j,k,v)
+    TYPE(coolist), DIMENSION(ndim), INTENT(INOUT) :: t
+    INTEGER, INTENT(IN) :: i,j,k
+    REAL(KIND=8), INTENT(IN) :: v
+    INTEGER :: n
+    IF (ABS(v) .ge. real_eps) THEN
+       n=(t(i)%nelems)+1
+       t(i)%elems(n)%j=j
+       t(i)%elems(n)%k=k
+       t(i)%elems(n)%v=v
+       t(i)%nelems=n
+    END IF
+  END SUBROUTINE add_elem
+
+  !> Subroutine to add element to a coolist and check for overflow.
+  !> Once the t buffer tensor is full, add it to the destination buffer.
+  !> @param t temporary buffer tensor for the destination tensor
+  !> @param i tensor \f$i\f$ index
+  !> @param j tensor \f$j\f$ index
+  !> @param k tensor \f$k\f$ index
+  !> @param v value to add
+  !> @param dst destination tensor
+  SUBROUTINE add_check(t,i,j,k,v,dst)
+    TYPE(coolist), DIMENSION(ndim), INTENT(INOUT) :: t
+    TYPE(coolist), DIMENSION(ndim), INTENT(INOUT) :: dst
+    INTEGER, INTENT(IN) :: i,j,k
+    REAL(KIND=8), INTENT(IN) :: v
+    INTEGER :: n
+    CALL add_elem(t,i,j,k,v)
+    IF (t(i)%nelems==size(t(i)%elems)) THEN
+       CALL add_to_tensor(t,dst)
+       DO n=1,ndim
+           t(n)%nelems=0
+       ENDDO
+    ENDIF
+  END SUBROUTINE add_check
+
+  !> Routine to add a rank-3 tensor to another one.
+  !> @param src Tensor to add
+  !> @param dst Destination tensor
+  SUBROUTINE add_to_tensor(src,dst)
+    TYPE(coolist), DIMENSION(ndim), INTENT(IN) :: src
+    TYPE(coolist), DIMENSION(ndim), INTENT(INOUT) :: dst
+    TYPE(coolist_elem), DIMENSION(:), ALLOCATABLE :: celems
+    INTEGER :: i,j,n,AllocStat
+
+    DO i=1,ndim
+       IF (src(i)%nelems/=0) THEN
+          IF (dst(i)%nelems==0) THEN
+             IF (ALLOCATED(dst(i)%elems)) THEN
+                DEALLOCATE(dst(i)%elems, STAT=AllocStat)
+                IF (AllocStat /= 0) STOP "*** Deallocation problem ! ***"
+             ENDIF
+             ALLOCATE(dst(i)%elems(src(i)%nelems), STAT=AllocStat)
+             IF (AllocStat /= 0) STOP "*** Not enough memory ! ***"
+             n=0
+          ELSE
+             n=dst(i)%nelems
+             ALLOCATE(celems(n), STAT=AllocStat)
+             DO j=1,n
+                celems(j)%j=dst(i)%elems(j)%j
+                celems(j)%k=dst(i)%elems(j)%k
+                celems(j)%v=dst(i)%elems(j)%v
+             ENDDO
+             DEALLOCATE(dst(i)%elems, STAT=AllocStat)
+             IF (AllocStat /= 0) STOP "*** Deallocation problem ! ***"
+             ALLOCATE(dst(i)%elems(src(i)%nelems+n), STAT=AllocStat)
+             IF (AllocStat /= 0) STOP "*** Not enough memory ! ***"
+             DO j=1,n
+                dst(i)%elems(j)%j=celems(j)%j
+                dst(i)%elems(j)%k=celems(j)%k
+                dst(i)%elems(j)%v=celems(j)%v
+             ENDDO
+             DEALLOCATE(celems, STAT=AllocStat)
+             IF (AllocStat /= 0) STOP "*** Deallocation problem ! ***"
+          ENDIF
+          DO j=1,src(i)%nelems
+             dst(i)%elems(n+j)%j=src(i)%elems(j)%j
+             dst(i)%elems(n+j)%k=src(i)%elems(j)%k
+             dst(i)%elems(n+j)%v=src(i)%elems(j)%v
+          ENDDO
+          dst(i)%nelems=src(i)%nelems+n
+       ENDIF
+    ENDDO
+
+  END SUBROUTINE add_to_tensor
+
+   !> Routine to print a rank 3 tensor coolist.
+  !> @param t coolist to print
+  SUBROUTINE print_tensor(t,s)
+    USE util, only: str
+    TYPE(coolist), DIMENSION(ndim), INTENT(IN) :: t
+    CHARACTER, INTENT(IN), OPTIONAL :: s
+    CHARACTER :: r
+    INTEGER :: i,n,j,k
+    IF (PRESENT(s)) THEN
+       r=s
+    ELSE
+       r="t"
+    END IF
+    DO i=1,ndim
+       DO n=1,t(i)%nelems
+          j=t(i)%elems(n)%j
+          k=t(i)%elems(n)%k
+          IF( ABS(t(i)%elems(n)%v) .GE. real_eps) THEN
+             write(*,"(A,ES12.5)") s//"["//TRIM(str(i))//"]["//TRIM(str(j)) &
+                  &//"]["//TRIM(str(k))//"] = ",t(i)%elems(n)%v
+          END IF
+       END DO
+    END DO
+  END SUBROUTINE print_tensor
+
+  !> Load a rank-4 tensor coolist from a file definition
+  !> @param s Destination filename
+  !> @param t The coolist to write
+  SUBROUTINE write_tensor_to_file(s,t)
+    CHARACTER (LEN=*), INTENT(IN) :: s
+    TYPE(coolist), DIMENSION(ndim), INTENT(IN) :: t
+    INTEGER :: i,j,k,n
+    OPEN(30,file=s)
+    DO i=1,ndim
+       WRITE(30,*) i,t(i)%nelems
+       DO n=1,t(i)%nelems
+          j=t(i)%elems(n)%j
+          k=t(i)%elems(n)%k
+          WRITE(30,*) i,j,k,t(i)%elems(n)%v
+       END DO
+    END DO
+    CLOSE(30)
+  END SUBROUTINE write_tensor_to_file
+
+  !> Load a rank-4 tensor coolist from a file definition
+  !> @param s Filename of the tensor definition file
+  !> @param t The loaded coolist
+  !> @remark The destination tensor have to be an empty tensor, i.e. with unallocated list of elements and nelems set to 0.
+  SUBROUTINE load_tensor_from_file(s,t)
+    CHARACTER (LEN=*), INTENT(IN) :: s
+    TYPE(coolist), DIMENSION(ndim), INTENT(OUT) :: t
+    INTEGER :: i,ir,j,k,n,AllocStat
+    REAL(KIND=8) :: v
+    OPEN(30,file=s,status='old')
+    DO i=1,ndim
+       READ(30,*) ir,n
+       IF (n /= 0) THEN
+          ALLOCATE(t(i)%elems(n), STAT=AllocStat)
+          IF (AllocStat /= 0) STOP "*** Not enough memory ! ***"
+          t(i)%nelems=n
+       ENDIF
+       DO n=1,t(i)%nelems
+          READ(30,*) ir,j,k,v
+          t(i)%elems(n)%j=j
+          t(i)%elems(n)%k=k
+          t(i)%elems(n)%v=v
+       ENDDO
+    END DO
+    CLOSE(30)
+  END SUBROUTINE load_tensor_from_file
+
 
 END MODULE tensor
 

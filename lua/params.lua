@@ -40,10 +40,12 @@ local m = {
   H     = 5e2,     -- depth of the water layer
   alpha = 0,       -- coefficient characterizing the intensification of the flow on the western boundaries
   d     = 1e-8,    -- the coupling parameter (should be divided by f0 in order to be adimensional)
+  nuo   = 0,  -- dissipation in the ocean
   -- Parameters for the atmosphere
   k    = 2e-2, -- bottom friction coefficient
   kp   = 4e-2, -- internal friction coefficient
   sig0 = 1e-1, -- static stability
+  nua  = 0,  -- dissipation in the atmosphere
   -- Temperature-related parameters for the ocean
   Go     = 2e8,  -- Specific heat capacity of the ocean (50m layer)
   Co     = 350,  -- Constant short-wave radiation of the ocean
@@ -69,6 +71,8 @@ m.rp   = m.r/m.f0         -- r \prime
 m.dp   = m.d/m.f0         -- \delta \prime
 m.kd   = m.k*2            -- bottom friction coefficient
 m.kdp  = m.kp             -- internal friction coefficient
+m.nuop = m.nuo/(m.L^2*m.f0) -- dissipation in the ocean
+m.nuap = m.nua/(m.L^2*m.f0) -- dissipation in the atmosphere
 m.timeunit = 1./(m.f0*24.*3600.) -- dimensional time unit
 
 m.Cpo = m.Co / (m.Go*m.f0) * m.R/(m.f0^2*m.L^2)
