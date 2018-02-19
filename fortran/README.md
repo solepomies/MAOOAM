@@ -1,4 +1,5 @@
 # Modular arbitrary-order ocean-atmosphere model: MAOOAM -- Fortran implementation #
+## High resolution enabled version
 
 ## About ##
 
@@ -136,6 +137,15 @@ initial condition, stop the program, fill the newly generated file and restart :
 It will generate two files :
  * evol_field.dat : the recorded time evolution of the variables.
  * mean_field.dat : the mean field (the climatology)
+
+In this particular version, it generates two additional files to store the inner products related to the quadratic terms of the tendencies:
+ * atmos_g.ipf : the atmospheric g inner products
+ * atmos_O.ipf : the oceanic O inner products
+
+These two files can be huge so be sure to have enough space available.
+For a given configuration of the model, these two files will be reused
+by subsequent program runs to save initialization time.
+
 
 The tangent linear and adjoint models of MAOOAM are provided in the
 tl_ad_tensor, rk2_tl_ad_integrator and rk4_tl_ad_integrator modules. It is

@@ -101,8 +101,7 @@ CONTAINS
     CALL add_check(aobuf,theta(1),0,0,(Cpa / (1 - atmos%a(1,1) * sig0)),aotensor)
     DO i = 1, natm
        DO j = 1, natm
-          CALL add_check(aobuf,psi(i),psi(j),0,-(((atmos%c(i,j) * betp) / atmos%a(i,i))) -&
-               &(kd * kdelta(i,j)) / 2 + atmos%a(i,j)*nuap,aotensor)
+          CALL add_check(aobuf,psi(i),psi(j),0,-(((atmos%c(i,j) * betp) / atmos%a(i,i))) - (kd * kdelta(i,j)) / 2,aotensor)
           CALL add_check(aobuf,theta(i),psi(j),0,(atmos%a(i,j) * kd * sig0) / (-2 + 2 * atmos%a(i,i) * sig0),aotensor)
           CALL add_check(aobuf,psi(i),theta(j),0,(kd * kdelta(i,j)) / 2,aotensor)
           CALL add_check(aobuf,theta(i),theta(j),0,(-((sig0 * (2. * atmos%c(i,j) * betp +&
@@ -136,8 +135,8 @@ CONTAINS
     END DO
     DO i = 1, noc
        DO j = 1, noc
-          CALL add_check(aobuf,A(i),A(j),0,-((ocean%N(i,j) * betp + ocean%M(i,i) * (rp + dp) * kdelta(i,j)&
-               & - ocean%M(i,j)**2*nuop)) / (ocean%M(i,i) + G),aotensor)
+          CALL add_check(aobuf,A(i),A(j),0,-((ocean%N(i,j) * betp + ocean%M(i&
+               &,i) * (rp + dp) * kdelta(i,j))) / (ocean%M(i,i) + G),aotensor)
        END DO
     END DO
     DO i = 1, noc
@@ -199,8 +198,6 @@ CONTAINS
     IF (AllocStat /= 0) STOP "*** Deallocation problem ! ***"
 
     CALL simplify(aotensor)
-
-    CALL deallocate_inprod
 
   END SUBROUTINE init_aotensor
 END MODULE aotensor_def

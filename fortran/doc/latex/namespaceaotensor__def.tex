@@ -18,13 +18,9 @@ integer function \hyperlink{namespaceaotensor__def_aed72341f9a3de19b5e8c21fd2747
 \begin{DoxyCompactList}\small\item\em Translate the $\delta T_{o,i}$ coefficients into effective coordinates. \end{DoxyCompactList}\item 
 integer function \hyperlink{namespaceaotensor__def_a13eb91ac3a121fd77c1cf644021cff5b}{kdelta} (i, j)
 \begin{DoxyCompactList}\small\item\em Kronecker delta function. \end{DoxyCompactList}\item 
-subroutine \hyperlink{namespaceaotensor__def_a0da983fc262aa15a3fde0d6138825660}{coeff} (i, j, k, v)
-\begin{DoxyCompactList}\small\item\em Subroutine to add element in the \hyperlink{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}{aotensor} $\mathcal{T}_{i,j,k}$ structure. \end{DoxyCompactList}\item 
-subroutine \hyperlink{namespaceaotensor__def_ac8104c190904681c1fd27eec036114aa}{add\+\_\+count} (i, j, k, v)
-\begin{DoxyCompactList}\small\item\em Subroutine to count the elements of the \hyperlink{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}{aotensor} $\mathcal{T}_{i,j,k}$. Add +1 to count\+\_\+elems(i) for each value that is added to the tensor i-\/th component. \end{DoxyCompactList}\item 
-subroutine \hyperlink{namespaceaotensor__def_a3dfccbce01ca1616c616f855c0cfa45a}{compute\+\_\+aotensor} (func)
+subroutine \hyperlink{namespaceaotensor__def_af8d3b24f71f7b03dd5335e20a00c73b4}{compute\+\_\+aotensor}
 \begin{DoxyCompactList}\small\item\em Subroutine to compute the tensor \hyperlink{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}{aotensor}. \end{DoxyCompactList}\item 
-subroutine, public \hyperlink{namespaceaotensor__def_ac2d5a88885d06f6dc047bee3a4ab427a}{init\+\_\+aotensor}
+subroutine, public \hyperlink{namespaceaotensor__def_ac583b298e9b68f84b0a22588d3b7dbcd}{init\+\_\+aotensor}
 \begin{DoxyCompactList}\small\item\em Subroutine to initialise the \hyperlink{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}{aotensor} tensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
@@ -34,7 +30,9 @@ integer, dimension(\+:), allocatable \hyperlink{namespaceaotensor__def_aa9e30c84
 real(kind=8), parameter \hyperlink{namespaceaotensor__def_ab1cf9313fb1def1a17de539cfa922e35}{real\+\_\+eps} = 2.\+2204460492503131e-\/16
 \begin{DoxyCompactList}\small\item\em Epsilon to test equality with 0. \end{DoxyCompactList}\item 
 type(\hyperlink{structtensor_1_1coolist}{coolist}), dimension(\+:), allocatable, public \hyperlink{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}{aotensor}
-\begin{DoxyCompactList}\small\item\em $\mathcal{T}_{i,j,k}$ -\/ Tensor representation of the tendencies. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em $\mathcal{T}_{i,j,k}$ -\/ Tensor representation of the tendencies. \end{DoxyCompactList}\item 
+type(\hyperlink{structtensor_1_1coolist}{coolist}), dimension(\+:), allocatable \hyperlink{namespaceaotensor__def_ac1bc60299b01412e33c173869cb08307}{aobuf}
+\begin{DoxyCompactList}\small\item\em Buffer for the aotensor calculation. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -62,162 +60,151 @@ Translate the $\psi_{o,i}$ coefficients into effective coordinates.
 
 
 
-Definition at line 76 of file aotensor\+\_\+def.\+f90.
+Definition at line 79 of file aotensor\+\_\+def.\+f90.
 
 
 \begin{DoxyCode}
-76     \textcolor{keywordtype}{INTEGER} :: i,a
-77     a = i + 2 * natm
+79     \textcolor{keywordtype}{INTEGER} :: i,a
+80     a = i + 2 * natm
 \end{DoxyCode}
-\index{aotensor\+\_\+def@{aotensor\+\_\+def}!add\+\_\+count@{add\+\_\+count}}
-\index{add\+\_\+count@{add\+\_\+count}!aotensor\+\_\+def@{aotensor\+\_\+def}}
-\subsubsection[{\texorpdfstring{add\+\_\+count(i, j, k, v)}{add_count(i, j, k, v)}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine aotensor\+\_\+def\+::add\+\_\+count (
+\index{aotensor\+\_\+def@{aotensor\+\_\+def}!compute\+\_\+aotensor@{compute\+\_\+aotensor}}
+\index{compute\+\_\+aotensor@{compute\+\_\+aotensor}!aotensor\+\_\+def@{aotensor\+\_\+def}}
+\subsubsection[{\texorpdfstring{compute\+\_\+aotensor}{compute_aotensor}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine aotensor\+\_\+def\+::compute\+\_\+aotensor (
 \begin{DoxyParamCaption}
-\item[{integer, intent(in)}]{i, }
-\item[{integer, intent(in)}]{j, }
-\item[{integer, intent(in)}]{k, }
-\item[{real(kind=8), intent(in)}]{v}
+{}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespaceaotensor__def_ac8104c190904681c1fd27eec036114aa}{}\label{namespaceaotensor__def_ac8104c190904681c1fd27eec036114aa}
+)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespaceaotensor__def_af8d3b24f71f7b03dd5335e20a00c73b4}{}\label{namespaceaotensor__def_af8d3b24f71f7b03dd5335e20a00c73b4}
 
 
-Subroutine to count the elements of the \hyperlink{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}{aotensor} $\mathcal{T}_{i,j,k}$. Add +1 to count\+\_\+elems(i) for each value that is added to the tensor i-\/th component. 
+Subroutine to compute the tensor \hyperlink{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}{aotensor}. 
 
-
-\begin{DoxyParams}{Parameters}
-{\em i} & tensor $i$ index \\
-\hline
-{\em j} & tensor $j$ index \\
-\hline
-{\em k} & tensor $k$ index \\
-\hline
-{\em v} & value that will be added \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 124 of file aotensor\+\_\+def.\+f90.
-
-
-\begin{DoxyCode}
-124     \textcolor{keywordtype}{INTEGER}, \textcolor{keywordtype}{INTENT(IN)} :: i,j,k
-125     \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{INTENT(IN)}  :: v
-126     \textcolor{keywordflow}{IF} (abs(v) .ge. real\_eps) count\_elems(i)=count\_elems(i)+1
-\end{DoxyCode}
-\index{aotensor\+\_\+def@{aotensor\+\_\+def}!coeff@{coeff}}
-\index{coeff@{coeff}!aotensor\+\_\+def@{aotensor\+\_\+def}}
-\subsubsection[{\texorpdfstring{coeff(i, j, k, v)}{coeff(i, j, k, v)}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine aotensor\+\_\+def\+::coeff (
-\begin{DoxyParamCaption}
-\item[{integer, intent(in)}]{i, }
-\item[{integer, intent(in)}]{j, }
-\item[{integer, intent(in)}]{k, }
-\item[{real(kind=8), intent(in)}]{v}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespaceaotensor__def_a0da983fc262aa15a3fde0d6138825660}{}\label{namespaceaotensor__def_a0da983fc262aa15a3fde0d6138825660}
-
-
-Subroutine to add element in the \hyperlink{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}{aotensor} $\mathcal{T}_{i,j,k}$ structure. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em i} & tensor $i$ index \\
-\hline
-{\em j} & tensor $j$ index \\
-\hline
-{\em k} & tensor $k$ index \\
-\hline
-{\em v} & value to add \\
-\hline
-\end{DoxyParams}
 
 
 Definition at line 99 of file aotensor\+\_\+def.\+f90.
 
 
 \begin{DoxyCode}
-99     \textcolor{keywordtype}{INTEGER}, \textcolor{keywordtype}{INTENT(IN)} :: i,j,k
-100     \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{INTENT(IN)} :: v
-101     \textcolor{keywordtype}{INTEGER} :: n
-102     \textcolor{keywordflow}{IF} (.NOT. \textcolor{keyword}{ALLOCATED}(aotensor)) stop \textcolor{stringliteral}{"*** coeff routine : tensor not yet allocated ***"}
-103     \textcolor{keywordflow}{IF} (.NOT. \textcolor{keyword}{ALLOCATED}(aotensor(i)%elems)) stop \textcolor{stringliteral}{"*** coeff routine : tensor not yet allocated ***"}
-104     \textcolor{keywordflow}{IF} (abs(v) .ge. real\_eps) \textcolor{keywordflow}{THEN}
-105        n=(aotensor(i)%nelems)+1
-106        \textcolor{keywordflow}{IF} (j .LE. k) \textcolor{keywordflow}{THEN}
-107           aotensor(i)%elems(n)%j=j
-108           aotensor(i)%elems(n)%k=k
-109        \textcolor{keywordflow}{ELSE}
-110           aotensor(i)%elems(n)%j=k
-111           aotensor(i)%elems(n)%k=j
-112 \textcolor{keywordflow}{       END IF}
-113        aotensor(i)%elems(n)%v=v
-114        aotensor(i)%nelems=n
-115 \textcolor{keywordflow}{    END IF}
+99     \textcolor{keywordtype}{INTEGER} :: i,j,k,l,n
+100     \textcolor{keywordtype}{REAL(KIND=8)} :: v
+101     \textcolor{keyword}{CALL }add\_check(aobuf,theta(1),0,0,(cpa / (1 - atmos%a(1,1) * sig0)),aotensor)
+102     \textcolor{keywordflow}{DO} i = 1, natm
+103        \textcolor{keywordflow}{DO} j = 1, natm
+104           \textcolor{keyword}{CALL }add\_check(aobuf,psi(i),psi(j),0,-(((atmos%c(i,j) * betp) / atmos%a(i,i))) -&
+105                &(kd * kdelta(i,j)) / 2 + atmos%a(i,j)*nuap,aotensor)
+106           \textcolor{keyword}{CALL }add\_check(aobuf,theta(i),psi(j),0,(atmos%a(i,j) * kd * sig0) / (-2 + 2 * atmos%a(i,i) * sig0
+      ),aotensor)
+107           \textcolor{keyword}{CALL }add\_check(aobuf,psi(i),theta(j),0,(kd * kdelta(i,j)) / 2,aotensor)
+108           \textcolor{keyword}{CALL }add\_check(aobuf,theta(i),theta(j),0,(-((sig0 * (2. * atmos%c(i,j) * betp +&
+109                & atmos%a(i,j) * (kd + 4. * kdp)))) + 2. * (lsbpa + sc * lpa) &
+110                &* kdelta(i,j)) / (-2. + 2. * atmos%a(i,i) * sig0),aotensor)
+111 \textcolor{keywordflow}{       END DO}
+112 \textcolor{keywordflow}{    END DO}
+113     \textcolor{keywordflow}{DO} i = 1, natm
+114        \textcolor{keywordflow}{DO} n=1,atmos%g(i)%nelems
+115           j=atmos%g(i)%elems(n)%j
+116           k=atmos%g(i)%elems(n)%k
+117           v=atmos%g(i)%elems(n)%v
+118           \textcolor{keyword}{CALL }add\_check(aobuf,psi(i),psi(j),psi(k),-((v*atmos%a(k,k) / atmos%a(i,i))),aotensor)
+119           \textcolor{keyword}{CALL }add\_check(aobuf,psi(i),theta(j),theta(k),-((v*atmos%a(k,k) / atmos%a(i,i))),aotensor)
+120           \textcolor{keyword}{CALL }add\_check(aobuf,theta(i),psi(j),theta(k),(v*(1- atmos%a(k,k)* sig0)  / (-1 + atmos%a(i,i)*
+      sig0)),aotensor)
+121           \textcolor{keyword}{CALL }add\_check(aobuf,theta(i),theta(j),psi(k),(v*atmos%a(k,k) * sig0) / (1 - atmos%a(i,i) * sig0)
+      ,aotensor)
+122 \textcolor{keywordflow}{       ENDDO}
+123 \textcolor{keywordflow}{    END DO}
+124     \textcolor{keywordflow}{DO} i = 1, natm
+125        \textcolor{keywordflow}{DO} j = 1, noc
+126           \textcolor{keyword}{CALL }add\_check(aobuf,psi(i),a(j),0,kd * atmos%d(i,j) / (2 * atmos%a(i,i)),aotensor)
+127           \textcolor{keyword}{CALL }add\_check(aobuf,theta(i),a(j),0,kd * (atmos%d(i,j) * sig0) / (2 - 2 * atmos%a(i,i) * sig0),
+      aotensor)
+128           \textcolor{keyword}{CALL }add\_check(aobuf,theta(i),t(j),0,atmos%s(i,j) * (2 * lsbpo + lpa) / (2 - 2 * atmos%a(i,i) * 
+      sig0),aotensor)
+129 \textcolor{keywordflow}{       END DO}
+130 \textcolor{keywordflow}{    END DO}
+131     \textcolor{keywordflow}{DO} i = 1, noc
+132        \textcolor{keywordflow}{DO} j = 1, natm
+133           \textcolor{keyword}{CALL }add\_check(aobuf,a(i),psi(j),0,ocean%K(i,j) * dp / (ocean%M(i,i) + g),aotensor)
+134           \textcolor{keyword}{CALL }add\_check(aobuf,a(i),theta(j),0,-(ocean%K(i,j)) * dp / (ocean%M(i,i) + g),aotensor)
+135 \textcolor{keywordflow}{       END DO}
+136 \textcolor{keywordflow}{    END DO}
+137     \textcolor{keywordflow}{DO} i = 1, noc
+138        \textcolor{keywordflow}{DO} j = 1, noc
+139           \textcolor{keyword}{CALL }add\_check(aobuf,a(i),a(j),0,-((ocean%N(i,j) * betp + ocean%M(i,i) * (rp + dp) * kdelta(i,j)&
+140                & - ocean%M(i,j)**2*nuop)) / (ocean%M(i,i) + g),aotensor)
+141 \textcolor{keywordflow}{       END DO}
+142 \textcolor{keywordflow}{    END DO}
+143     \textcolor{keywordflow}{DO} i = 1, noc
+144        \textcolor{keywordflow}{DO} n=1,ocean%O(i)%nelems
+145           j=ocean%O(i)%elems(n)%j
+146           k=ocean%O(i)%elems(n)%k
+147           v=ocean%O(i)%elems(n)%v
+148           \textcolor{keyword}{CALL }add\_check(aobuf,a(i),a(j),a(k),-(v*ocean%M(k,k)) / (ocean%M(i,i) + g),aotensor)
+149 \textcolor{keywordflow}{       END DO}
+150 \textcolor{keywordflow}{    END DO}
+151     \textcolor{keywordflow}{DO} i = 1, noc
+152        \textcolor{keyword}{CALL }add\_check(aobuf,t(i),0,0,cpo * ocean%W(i,1),aotensor)
+153        \textcolor{keywordflow}{DO} j = 1, natm
+154           \textcolor{keyword}{CALL }add\_check(aobuf,t(i),theta(j),0,ocean%W(i,j) * (2 * sc * lpo + sbpa),aotensor)
+155 \textcolor{keywordflow}{       END DO}
+156 \textcolor{keywordflow}{    END DO}
+157     \textcolor{keywordflow}{DO} i = 1, noc
+158        \textcolor{keywordflow}{DO} j = 1, noc
+159           \textcolor{keyword}{CALL }add\_check(aobuf,t(i),t(j),0,-((lpo + sbpo)) * kdelta(i,j),aotensor)
+160 \textcolor{keywordflow}{       END DO}
+161 \textcolor{keywordflow}{    END DO}
+162     \textcolor{keywordflow}{DO} i = 1, noc
+163        \textcolor{keywordflow}{DO} n=1,ocean%O(i)%nelems
+164           j=ocean%O(i)%elems(n)%j
+165           k=ocean%O(i)%elems(n)%k
+166           v=ocean%O(i)%elems(n)%v
+167           \textcolor{keyword}{CALL }add\_check(aobuf,t(i),a(j),t(k),-v,aotensor)
+168 \textcolor{keywordflow}{       END DO}
+169 \textcolor{keywordflow}{    END DO}
+170     \textcolor{keyword}{CALL }add\_to\_tensor(aobuf,aotensor)
 \end{DoxyCode}
-\index{aotensor\+\_\+def@{aotensor\+\_\+def}!compute\+\_\+aotensor@{compute\+\_\+aotensor}}
-\index{compute\+\_\+aotensor@{compute\+\_\+aotensor}!aotensor\+\_\+def@{aotensor\+\_\+def}}
-\subsubsection[{\texorpdfstring{compute\+\_\+aotensor(func)}{compute_aotensor(func)}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine aotensor\+\_\+def\+::compute\+\_\+aotensor (
-\begin{DoxyParamCaption}
-\item[{external}]{func}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespaceaotensor__def_a3dfccbce01ca1616c616f855c0cfa45a}{}\label{namespaceaotensor__def_a3dfccbce01ca1616c616f855c0cfa45a}
-
-
-Subroutine to compute the tensor \hyperlink{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}{aotensor}. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em func} & External function to be used \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 132 of file aotensor\+\_\+def.\+f90.
-
 \index{aotensor\+\_\+def@{aotensor\+\_\+def}!init\+\_\+aotensor@{init\+\_\+aotensor}}
 \index{init\+\_\+aotensor@{init\+\_\+aotensor}!aotensor\+\_\+def@{aotensor\+\_\+def}}
-\subsubsection[{\texorpdfstring{init\+\_\+aotensor}{init_aotensor}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine, public aotensor\+\_\+def\+::init\+\_\+aotensor (
+\subsubsection[{\texorpdfstring{init\+\_\+aotensor}{init_aotensor}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine public aotensor\+\_\+def\+::init\+\_\+aotensor (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}\hypertarget{namespaceaotensor__def_ac2d5a88885d06f6dc047bee3a4ab427a}{}\label{namespaceaotensor__def_ac2d5a88885d06f6dc047bee3a4ab427a}
+)}\hypertarget{namespaceaotensor__def_ac583b298e9b68f84b0a22588d3b7dbcd}{}\label{namespaceaotensor__def_ac583b298e9b68f84b0a22588d3b7dbcd}
 
 
 Subroutine to initialise the \hyperlink{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}{aotensor} tensor. 
 
 \begin{DoxyRemark}{Remarks}
-This procedure will also call \hyperlink{namespaceparams_aa5d1f7f88b00cf3705691de2f6f92a08}{params\+::init\+\_\+params()} and \hyperlink{namespaceinprod__analytic_a7491dd2b8ba26eb10d160eb0bf072e56}{inprod\+\_\+analytic\+::init\+\_\+inprod()} . It will finally call inprod\+\_\+analytic\+::deallocate\+\_\+inprod() to remove the inner products, which are not needed anymore at this point. 
+This procedure will also call \hyperlink{namespaceparams_aa5d1f7f88b00cf3705691de2f6f92a08}{params\+::init\+\_\+params()} and \hyperlink{namespaceinprod__analytic_a15216aea8062cfef76196c8453a4291c}{inprod\+\_\+analytic\+::init\+\_\+inprod()} . 
 \end{DoxyRemark}
 
 
-Definition at line 203 of file aotensor\+\_\+def.\+f90.
+Definition at line 182 of file aotensor\+\_\+def.\+f90.
 
 
 \begin{DoxyCode}
-203     \textcolor{keywordtype}{INTEGER} :: i
-204     \textcolor{keywordtype}{INTEGER} :: allocstat 
-205 
-206     \textcolor{keyword}{CALL }init\_params  \textcolor{comment}{! Iniatialise the parameter}
-207 
-208     \textcolor{keyword}{CALL }init\_inprod  \textcolor{comment}{! Initialise the inner product tensors}
-209 
-210     \textcolor{keyword}{ALLOCATE}(aotensor(ndim),count\_elems(ndim), \hyperlink{namespacestat}{stat}=allocstat)
-211     \textcolor{keywordflow}{IF} (allocstat /= 0) stop \textcolor{stringliteral}{"*** Not enough memory ! ***"}
-212     count\_elems=0
-213 
-214     \textcolor{keyword}{CALL }compute\_aotensor(add\_count)
-215 
-216     \textcolor{keywordflow}{DO} i=1,ndim
-217        \textcolor{keyword}{ALLOCATE}(aotensor(i)%elems(count\_elems(i)), \hyperlink{namespacestat}{stat}=allocstat)
-218        \textcolor{keywordflow}{IF} (allocstat /= 0) stop \textcolor{stringliteral}{"*** Not enough memory ! ***"}
-219 \textcolor{keywordflow}{    END DO}
-220 
-221     \textcolor{keyword}{DEALLOCATE}(count\_elems, \hyperlink{namespacestat}{stat}=allocstat)
-222     \textcolor{keywordflow}{IF} (allocstat /= 0) stop \textcolor{stringliteral}{"*** Deallocation problem ! ***"}
-223     
-224     \textcolor{keyword}{CALL }compute\_aotensor(coeff)
-225 
-226     \textcolor{keyword}{CALL }simplify(aotensor)
-227 
+182     \textcolor{keywordtype}{INTEGER} :: i
+183     \textcolor{keywordtype}{INTEGER} :: allocstat 
+184 
+185     \textcolor{keyword}{CALL }init\_params  \textcolor{comment}{! Iniatialise the parameter}
+186 
+187     \textcolor{keyword}{CALL }init\_inprod  \textcolor{comment}{! Initialise the inner product tensors}
+188 
+189     \textcolor{keyword}{ALLOCATE}(aotensor(ndim),aobuf(ndim), \hyperlink{namespacestat}{stat}=allocstat)
+190     \textcolor{keywordflow}{IF} (allocstat /= 0) stop \textcolor{stringliteral}{"*** Not enough memory ! ***"}
+191     \textcolor{keywordflow}{DO} i=1,ndim
+192        \textcolor{keyword}{ALLOCATE}(aobuf(i)%elems(1000), \hyperlink{namespacestat}{stat}=allocstat)
+193        \textcolor{keywordflow}{IF} (allocstat /= 0) stop \textcolor{stringliteral}{"*** Not enough memory ! ***"}
+194 \textcolor{keywordflow}{    END DO}
+195     
+196     \textcolor{keyword}{CALL }compute\_aotensor
+197 
+198     \textcolor{keyword}{DEALLOCATE}(aobuf, \hyperlink{namespacestat}{stat}=allocstat)
+199     \textcolor{keywordflow}{IF} (allocstat /= 0) stop \textcolor{stringliteral}{"*** Deallocation problem ! ***"}
+200 
+201     \textcolor{keyword}{CALL }simplify(aotensor)
+202 
+203     \textcolor{keyword}{CALL }deallocate\_inprod
+204 
 \end{DoxyCode}
 \index{aotensor\+\_\+def@{aotensor\+\_\+def}!kdelta@{kdelta}}
 \index{kdelta@{kdelta}!aotensor\+\_\+def@{aotensor\+\_\+def}}
@@ -233,13 +220,13 @@ Kronecker delta function.
 
 
 
-Definition at line 88 of file aotensor\+\_\+def.\+f90.
+Definition at line 91 of file aotensor\+\_\+def.\+f90.
 
 
 \begin{DoxyCode}
-88     \textcolor{keywordtype}{INTEGER} :: i,j,kdelta
-89     kdelta=0
-90     \textcolor{keywordflow}{IF} (i == j) kdelta = 1
+91     \textcolor{keywordtype}{INTEGER} :: i,j,kdelta
+92     kdelta=0
+93     \textcolor{keywordflow}{IF} (i == j) kdelta = 1
 \end{DoxyCode}
 \index{aotensor\+\_\+def@{aotensor\+\_\+def}!psi@{psi}}
 \index{psi@{psi}!aotensor\+\_\+def@{aotensor\+\_\+def}}
@@ -254,12 +241,12 @@ Translate the $\psi_{a,i}$ coefficients into effective coordinates.
 
 
 
-Definition at line 64 of file aotensor\+\_\+def.\+f90.
+Definition at line 67 of file aotensor\+\_\+def.\+f90.
 
 
 \begin{DoxyCode}
-64     \textcolor{keywordtype}{INTEGER} :: i,psi
-65     psi = i
+67     \textcolor{keywordtype}{INTEGER} :: i,psi
+68     psi = i
 \end{DoxyCode}
 \index{aotensor\+\_\+def@{aotensor\+\_\+def}!t@{t}}
 \index{t@{t}!aotensor\+\_\+def@{aotensor\+\_\+def}}
@@ -274,12 +261,12 @@ Translate the $\delta T_{o,i}$ coefficients into effective coordinates.
 
 
 
-Definition at line 82 of file aotensor\+\_\+def.\+f90.
+Definition at line 85 of file aotensor\+\_\+def.\+f90.
 
 
 \begin{DoxyCode}
-82     \textcolor{keywordtype}{INTEGER} :: i,t
-83     t = i + 2 * natm + noc
+85     \textcolor{keywordtype}{INTEGER} :: i,t
+86     t = i + 2 * natm + noc
 \end{DoxyCode}
 \index{aotensor\+\_\+def@{aotensor\+\_\+def}!theta@{theta}}
 \index{theta@{theta}!aotensor\+\_\+def@{aotensor\+\_\+def}}
@@ -294,16 +281,31 @@ Translate the $\theta_{a,i}$ coefficients into effective coordinates.
 
 
 
-Definition at line 70 of file aotensor\+\_\+def.\+f90.
+Definition at line 73 of file aotensor\+\_\+def.\+f90.
 
 
 \begin{DoxyCode}
-70     \textcolor{keywordtype}{INTEGER} :: i,theta
-71     theta = i + natm
+73     \textcolor{keywordtype}{INTEGER} :: i,theta
+74     theta = i + natm
 \end{DoxyCode}
 
 
 \subsection{Variable Documentation}
+\index{aotensor\+\_\+def@{aotensor\+\_\+def}!aobuf@{aobuf}}
+\index{aobuf@{aobuf}!aotensor\+\_\+def@{aotensor\+\_\+def}}
+\subsubsection[{\texorpdfstring{aobuf}{aobuf}}]{\setlength{\rightskip}{0pt plus 5cm}type({\bf coolist}), dimension(\+:), allocatable aotensor\+\_\+def\+::aobuf\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespaceaotensor__def_ac1bc60299b01412e33c173869cb08307}{}\label{namespaceaotensor__def_ac1bc60299b01412e33c173869cb08307}
+
+
+Buffer for the aotensor calculation. 
+
+
+
+Definition at line 48 of file aotensor\+\_\+def.\+f90.
+
+
+\begin{DoxyCode}
+48   \textcolor{keywordtype}{TYPE}(coolist), \textcolor{keywordtype}{DIMENSION(:)}, \textcolor{keywordtype}{ALLOCATABLE} :: aobuf
+\end{DoxyCode}
 \index{aotensor\+\_\+def@{aotensor\+\_\+def}!aotensor@{aotensor}}
 \index{aotensor@{aotensor}!aotensor\+\_\+def@{aotensor\+\_\+def}}
 \subsubsection[{\texorpdfstring{aotensor}{aotensor}}]{\setlength{\rightskip}{0pt plus 5cm}type({\bf coolist}), dimension(\+:), allocatable, public aotensor\+\_\+def\+::aotensor}\hypertarget{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}{}\label{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}

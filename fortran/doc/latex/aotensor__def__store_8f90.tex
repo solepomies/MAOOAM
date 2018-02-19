@@ -1,5 +1,5 @@
-\hypertarget{aotensor__def_8f90}{}\section{aotensor\+\_\+def.\+f90 File Reference}
-\label{aotensor__def_8f90}\index{aotensor\+\_\+def.\+f90@{aotensor\+\_\+def.\+f90}}
+\hypertarget{aotensor__def__store_8f90}{}\section{aotensor\+\_\+def\+\_\+store.\+f90 File Reference}
+\label{aotensor__def__store_8f90}\index{aotensor\+\_\+def\+\_\+store.\+f90@{aotensor\+\_\+def\+\_\+store.\+f90}}
 \subsection*{Modules}
 \begin{DoxyCompactItemize}
 \item 
@@ -22,14 +22,3 @@ subroutine \hyperlink{namespaceaotensor__def_af8d3b24f71f7b03dd5335e20a00c73b4}{
 \begin{DoxyCompactList}\small\item\em Subroutine to compute the tensor \hyperlink{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}{aotensor}. \end{DoxyCompactList}\item 
 subroutine, public \hyperlink{namespaceaotensor__def_ac583b298e9b68f84b0a22588d3b7dbcd}{aotensor\+\_\+def\+::init\+\_\+aotensor}
 \begin{DoxyCompactList}\small\item\em Subroutine to initialise the \hyperlink{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}{aotensor} tensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Variables}
-\begin{DoxyCompactItemize}
-\item 
-integer, dimension(\+:), allocatable \hyperlink{namespaceaotensor__def_aa9e30c84efc5a81409ba9c0286c87eac}{aotensor\+\_\+def\+::count\+\_\+elems}
-\begin{DoxyCompactList}\small\item\em Vector used to count the tensor elements. \end{DoxyCompactList}\item 
-real(kind=8), parameter \hyperlink{namespaceaotensor__def_ab1cf9313fb1def1a17de539cfa922e35}{aotensor\+\_\+def\+::real\+\_\+eps} = 2.\+2204460492503131e-\/16
-\begin{DoxyCompactList}\small\item\em Epsilon to test equality with 0. \end{DoxyCompactList}\item 
-type(coolist), dimension(\+:), allocatable, public \hyperlink{namespaceaotensor__def_a0dc43bc9294a18f2fe57b67489f1702f}{aotensor\+\_\+def\+::aotensor}
-\begin{DoxyCompactList}\small\item\em $\mathcal{T}_{i,j,k}$ -\/ Tensor representation of the tendencies. \end{DoxyCompactList}\item 
-type(coolist), dimension(\+:), allocatable \hyperlink{namespaceaotensor__def_ac1bc60299b01412e33c173869cb08307}{aotensor\+\_\+def\+::aobuf}
-\begin{DoxyCompactList}\small\item\em Buffer for the aotensor calculation. \end{DoxyCompactList}\end{DoxyCompactItemize}

@@ -7,8 +7,8 @@ var searchData=
   ['implied',['IMPLIED',['../LICENSE_8txt.html#ab0624cdd79a1b72ae3e8cb7b147149da',1,'LICENSE.txt']]],
   ['init_5fadtensor',['init_adtensor',['../namespacetl__ad__tensor.html#a199cc07a7172f6cf662f9a5bd6f3d45c',1,'tl_ad_tensor']]],
   ['init_5fadtensor_5fref',['init_adtensor_ref',['../namespacetl__ad__tensor.html#a3b666898a684bf3f2e932f38616fc920',1,'tl_ad_tensor']]],
-  ['init_5faotensor',['init_aotensor',['../namespaceaotensor__def.html#ac2d5a88885d06f6dc047bee3a4ab427a',1,'aotensor_def']]],
-  ['init_5finprod',['init_inprod',['../namespaceinprod__analytic.html#a7491dd2b8ba26eb10d160eb0bf072e56',1,'inprod_analytic']]],
+  ['init_5faotensor',['init_aotensor',['../namespaceaotensor__def.html#ac583b298e9b68f84b0a22588d3b7dbcd',1,'aotensor_def']]],
+  ['init_5finprod',['init_inprod',['../namespaceinprod__analytic.html#a15216aea8062cfef76196c8453a4291c',1,'inprod_analytic']]],
   ['init_5fintegrator',['init_integrator',['../namespaceintegrator.html#ab01b1930fc627150051ed5c5465ac533',1,'integrator']]],
   ['init_5fnml',['init_nml',['../namespaceparams.html#ab21e77dfefda280da4cfdd29117173d5',1,'params']]],
   ['init_5fone',['init_one',['../namespaceutil.html#aca7f2465fedb87fef954d8f0c30668c7',1,'util']]],
@@ -19,8 +19,10 @@ var searchData=
   ['init_5ftltensor',['init_tltensor',['../namespacetl__ad__tensor.html#a8a94fe84e907fc8835f798eddcff38e8',1,'tl_ad_tensor']]],
   ['inprod_5fanalytic',['inprod_analytic',['../namespaceinprod__analytic.html',1,'']]],
   ['inprod_5fanalytic_2ef90',['inprod_analytic.f90',['../inprod__analytic_8f90.html',1,'']]],
+  ['inprod_5fanalytic_5fstore_2ef90',['inprod_analytic_store.f90',['../inprod__analytic__store_8f90.html',1,'']]],
   ['inprod_5fanalytic_5ftest',['inprod_analytic_test',['../test__inprod__analytic_8f90.html#ab39906c756570260b929dab5e6f182c1',1,'test_inprod_analytic.f90']]],
   ['integrator',['integrator',['../namespaceintegrator.html',1,'']]],
+  ['ipbuf',['ipbuf',['../namespaceinprod__analytic.html#a6263b2bbddcdb63f1629be2c7ba9021d',1,'inprod_analytic']]],
   ['isin',['isin',['../namespaceutil.html#a1e2cd46baa2070e28949e28c8a3e037e',1,'util']]],
   ['iter',['iter',['../namespacestat.html#aca30ccb65a1fc6af92be1018ec40f6c6',1,'stat']]]
 ];

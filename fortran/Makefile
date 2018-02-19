@@ -70,7 +70,7 @@ endif
 
 PROGRAMS = maooam test_tl_ad
 
-MODULES = util.mod params.mod inprod_analytic$(ST).mod aotensor_def.mod ic_def.mod $(INTEGRATOR).mod stat.mod tensor.mod tl_ad_tensor.mod $(TL_AD_INTEGRATOR).mod $(IFPORT)
+MODULES = util.mod params.mod inprod_analytic$(ST).mod aotensor_def$(ST).mod ic_def.mod $(INTEGRATOR).mod stat.mod tensor.mod tl_ad_tensor.mod $(TL_AD_INTEGRATOR).mod $(IFPORT)
 MODULE_OBJECTS = $(MODULES:.mod=.o)
 
 TEST_PROGRAMS = test_inprod_analytic test_aotensor
@@ -103,16 +103,16 @@ test_aotensor.test: test_aotensor
 %: %.o $(MODULE_OBJECTS)
 	$(COMPILER) $(COMPILER_FLAGS) $^ -o $@ $(LD_FLAGS) 
 
-inprod_analytic$(ST).mod: params.mod util.mod
-aotensor_def.mod: tensor.mod inprod_analytic$(ST).mod
-$(INTEGRATOR).mod: aotensor_def.mod
-ic_def.mod: util.mod aotensor_def.mod
+inprod_analytic$(ST).mod: params.mod util.mod tensor.mod
+aotensor_def$(ST).mod: tensor.mod inprod_analytic$(ST).mod
+$(INTEGRATOR).mod: aotensor_def$(ST).mod
+ic_def.mod: util.mod aotensor_def$(ST).mod
 stat.mod: params.mod
-tl_ad_tensor.mod: aotensor_def.mod
+tl_ad_tensor.mod: aotensor_def$(ST).mod
 $(TL_AD_INTEGRATOR).mod: tl_ad_tensor.mod
 util.mod: $(IFPORT)
 
 clean:
-	$(RM) *.o *.mod $(PROGRAMS) $(TEST_PROGRAMS) tests/*.out
+	$(RM) *.o *.mod *.ipf $(PROGRAMS) $(TEST_PROGRAMS) tests/*.out
 
 .PHONY: clean all test %.test

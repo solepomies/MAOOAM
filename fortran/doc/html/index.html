@@ -86,7 +86,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Modular arbitrary-order ocean-atmosphere model: MAOOAM -- Fortran implementation </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2>About</h2>
+<div class="textblock"><h2>High resolution enabled version</h2>
+<h2>About</h2>
 <p>(c) 2013-2016 Lesley De Cruz and Jonathan Demaeyer</p>
 <p>See <a href="../LICENSE.txt">LICENSE.txt</a> for license information.</p>
 <p>This software is provided as supplementary material with:</p>
@@ -147,6 +148,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>evol_field.dat : the recorded time evolution of the variables.</li>
 <li>mean_field.dat : the mean field (the climatology)</li>
 </ul>
+<p>In this particular version, it generates two additional files to store the inner products related to the quadratic terms of the tendencies:</p><ul>
+<li>atmos_g.ipf : the atmospheric g inner products</li>
+<li>atmos_O.ipf : the oceanic O inner products</li>
+</ul>
+<p>These two files can be huge so be sure to have enough space available. For a given configuration of the model, these two files will be reused by subsequent program runs to save initialization time.</p>
 <p>The tangent linear and adjoint models of MAOOAM are provided in the <a class="el" href="namespacetl__ad__tensor.html" title="Tangent Linear (TL) and Adjoint (AD) model versions of MAOOAM. Tensors definition module...">tl_ad_tensor</a>, rk2_tl_ad_integrator and rk4_tl_ad_integrator modules. It is documented <a href="./md_doc_tl_ad_doc.html">here</a>.</p>
 <hr/>
 <h2>Implementation notes</h2>
@@ -170,7 +176,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 19 2018 16:12:32 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 19 2018 17:07:26 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

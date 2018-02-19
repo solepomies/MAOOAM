@@ -1,3 +1,5 @@
+\subsection*{High resolution enabled version}
+
 \subsection*{About}
 
 (c) 2013-\/2016 Lesley De Cruz and Jonathan Demaeyer
@@ -118,6 +120,14 @@ It will generate two files \+:
 \item evol\+\_\+field.\+dat \+: the recorded time evolution of the variables.
 \item mean\+\_\+field.\+dat \+: the mean field (the climatology)
 \end{DoxyItemize}
+
+In this particular version, it generates two additional files to store the inner products related to the quadratic terms of the tendencies\+:
+\begin{DoxyItemize}
+\item atmos\+\_\+g.\+ipf \+: the atmospheric g inner products
+\item atmos\+\_\+\+O.\+ipf \+: the oceanic O inner products
+\end{DoxyItemize}
+
+These two files can be huge so be sure to have enough space available. For a given configuration of the model, these two files will be reused by subsequent program runs to save initialization time.
 
 The tangent linear and adjoint models of M\+A\+O\+O\+AM are provided in the \hyperlink{namespacetl__ad__tensor}{tl\+\_\+ad\+\_\+tensor}, rk2\+\_\+tl\+\_\+ad\+\_\+integrator and rk4\+\_\+tl\+\_\+ad\+\_\+integrator modules. It is documented \href{./md_doc_tl_ad_doc.html}{\tt here}.
 

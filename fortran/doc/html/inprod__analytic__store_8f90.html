@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>inprod_analytic.f90 File Reference</title>
+<title>inprod_analytic_store.f90 File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -91,14 +91,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Data Types</a> &#124;
 <a href="#namespaces">Modules</a> &#124;
-<a href="#func-members">Functions/Subroutines</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions/Subroutines</a>  </div>
   <div class="headertitle">
-<div class="title">inprod_analytic.f90 File Reference</div>  </div>
+<div class="title">inprod_analytic_store.f90 File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><a href="inprod__analytic_8f90_source.html">Go to the source code of this file.</a></p>
+<p><a href="inprod__analytic__store_8f90_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Types</h2></td></tr>
@@ -180,27 +179,6 @@ Functions/Subroutines</h2></td></tr>
 <tr class="memitem:a15216aea8062cfef76196c8453a4291c"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinprod__analytic.html#a15216aea8062cfef76196c8453a4291c">inprod_analytic::init_inprod</a></td></tr>
 <tr class="memdesc:a15216aea8062cfef76196c8453a4291c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialisation of the inner product.  <a href="namespaceinprod__analytic.html#a15216aea8062cfef76196c8453a4291c">More...</a><br /></td></tr>
 <tr class="separator:a15216aea8062cfef76196c8453a4291c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77718deee55b484b0946e6c8faf72cd6"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinprod__analytic.html#a77718deee55b484b0946e6c8faf72cd6">inprod_analytic::deallocate_inprod</a></td></tr>
-<tr class="memdesc:a77718deee55b484b0946e6c8faf72cd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deallocation of the inner products.  <a href="namespaceinprod__analytic.html#a77718deee55b484b0946e6c8faf72cd6">More...</a><br /></td></tr>
-<tr class="separator:a77718deee55b484b0946e6c8faf72cd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:aa6b6ebedac44495720ffe649bc937a56"><td class="memItemLeft" align="right" valign="top">type(atm_wavenum), dimension(:), allocatable, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinprod__analytic.html#aa6b6ebedac44495720ffe649bc937a56">inprod_analytic::awavenum</a></td></tr>
-<tr class="memdesc:aa6b6ebedac44495720ffe649bc937a56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atmospheric blocs specification.  <a href="namespaceinprod__analytic.html#aa6b6ebedac44495720ffe649bc937a56">More...</a><br /></td></tr>
-<tr class="separator:aa6b6ebedac44495720ffe649bc937a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7273713c6b1a079e1c653e8b8d2fe089"><td class="memItemLeft" align="right" valign="top">type(ocean_wavenum), dimension(:), allocatable, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinprod__analytic.html#a7273713c6b1a079e1c653e8b8d2fe089">inprod_analytic::owavenum</a></td></tr>
-<tr class="memdesc:a7273713c6b1a079e1c653e8b8d2fe089"><td class="mdescLeft">&#160;</td><td class="mdescRight">Oceanic blocs specification.  <a href="namespaceinprod__analytic.html#a7273713c6b1a079e1c653e8b8d2fe089">More...</a><br /></td></tr>
-<tr class="separator:a7273713c6b1a079e1c653e8b8d2fe089"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f4fe9aa292d78b871e5498e411d1297"><td class="memItemLeft" align="right" valign="top">type(atm_tensors), public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinprod__analytic.html#a6f4fe9aa292d78b871e5498e411d1297">inprod_analytic::atmos</a></td></tr>
-<tr class="memdesc:a6f4fe9aa292d78b871e5498e411d1297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atmospheric tensors.  <a href="namespaceinprod__analytic.html#a6f4fe9aa292d78b871e5498e411d1297">More...</a><br /></td></tr>
-<tr class="separator:a6f4fe9aa292d78b871e5498e411d1297"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac691a1258fb0a341e2ba5b4811be1c0b"><td class="memItemLeft" align="right" valign="top">type(ocean_tensors), public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinprod__analytic.html#ac691a1258fb0a341e2ba5b4811be1c0b">inprod_analytic::ocean</a></td></tr>
-<tr class="memdesc:ac691a1258fb0a341e2ba5b4811be1c0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Oceanic tensors.  <a href="namespaceinprod__analytic.html#ac691a1258fb0a341e2ba5b4811be1c0b">More...</a><br /></td></tr>
-<tr class="separator:ac691a1258fb0a341e2ba5b4811be1c0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6263b2bbddcdb63f1629be2c7ba9021d"><td class="memItemLeft" align="right" valign="top">type(coolist), dimension(:), allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceinprod__analytic.html#a6263b2bbddcdb63f1629be2c7ba9021d">inprod_analytic::ipbuf</a></td></tr>
-<tr class="memdesc:a6263b2bbddcdb63f1629be2c7ba9021d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer for the inner products calculation.  <a href="namespaceinprod__analytic.html#a6263b2bbddcdb63f1629be2c7ba9021d">More...</a><br /></td></tr>
-<tr class="separator:a6263b2bbddcdb63f1629be2c7ba9021d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

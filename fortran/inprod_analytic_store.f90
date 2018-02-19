@@ -35,7 +35,7 @@ MODULE inprod_analytic
 
   PRIVATE
 
-  PUBLIC :: init_inprod,deallocate_inprod
+  PUBLIC :: init_inprod
 
   !> Atmospheric bloc specification type
   TYPE :: atm_wavenum 
@@ -729,65 +729,6 @@ CONTAINS
     IF (AllocStat /= 0) STOP "*** Deallocation problem ! ***"
 
   END SUBROUTINE init_inprod
-
-  !> Deallocation of the inner products
-  SUBROUTINE deallocate_inprod
-    INTEGER :: i,AllocStat
-
-    ! Deallocation of atmospheric inprod
-    AllocStat=0
-    IF (ALLOCATED(atmos%a)) DEALLOCATE(atmos%a, STAT=AllocStat)
-    IF (AllocStat /= 0)  STOP "*** Problem to deallocate ! ***"
-
-    AllocStat=0
-    IF (ALLOCATED(atmos%c)) DEALLOCATE(atmos%c, STAT=AllocStat)
-    IF (AllocStat /= 0)  STOP "*** Problem to deallocate ! ***"
-
-    AllocStat=0
-    IF (ALLOCATED(atmos%d)) DEALLOCATE(atmos%d, STAT=AllocStat)
-    IF (AllocStat /= 0)  STOP "*** Problem to deallocate ! ***"
-
-    AllocStat=0
-    IF (ALLOCATED(atmos%s)) DEALLOCATE(atmos%s, STAT=AllocStat)
-    IF (AllocStat /= 0)  STOP "*** Problem to deallocate ! ***"
-
-    DO i=1,ndim
-       AllocStat=0
-       IF (ALLOCATED(atmos%g(i)%elems)) DEALLOCATE(atmos%g(i)%elems, STAT=AllocStat)
-       IF (AllocStat /= 0)  STOP "*** Problem to deallocate ! ***"
-    ENDDO
-
-    AllocStat=0
-    IF (ALLOCATED(atmos%g)) DEALLOCATE(atmos%g, STAT=AllocStat)
-    IF (AllocStat /= 0)  STOP "*** Problem to deallocate ! ***"
-
-    ! Deallocation of oceanic inprod
-    AllocStat=0
-    IF (ALLOCATED(ocean%K)) DEALLOCATE(ocean%K, STAT=AllocStat)
-    IF (AllocStat /= 0)  STOP "*** Problem to deallocate ! ***"
-
-    AllocStat=0
-    IF (ALLOCATED(ocean%M)) DEALLOCATE(ocean%M, STAT=AllocStat)
-    IF (AllocStat /= 0)  STOP "*** Problem to deallocate ! ***"
-
-    AllocStat=0
-    IF (ALLOCATED(ocean%N)) DEALLOCATE(ocean%N, STAT=AllocStat)
-    IF (AllocStat /= 0)  STOP "*** Problem to deallocate ! ***"
-
-    AllocStat=0
-    IF (ALLOCATED(ocean%W)) DEALLOCATE(ocean%W, STAT=AllocStat)
-    IF (AllocStat /= 0)  STOP "*** Problem to deallocate ! ***"
-
-    DO i=1,ndim
-       AllocStat=0
-       IF (ALLOCATED(ocean%O(i)%elems)) DEALLOCATE(ocean%O(i)%elems, STAT=AllocStat)
-       IF (AllocStat /= 0)  STOP "*** Problem to deallocate ! ***"
-    ENDDO
-
-    AllocStat=0
-    IF (ALLOCATED(ocean%O)) DEALLOCATE(ocean%O, STAT=AllocStat)
-    IF (AllocStat /= 0)  STOP "*** Problem to deallocate ! ***"
-  END SUBROUTINE deallocate_inprod
 
 
 END MODULE inprod_analytic

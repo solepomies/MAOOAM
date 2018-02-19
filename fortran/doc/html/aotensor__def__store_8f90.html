@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>aotensor_def.f90 File Reference</title>
+<title>aotensor_def_store.f90 File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,14 +90,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Modules</a> &#124;
-<a href="#func-members">Functions/Subroutines</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions/Subroutines</a>  </div>
   <div class="headertitle">
-<div class="title">aotensor_def.f90 File Reference</div>  </div>
+<div class="title">aotensor_def_store.f90 File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><a href="aotensor__def_8f90_source.html">Go to the source code of this file.</a></p>
+<p><a href="aotensor__def__store_8f90_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Modules</h2></td></tr>
@@ -128,21 +127,6 @@ Functions/Subroutines</h2></td></tr>
 <tr class="memitem:ac583b298e9b68f84b0a22588d3b7dbcd"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceaotensor__def.html#ac583b298e9b68f84b0a22588d3b7dbcd">aotensor_def::init_aotensor</a></td></tr>
 <tr class="memdesc:ac583b298e9b68f84b0a22588d3b7dbcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subroutine to initialise the <a class="el" href="namespaceaotensor__def.html#a0dc43bc9294a18f2fe57b67489f1702f" title=" - Tensor representation of the tendencies. ">aotensor</a> tensor.  <a href="namespaceaotensor__def.html#ac583b298e9b68f84b0a22588d3b7dbcd">More...</a><br /></td></tr>
 <tr class="separator:ac583b298e9b68f84b0a22588d3b7dbcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:aa9e30c84efc5a81409ba9c0286c87eac"><td class="memItemLeft" align="right" valign="top">integer, dimension(:), allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceaotensor__def.html#aa9e30c84efc5a81409ba9c0286c87eac">aotensor_def::count_elems</a></td></tr>
-<tr class="memdesc:aa9e30c84efc5a81409ba9c0286c87eac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector used to count the tensor elements.  <a href="namespaceaotensor__def.html#aa9e30c84efc5a81409ba9c0286c87eac">More...</a><br /></td></tr>
-<tr class="separator:aa9e30c84efc5a81409ba9c0286c87eac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1cf9313fb1def1a17de539cfa922e35"><td class="memItemLeft" align="right" valign="top">real(kind=8), parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceaotensor__def.html#ab1cf9313fb1def1a17de539cfa922e35">aotensor_def::real_eps</a> = 2.2204460492503131e-16</td></tr>
-<tr class="memdesc:ab1cf9313fb1def1a17de539cfa922e35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Epsilon to test equality with 0.  <a href="namespaceaotensor__def.html#ab1cf9313fb1def1a17de539cfa922e35">More...</a><br /></td></tr>
-<tr class="separator:ab1cf9313fb1def1a17de539cfa922e35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0dc43bc9294a18f2fe57b67489f1702f"><td class="memItemLeft" align="right" valign="top">type(coolist), dimension(:), allocatable, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceaotensor__def.html#a0dc43bc9294a18f2fe57b67489f1702f">aotensor_def::aotensor</a></td></tr>
-<tr class="memdesc:a0dc43bc9294a18f2fe57b67489f1702f"><td class="mdescLeft">&#160;</td><td class="mdescRight">\(\mathcal{T}_{i,j,k}\) - Tensor representation of the tendencies.  <a href="namespaceaotensor__def.html#a0dc43bc9294a18f2fe57b67489f1702f">More...</a><br /></td></tr>
-<tr class="separator:a0dc43bc9294a18f2fe57b67489f1702f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1bc60299b01412e33c173869cb08307"><td class="memItemLeft" align="right" valign="top">type(coolist), dimension(:), allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceaotensor__def.html#ac1bc60299b01412e33c173869cb08307">aotensor_def::aobuf</a></td></tr>
-<tr class="memdesc:ac1bc60299b01412e33c173869cb08307"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer for the aotensor calculation.  <a href="namespaceaotensor__def.html#ac1bc60299b01412e33c173869cb08307">More...</a><br /></td></tr>
-<tr class="separator:ac1bc60299b01412e33c173869cb08307"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

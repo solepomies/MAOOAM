@@ -28,6 +28,7 @@ resources.
 ------------------------------------------------------------------------
 
 ## Model description ##
+## High resolution enabled version
 
 The atmospheric component of the model is based on the papers of Charney and
 Straus (1980), Reinhold and Pierrehumbert (1982) and  Cehelsky and Tung (1987),
