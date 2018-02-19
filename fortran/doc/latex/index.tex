@@ -1,6 +1,12 @@
+\subsection*{Lyapunov exponents computation version}
+
+
+
+
+
 \subsection*{About}
 
-(c) 2013-\/2016 Lesley De Cruz and Jonathan Demaeyer
+(c) 2013-\/2016 Lesley De Cruz, Jonathan Demaeyer and Sebastian Schubert
 
 See \href{../LICENSE.txt}{\tt L\+I\+C\+E\+N\+S\+E.\+txt} for license information.
 
@@ -20,6 +26,24 @@ Consult the M\+A\+O\+O\+AM \href{http://www.github.com/Climdyn/MAOOAM}{\tt code 
 A pdf version of this manual is available \href{../latex/Reference_manual.pdf}{\tt here}. 
 
 
+
+\subsection*{Note on the Lyapunov exponents computation}
+
+This version of the code allows for the computation of the backward Lyapunov exponents. The method used is described in
+
+
+\begin{DoxyItemize}
+\item Benettin, G., Galgani, L., Giorgilli, A., and Strelcyn, J. M. \+: Lyapunov characteristic exponents for smooth dynamical systems; a method for computing all of them. Part 2\+: Numerical application. Meccanica, 15, 21-\/30, \href{http://dx.doi.org/10.1007/BF02128237}{\tt doi\+:10.\+1007/\+B\+F02128237}, 1980.
+\end{DoxyItemize}
+
+This version has been used to compute the Lyapunov exponents of M\+A\+O\+O\+AM in the following manuscript\+:
+
+
+\begin{DoxyItemize}
+\item De Cruz, L., Schubert, S., Demaeyer, J., Lucarini, V., and Vannitsem, S.\+: Exploring the Lyapunov instability properties of high-\/dimensional atmospheric and climate models, Nonlin. Processes Geophys. Discuss., \href{https://doi.org/10.5194/npg-2017-76}{\tt doi\+:10.\+5194/npg-\/2017-\/76}, in review, 2018. 
+
+
+\end{DoxyItemize}
 
 \subsection*{Installation}
 
@@ -65,7 +89,10 @@ The model tendencies are represented through a tensor called aotensor which incl
 
 \begin{DoxyItemize}
 \item \hyperlink{maooam_8f90}{maooam.\+f90} \+: Main program.
+\item \hyperlink{maooam__lyap_8f90}{maooam\+\_\+lyap.\+f90} \+: Version of the main program with the computation of the Lyapunov exponents.
+\item \hyperlink{maooam__lyap__div_8f90}{maooam\+\_\+lyap\+\_\+div.\+f90} \+: Version of the main program with the computation of the first Lyapunov exponents with the divergence method.
 \item \hyperlink{aotensor__def_8f90}{aotensor\+\_\+def.\+f90} \+: Tensor aotensor computation module.
+\item \hyperlink{lyap__vectors_8f90}{lyap\+\_\+vectors.\+f90} \+: Module for the computation of Lyapunov exponents and vectors
 \item I\+C\+\_\+def.\+f90 \+: A module which loads the user specified initial condition.
 \item \hyperlink{inprod__analytic_8f90}{inprod\+\_\+analytic.\+f90} \+: Inner products computation module.
 \item \hyperlink{rk2__integrator_8f90}{rk2\+\_\+integrator.\+f90} \+: A module which contains the Heun integrator for the model equations.
@@ -94,6 +121,8 @@ The model tendencies are represented through a tensor called aotensor which incl
 
 The user first has to fill the params.\+nml and int\+\_\+params.\+nml namelist files according to their needs. Indeed, model and integration parameters can be specified respectively in the params.\+nml and int\+\_\+params.\+nml namelist files. Some examples related to already published article are available in the params folder.
 
+The parameters related to the Lyapunov exponents computation are located in the int\+\_\+params.\+nml namelist file.
+
 The modeselection.\+nml namelist can then be filled \+:
 \begin{DoxyItemize}
 \item N\+B\+OC and N\+B\+A\+TM specify the number of blocks that will be used in respectively the ocean and the atmosphere. Each block corresponds to a given x and y wavenumber.
@@ -105,7 +134,7 @@ The modeselection.\+nml namelist can then be filled \+:
 
 The Makefile allows to change the integrator being used for the time evolution. The user should modify it according to its need. By default a R\+K2 scheme is selected.
 
-Finally, the I\+C.\+nml file specifying the initial condition should be defined. To obtain an example of this configuration file corresponding to the model you have previously defined, simply delete the current I\+C.\+nml file (if it exists) and run the program \+: \begin{DoxyVerb}./maooam
+Finally, the I\+C.\+nml file specifying the initial condition should be defined. To obtain an example of this configuration file corresponding to the model you have previously defined, simply delete the current I\+C.\+nml file (if it exists) and run the main program \+: \begin{DoxyVerb}./maooam
 \end{DoxyVerb}
 
 
@@ -121,9 +150,30 @@ It will generate two files \+:
 
 The tangent linear and adjoint models of M\+A\+O\+O\+AM are provided in the \hyperlink{namespacetl__ad__tensor}{tl\+\_\+ad\+\_\+tensor}, rk2\+\_\+tl\+\_\+ad\+\_\+integrator and rk4\+\_\+tl\+\_\+ad\+\_\+integrator modules. It is documented \href{./md_doc_tl_ad_doc.html}{\tt here}.
 
+The computation of the Lyapunov exponents can be done by running the program \+: \begin{DoxyVerb}./maooam_lyap
+\end{DoxyVerb}
 
 
+It will generate four files\+:
+\begin{DoxyItemize}
+\item evol\+\_\+field.\+dat \+: the recorded time evolution of the variables.
+\item mean\+\_\+field.\+dat \+: the mean field (the climatology)
+\item lyapunov\+\_\+exponents.\+dat \+: the recorded time evolution of the Lyapunov exponents
+\item mean\+\_\+lyapunov.\+dat \+: the mean Lyapunov exponents as well as their variance.
+\end{DoxyItemize}
 
+Alternatively, the first Lyapunov exponent can be computed by the divergence method, by running \+:
+
+./maooam\+\_\+lyap\+\_\+div
+
+It will generate three files \+:
+\begin{DoxyItemize}
+\item evol\+\_\+field.\+dat \+: the recorded time evolution of the variables.
+\item mean\+\_\+field.\+dat \+: the mean field (the climatology)
+\item lyapunov\+\_\+exponents\+\_\+div.\+dat \+: the recorded time evolution of the first Lyapunov exponent 
+
+
+\end{DoxyItemize}
 
 \subsection*{Implementation notes}
 

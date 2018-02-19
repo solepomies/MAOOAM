@@ -1,8 +1,11 @@
-# Modular arbitrary-order ocean-atmosphere model: MAOOAM -- Fortran implementation #
+# Modular arbitrary-order ocean-atmosphere model: MAOOAM -- Fortran implementation
+## Lyapunov exponents computation version
+
+------------------------------------------------------------------------
 
 ## About ##
 
-(c) 2013-2016 Lesley De Cruz and Jonathan Demaeyer
+(c) 2013-2016 Lesley De Cruz, Jonathan Demaeyer and Sebastian Schubert
 
 See [LICENSE.txt](../LICENSE.txt) for license information.
 
@@ -24,6 +27,27 @@ for updates, and [our website](http://climdyn.meteo.be) for additional
 resources.
 
 A pdf version of this manual is available [here](../latex/Reference_manual.pdf).
+
+------------------------------------------------------------------------
+
+## Note on the Lyapunov exponents computation
+
+This version of the code allows for the computation of the backward Lyapunov
+exponents. The method used is described in
+
+* Benettin, G., Galgani, L., Giorgilli, A., and Strelcyn, J. M. : Lyapunov
+characteristic exponents for smooth dynamical systems; a method for computing
+all of them. Part 2: Numerical application. Meccanica, 15, 21-30,
+[doi:10.1007/BF02128237](http://dx.doi.org/10.1007/BF02128237), 1980.
+
+This version has been used to compute the Lyapunov exponents of MAOOAM in the
+following manuscript:
+
+* De Cruz, L., Schubert, S., Demaeyer, J., Lucarini, V., and Vannitsem, S.:
+Exploring the Lyapunov instability properties of high-dimensional atmospheric
+and climate models, Nonlin. Processes Geophys. Discuss.,
+[doi:10.5194/npg-2017-76](https://doi.org/10.5194/npg-2017-76), in
+review, 2018.
 
 ------------------------------------------------------------------------
 
@@ -77,7 +101,10 @@ includes all the coefficients. This tensor is computed once at the program
 initialization.
 
 * maooam.f90 : Main program.
+* maooam_lyap.f90 : Version of the main program with the computation of the Lyapunov exponents.
+* maooam_lyap_div.f90 : Version of the main program with the computation of the first Lyapunov exponents with the divergence method.
 * aotensor_def.f90 : Tensor aotensor computation module.
+* lyap_vectors.f90 : Module for the computation of Lyapunov exponents and vectors
 * IC_def.f90 : A module which loads the user specified initial condition.
 * inprod_analytic.f90 : Inner products computation module.
 * rk2_integrator.f90 : A module which contains the Heun integrator for the model equations.
@@ -105,6 +132,8 @@ initialization.
 The user first has to fill the params.nml and int_params.nml namelist files according to their needs.
 Indeed, model and integration parameters can be specified respectively in the params.nml and int_params.nml namelist files. Some examples related to already published article are available in the params folder.
 
+The parameters related to the Lyapunov exponents computation are located in the int_params.nml namelist file.
+
 The modeselection.nml namelist can then be filled : 
 * NBOC and NBATM specify the number of blocks that will be used in respectively the ocean and
   the atmosphere. Each block corresponds to a given x and y wavenumber.
@@ -125,7 +154,7 @@ By default a RK2 scheme is selected.
 Finally, the IC.nml file specifying the initial condition should be defined. To
 obtain an example of this configuration file corresponding to the model you
 have previously defined, simply delete the current IC.nml file (if it exists)
-and run the program :
+and run the main program :
 
     ./maooam
 
@@ -142,6 +171,25 @@ The tangent linear and adjoint models of MAOOAM are provided in the
 tl_ad_tensor, rk2_tl_ad_integrator and rk4_tl_ad_integrator modules. It is
 documented [here](./md_doc_tl_ad_doc.html).
 
+The computation of the Lyapunov exponents can be done by running the program :
+
+    ./maooam_lyap
+
+It will generate four files:
+ * evol_field.dat : the recorded time evolution of the variables.
+ * mean_field.dat : the mean field (the climatology)
+ * lyapunov_exponents.dat : the recorded time evolution of the Lyapunov exponents
+ * mean_lyapunov.dat : the mean Lyapunov exponents as well as their variance.
+
+Alternatively, the first Lyapunov exponent can be computed by the divergence method, 
+by running :
+
+   ./maooam_lyap_div
+
+It will generate three files :
+ * evol_field.dat : the recorded time evolution of the variables.
+ * mean_field.dat : the mean field (the climatology)
+ * lyapunov_exponents_div.dat : the recorded time evolution of the first Lyapunov exponent
 
 ------------------------------------------------------------------------
 
