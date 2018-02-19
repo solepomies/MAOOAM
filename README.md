@@ -1,4 +1,5 @@
 # Modular arbitrary-order ocean-atmosphere model: MAOOAM
+## Lyapunov exponents computation version
 
 ------------------------------------------------------------------------
 
@@ -37,6 +38,27 @@ coupling between the two components includes wind forcings, radiative and heat
 exchanges.
 
 ![](./misc/figs/movie_10x10_GMD.gif)
+
+------------------------------------------------------------------------
+
+## Note on the Lyapunov exponents computation
+
+This version of the code (Fortran version) allows for the computation of the
+backward Lyapunov exponents. The method used is described in
+
+* Benettin, G., Galgani, L., Giorgilli, A., and Strelcyn, J. M. : Lyapunov
+characteristic exponents for smooth dynamical systems; a method for computing
+all of them. Part 2: Numerical application. Meccanica, 15, 21-30,
+[doi:10.1007/BF02128237](http://dx.doi.org/10.1007/BF02128237), 1980.
+
+This version has been used to compute the Lyapunov exponents of MAOOAM in the
+following manuscript:
+
+* De Cruz, L., Schubert, S., Demaeyer, J., Lucarini, V., and Vannitsem, S.:
+Exploring the Lyapunov instability properties of high-dimensional atmospheric
+and climate models, Nonlin. Processes Geophys. Discuss.,
+[doi:10.5194/npg-2017-76](https://doi.org/10.5194/npg-2017-76), in
+review, 2018.
 
 ------------------------------------------------------------------------
 

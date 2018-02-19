@@ -12,6 +12,10 @@
   TW = 10.D0           !
 &END
 
+&LYAP_PARAMS
+  RESCALING_TIME = 1.D-2  ! Rescaling time for the Lyapunov computation
+&END
+
 
 
 ! End of parameters Namelist

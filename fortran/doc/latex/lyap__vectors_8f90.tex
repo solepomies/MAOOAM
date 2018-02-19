@@ -1,0 +1,39 @@
+\hypertarget{lyap__vectors_8f90}{}\section{lyap\+\_\+vectors.\+f90 File Reference}
+\label{lyap__vectors_8f90}\index{lyap\+\_\+vectors.\+f90@{lyap\+\_\+vectors.\+f90}}
+\subsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+module \hyperlink{namespacelyap__vectors}{lyap\+\_\+vectors}
+\begin{DoxyCompactList}\small\item\em Module for computation of Lyapunov exponents and vectors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine, public \hyperlink{namespacelyap__vectors_a72d9b0b0cb5933542de34def4cdef516}{lyap\+\_\+vectors\+::init\+\_\+lyap}
+\begin{DoxyCompactList}\small\item\em Initialize Lyapunov computation (possibly also vectors in later version) and initializes also a random orthogonal matrix for the matrix ensemble. \end{DoxyCompactList}\item 
+subroutine, public \hyperlink{namespacelyap__vectors_aec560ddebe1222a0df44b49125bf6d7b}{lyap\+\_\+vectors\+::multiply\+\_\+prop} (prop\+\_\+mul)
+\begin{DoxyCompactList}\small\item\em Multiplies prop\+\_\+mul from the left with the prop matrix defined in this module and saves the result to prop\+\_\+mul. \end{DoxyCompactList}\item 
+subroutine, public \hyperlink{namespacelyap__vectors_ae6948c534a6ec370975f3843a591720d}{lyap\+\_\+vectors\+::benettin\+\_\+step}
+\begin{DoxyCompactList}\small\item\em Performs the benettin step in integration. Multiplies the aggregated propagators in prop with ensemble and performs QR decomposition (Gram-\/\+Schmidt orthogonalization gives Q and upper triangular matrix R). Computes also the Lyapunov exponents via the diagonal of R. W\+A\+T\+CH O\+UT\+: prop is changed during the subroutine and restored to a unit matrix. \end{DoxyCompactList}\item 
+subroutine, public \hyperlink{namespacelyap__vectors_a081fa2db33f0a55e2639c558d39b3b24}{lyap\+\_\+vectors\+::get\+\_\+lyap\+\_\+state} (prop\+\_\+ret, ensemble\+\_\+ret)
+\begin{DoxyCompactList}\small\item\em Routine that returns the current global propagator and ensemble of lyapunov vectors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+real(kind=8), dimension(\+:), allocatable, public \hyperlink{namespacelyap__vectors_a85e15a0071ac9c6857316d72152be731}{lyap\+\_\+vectors\+::loclyap}
+\begin{DoxyCompactList}\small\item\em Buffer containing the local Lyapunov exponent. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable, public \hyperlink{namespacelyap__vectors_a9bf23b3cf7aebbfe17422bbd63e95bab}{lyap\+\_\+vectors\+::lyapunov}
+\begin{DoxyCompactList}\small\item\em Buffer containing the averaged Lyapunov exponent. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:,\+:), allocatable, public \hyperlink{namespacelyap__vectors_a23c35fd358f7646818d0637993f0078b}{lyap\+\_\+vectors\+::ensemble}
+\begin{DoxyCompactList}\small\item\em Buffer containing the QR decompsoition of the ensemble. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:,\+:), allocatable \hyperlink{namespacelyap__vectors_a64ed59283a3d1411d14735b924b5794b}{lyap\+\_\+vectors\+::prop}
+\begin{DoxyCompactList}\small\item\em Buffer holding the propagator matrix. \end{DoxyCompactList}\item 
+integer \hyperlink{namespacelyap__vectors_a217e531a819065ea8ebc1548ca82d5e1}{lyap\+\_\+vectors\+::lwork}
+\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacelyap__vectors_ac6e7ade9ca919e7183c90eb20f820ce4}{lyap\+\_\+vectors\+::work}
+\begin{DoxyCompactList}\small\item\em Temporary buffer for QR decomposition. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacelyap__vectors_a1575bc16fe4704466132dea4aeb2d067}{lyap\+\_\+vectors\+::work2}
+\begin{DoxyCompactList}\small\item\em Temporary buffer for QR decomposition. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacelyap__vectors_a336c0490ac0927589648b33fe7abc733}{lyap\+\_\+vectors\+::tau}
+\begin{DoxyCompactList}\small\item\em Temporary buffer for QR decomposition. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:,\+:), allocatable \hyperlink{namespacelyap__vectors_ac3665710ab2b402b9e952fa3311d2517}{lyap\+\_\+vectors\+::prop\+\_\+buf}
+\begin{DoxyCompactList}\small\item\em Buffer holding the local propagator matrix. \end{DoxyCompactList}\end{DoxyCompactItemize}

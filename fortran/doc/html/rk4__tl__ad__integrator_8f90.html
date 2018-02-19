@@ -107,15 +107,27 @@ Modules</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions/Subroutines</h2></td></tr>
+<tr class="memitem:aa03be9677761cfa373b15c85cccdc424"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#aa03be9677761cfa373b15c85cccdc424">tl_ad_integrator::tendencies</a> (t, y, res)</td></tr>
+<tr class="memdesc:aa03be9677761cfa373b15c85cccdc424"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine computing the tendencies of the nonlinear model.  <a href="namespacetl__ad__integrator.html#aa03be9677761cfa373b15c85cccdc424">More...</a><br /></td></tr>
+<tr class="separator:aa03be9677761cfa373b15c85cccdc424"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeef5ff45fe5f9b73ceb8d72c195dc381"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#aeef5ff45fe5f9b73ceb8d72c195dc381">tl_ad_integrator::init_tl_ad_integrator</a></td></tr>
 <tr class="memdesc:aeef5ff45fe5f9b73ceb8d72c195dc381"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to initialise the integration buffers.  <a href="namespacetl__ad__integrator.html#aeef5ff45fe5f9b73ceb8d72c195dc381">More...</a><br /></td></tr>
 <tr class="separator:aeef5ff45fe5f9b73ceb8d72c195dc381"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a708ece5eac01486e65e889d19073fd19"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#a708ece5eac01486e65e889d19073fd19">tl_ad_integrator::ad_step</a> (y, ystar, t, dt, res)</td></tr>
 <tr class="memdesc:a708ece5eac01486e65e889d19073fd19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to perform an integration step (Heun algorithm) of the adjoint model. The incremented time is returned.  <a href="namespacetl__ad__integrator.html#a708ece5eac01486e65e889d19073fd19">More...</a><br /></td></tr>
 <tr class="separator:a708ece5eac01486e65e889d19073fd19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc53f72486953af9fa4ced620eee226f"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#abc53f72486953af9fa4ced620eee226f">tl_ad_integrator::evolve_ad_step</a> (y, deltay, t, dt, ynew, deltaynew)</td></tr>
+<tr class="memdesc:abc53f72486953af9fa4ced620eee226f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to perform a simultaneous integration step (RK4 algorithm) of the nonlinear and adjoint together. The incremented time is returned.  <a href="namespacetl__ad__integrator.html#abc53f72486953af9fa4ced620eee226f">More...</a><br /></td></tr>
+<tr class="separator:abc53f72486953af9fa4ced620eee226f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac88b155557d4fc0bae70007fde3aef06"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#ac88b155557d4fc0bae70007fde3aef06">tl_ad_integrator::tl_step</a> (y, ystar, t, dt, res)</td></tr>
 <tr class="memdesc:ac88b155557d4fc0bae70007fde3aef06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to perform an integration step (Heun algorithm) of the tangent linear model. The incremented time is returned.  <a href="namespacetl__ad__integrator.html#ac88b155557d4fc0bae70007fde3aef06">More...</a><br /></td></tr>
 <tr class="separator:ac88b155557d4fc0bae70007fde3aef06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fb60b4a88b0c5d6ca27b58440a32f74"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#a9fb60b4a88b0c5d6ca27b58440a32f74">tl_ad_integrator::evolve_tl_step</a> (y, deltay, t, dt, ynew, deltaynew)</td></tr>
+<tr class="memdesc:a9fb60b4a88b0c5d6ca27b58440a32f74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to perform a simultaneous integration step (RK4 algorithm) of the nonlinear and the tangent linear model together. The incremented time is returned.  <a href="namespacetl__ad__integrator.html#a9fb60b4a88b0c5d6ca27b58440a32f74">More...</a><br /></td></tr>
+<tr class="separator:a9fb60b4a88b0c5d6ca27b58440a32f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76538a8bd594899e94228abaa34b48cd"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#a76538a8bd594899e94228abaa34b48cd">tl_ad_integrator::prop_step</a> (y, propagator, t, dt, ynew, adjoint)</td></tr>
+<tr class="memdesc:a76538a8bd594899e94228abaa34b48cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to perform a simultaneously an integration step (Heun algorithm) of the nonlinear and computes the Heun tangent linear propagator. The boolean variable adjoint allows for an adjoint forward integration. The incremented time is returned.  <a href="namespacetl__ad__integrator.html#a76538a8bd594899e94228abaa34b48cd">More...</a><br /></td></tr>
+<tr class="separator:a76538a8bd594899e94228abaa34b48cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -125,11 +137,35 @@ Variables</h2></td></tr>
 <tr class="memitem:abd6a1c209bc0120ea4e1e473e067a902"><td class="memItemLeft" align="right" valign="top">real(kind=8), dimension(:), allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#abd6a1c209bc0120ea4e1e473e067a902">tl_ad_integrator::buf_kb</a></td></tr>
 <tr class="memdesc:abd6a1c209bc0120ea4e1e473e067a902"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer to hold tendencies in the RK4 scheme for the tangent linear model.  <a href="namespacetl__ad__integrator.html#abd6a1c209bc0120ea4e1e473e067a902">More...</a><br /></td></tr>
 <tr class="separator:abd6a1c209bc0120ea4e1e473e067a902"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cf59efa7229b47e580202dfe4bd4fd6"><td class="memItemLeft" align="right" valign="top">real(kind=8), dimension(:), allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#a1cf59efa7229b47e580202dfe4bd4fd6">tl_ad_integrator::buf_kc</a></td></tr>
+<tr class="memdesc:a1cf59efa7229b47e580202dfe4bd4fd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer to hold tendencies in the RK4 scheme for the tangent linear model.  <a href="namespacetl__ad__integrator.html#a1cf59efa7229b47e580202dfe4bd4fd6">More...</a><br /></td></tr>
+<tr class="separator:a1cf59efa7229b47e580202dfe4bd4fd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b72ebc24a7e0eb44e22e6489ac81ed3"><td class="memItemLeft" align="right" valign="top">real(kind=8), dimension(:), allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#a3b72ebc24a7e0eb44e22e6489ac81ed3">tl_ad_integrator::buf_kd</a></td></tr>
+<tr class="memdesc:a3b72ebc24a7e0eb44e22e6489ac81ed3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer to hold tendencies in the RK4 scheme for the tangent linear model.  <a href="namespacetl__ad__integrator.html#a3b72ebc24a7e0eb44e22e6489ac81ed3">More...</a><br /></td></tr>
+<tr class="separator:a3b72ebc24a7e0eb44e22e6489ac81ed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb500987b643ce33b2a549ba213221fc"><td class="memItemLeft" align="right" valign="top">real(kind=8), dimension(:,:), allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#afb500987b643ce33b2a549ba213221fc">tl_ad_integrator::buf_j3</a></td></tr>
+<tr class="memdesc:afb500987b643ce33b2a549ba213221fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer to hold jacobians in the RK4 scheme for the tangent linear model.  <a href="namespacetl__ad__integrator.html#afb500987b643ce33b2a549ba213221fc">More...</a><br /></td></tr>
+<tr class="separator:afb500987b643ce33b2a549ba213221fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a853bee458e7337f1556f19370dcbc9d6"><td class="memItemLeft" align="right" valign="top">real(kind=8), dimension(:,:), allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#a853bee458e7337f1556f19370dcbc9d6">tl_ad_integrator::buf_j4</a></td></tr>
+<tr class="memdesc:a853bee458e7337f1556f19370dcbc9d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer to hold jacobians in the RK4 scheme for the tangent linear model.  <a href="namespacetl__ad__integrator.html#a853bee458e7337f1556f19370dcbc9d6">More...</a><br /></td></tr>
+<tr class="separator:a853bee458e7337f1556f19370dcbc9d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ead2c02f871be0e94e91278fa71337c"><td class="memItemLeft" align="right" valign="top">real(kind=8), dimension(:,:), allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#a9ead2c02f871be0e94e91278fa71337c">tl_ad_integrator::buf_j3h</a></td></tr>
+<tr class="memdesc:a9ead2c02f871be0e94e91278fa71337c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer to hold jacobians in the RK4 scheme for the tangent linear model.  <a href="namespacetl__ad__integrator.html#a9ead2c02f871be0e94e91278fa71337c">More...</a><br /></td></tr>
+<tr class="separator:a9ead2c02f871be0e94e91278fa71337c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99c2747c1997b622f4ab6170e3a8f23d"><td class="memItemLeft" align="right" valign="top">real(kind=8), dimension(:,:), allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#a99c2747c1997b622f4ab6170e3a8f23d">tl_ad_integrator::buf_j4h</a></td></tr>
+<tr class="memdesc:a99c2747c1997b622f4ab6170e3a8f23d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer to hold jacobians in the RK4 scheme for the tangent linear model.  <a href="namespacetl__ad__integrator.html#a99c2747c1997b622f4ab6170e3a8f23d">More...</a><br /></td></tr>
+<tr class="separator:a99c2747c1997b622f4ab6170e3a8f23d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24b147c589eb6bdb6175c56657aff5ae"><td class="memItemLeft" align="right" valign="top">real(kind=8), dimension(:), allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#a24b147c589eb6bdb6175c56657aff5ae">tl_ad_integrator::buf_kaa</a></td></tr>
+<tr class="memdesc:a24b147c589eb6bdb6175c56657aff5ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer to hold tendencies in the RK4 scheme for the tangent linear model.  <a href="namespacetl__ad__integrator.html#a24b147c589eb6bdb6175c56657aff5ae">More...</a><br /></td></tr>
+<tr class="separator:a24b147c589eb6bdb6175c56657aff5ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68ad95731421a7e0c9f37668631e279c"><td class="memItemLeft" align="right" valign="top">real(kind=8), dimension(:), allocatable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetl__ad__integrator.html#a68ad95731421a7e0c9f37668631e279c">tl_ad_integrator::buf_kbb</a></td></tr>
+<tr class="memdesc:a68ad95731421a7e0c9f37668631e279c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer to hold tendencies in the RK4 scheme for the tangent linear model.  <a href="namespacetl__ad__integrator.html#a68ad95731421a7e0c9f37668631e279c">More...</a><br /></td></tr>
+<tr class="separator:a68ad95731421a7e0c9f37668631e279c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 19 2018 16:12:32 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 19 2018 17:25:48 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

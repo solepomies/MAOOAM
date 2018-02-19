@@ -1,0 +1,309 @@
+\hypertarget{namespacelyap__vectors}{}\section{lyap\+\_\+vectors Module Reference}
+\label{namespacelyap__vectors}\index{lyap\+\_\+vectors@{lyap\+\_\+vectors}}
+
+
+Module for computation of Lyapunov exponents and vectors.  
+
+
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine, public \hyperlink{namespacelyap__vectors_a72d9b0b0cb5933542de34def4cdef516}{init\+\_\+lyap}
+\begin{DoxyCompactList}\small\item\em Initialize Lyapunov computation (possibly also vectors in later version) and initializes also a random orthogonal matrix for the matrix ensemble. \end{DoxyCompactList}\item 
+subroutine, public \hyperlink{namespacelyap__vectors_aec560ddebe1222a0df44b49125bf6d7b}{multiply\+\_\+prop} (prop\+\_\+mul)
+\begin{DoxyCompactList}\small\item\em Multiplies prop\+\_\+mul from the left with the prop matrix defined in this module and saves the result to prop\+\_\+mul. \end{DoxyCompactList}\item 
+subroutine, public \hyperlink{namespacelyap__vectors_ae6948c534a6ec370975f3843a591720d}{benettin\+\_\+step}
+\begin{DoxyCompactList}\small\item\em Performs the benettin step in integration. Multiplies the aggregated propagators in prop with ensemble and performs QR decomposition (Gram-\/\+Schmidt orthogonalization gives Q and upper triangular matrix R). Computes also the Lyapunov exponents via the diagonal of R. W\+A\+T\+CH O\+UT\+: prop is changed during the subroutine and restored to a unit matrix. \end{DoxyCompactList}\item 
+subroutine, public \hyperlink{namespacelyap__vectors_a081fa2db33f0a55e2639c558d39b3b24}{get\+\_\+lyap\+\_\+state} (prop\+\_\+ret, ensemble\+\_\+ret)
+\begin{DoxyCompactList}\small\item\em Routine that returns the current global propagator and ensemble of lyapunov vectors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+real(kind=8), dimension(\+:), allocatable, public \hyperlink{namespacelyap__vectors_a85e15a0071ac9c6857316d72152be731}{loclyap}
+\begin{DoxyCompactList}\small\item\em Buffer containing the local Lyapunov exponent. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable, public \hyperlink{namespacelyap__vectors_a9bf23b3cf7aebbfe17422bbd63e95bab}{lyapunov}
+\begin{DoxyCompactList}\small\item\em Buffer containing the averaged Lyapunov exponent. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:,\+:), allocatable, public \hyperlink{namespacelyap__vectors_a23c35fd358f7646818d0637993f0078b}{ensemble}
+\begin{DoxyCompactList}\small\item\em Buffer containing the QR decompsoition of the ensemble. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:,\+:), allocatable \hyperlink{namespacelyap__vectors_a64ed59283a3d1411d14735b924b5794b}{prop}
+\begin{DoxyCompactList}\small\item\em Buffer holding the propagator matrix. \end{DoxyCompactList}\item 
+integer \hyperlink{namespacelyap__vectors_a217e531a819065ea8ebc1548ca82d5e1}{lwork}
+\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacelyap__vectors_ac6e7ade9ca919e7183c90eb20f820ce4}{work}
+\begin{DoxyCompactList}\small\item\em Temporary buffer for QR decomposition. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacelyap__vectors_a1575bc16fe4704466132dea4aeb2d067}{work2}
+\begin{DoxyCompactList}\small\item\em Temporary buffer for QR decomposition. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacelyap__vectors_a336c0490ac0927589648b33fe7abc733}{tau}
+\begin{DoxyCompactList}\small\item\em Temporary buffer for QR decomposition. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:,\+:), allocatable \hyperlink{namespacelyap__vectors_ac3665710ab2b402b9e952fa3311d2517}{prop\+\_\+buf}
+\begin{DoxyCompactList}\small\item\em Buffer holding the local propagator matrix. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for computation of Lyapunov exponents and vectors. 
+
+\begin{DoxyCopyright}{Copyright}
+2016 Sebastian Schubert. See \hyperlink{LICENSE_8txt}{L\+I\+C\+E\+N\+S\+E.\+txt} for license information. 
+\end{DoxyCopyright}
+\begin{DoxyRemark}{Remarks}
+This module contains the necessary tools to perform the Benettin steps to compute the lyapunov exponents. (Ginelli for C\+LV will be added later)
+\end{DoxyRemark}
+References \+: Benettin, G., Galgani, L., Giorgilli, A., \& Strelcyn, J. M. (1980). Lyapunov characteristic exponents for smooth dynamical systems; a method for computing all of them. Part 2\+: Numerical application. {\itshape Meccanica} {\itshape }, 15, 21-\/30. 
+
+\subsection{Function/\+Subroutine Documentation}
+\index{lyap\+\_\+vectors@{lyap\+\_\+vectors}!benettin\+\_\+step@{benettin\+\_\+step}}
+\index{benettin\+\_\+step@{benettin\+\_\+step}!lyap\+\_\+vectors@{lyap\+\_\+vectors}}
+\subsubsection[{\texorpdfstring{benettin\+\_\+step}{benettin_step}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine, public lyap\+\_\+vectors\+::benettin\+\_\+step (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacelyap__vectors_ae6948c534a6ec370975f3843a591720d}{}\label{namespacelyap__vectors_ae6948c534a6ec370975f3843a591720d}
+
+
+Performs the benettin step in integration. Multiplies the aggregated propagators in prop with ensemble and performs QR decomposition (Gram-\/\+Schmidt orthogonalization gives Q and upper triangular matrix R). Computes also the Lyapunov exponents via the diagonal of R. W\+A\+T\+CH O\+UT\+: prop is changed during the subroutine and restored to a unit matrix. 
+
+
+
+Definition at line 99 of file lyap\+\_\+vectors.\+f90.
+
+
+\begin{DoxyCode}
+99     \textcolor{keywordtype}{INTEGER} :: info,k
+100 
+101     \textcolor{comment}{! Multiply the Propagator prop from the right side with the non transposed q matrix}
+102     \textcolor{comment}{! from the qr decomposition which is stored in ensemble.}
+103     \textcolor{keyword}{CALL }dorm2r(\textcolor{stringliteral}{"r"},\textcolor{stringliteral}{"n"},ndim,ndim,ndim,ensemble,ndim,tau,prop,ndim,work2,info)
+104     \textcolor{comment}{! prop contains prop*ensemble but QR decomposed(tau is needed for that as}
+105     \textcolor{comment}{! well !) => copy to ensemble }
+106     ensemble=prop
+107 
+108     \textcolor{comment}{! From here on ensemble contains the new information prop*ensemble}
+109     \textcolor{keyword}{CALL }dgeqrf(ndim,ndim,ensemble,ndim,tau,work,lwork, info) \textcolor{comment}{! qr decomposition}
+110     
+111     \textcolor{keywordflow}{DO} k=1,ndim
+112       loclyap(k)=log(abs(ensemble(k,k)))/rescaling\_time
+113 \textcolor{keywordflow}{    END DO}
+114 
+115     \textcolor{comment}{!}
+116     \textcolor{comment}{! Add here save for }
+117     \textcolor{comment}{!}
+118 
+119     \textcolor{comment}{! Initialise prop again with unit matrix}
+120     \textcolor{keyword}{CALL }init\_one(prop) 
+121     
+\end{DoxyCode}
+\index{lyap\+\_\+vectors@{lyap\+\_\+vectors}!get\+\_\+lyap\+\_\+state@{get\+\_\+lyap\+\_\+state}}
+\index{get\+\_\+lyap\+\_\+state@{get\+\_\+lyap\+\_\+state}!lyap\+\_\+vectors@{lyap\+\_\+vectors}}
+\subsubsection[{\texorpdfstring{get\+\_\+lyap\+\_\+state(prop\+\_\+ret, ensemble\+\_\+ret)}{get_lyap_state(prop_ret, ensemble_ret)}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine, public lyap\+\_\+vectors\+::get\+\_\+lyap\+\_\+state (
+\begin{DoxyParamCaption}
+\item[{real(kind=8), dimension(ndim,ndim), intent(out)}]{prop\+\_\+ret, }
+\item[{real(kind=8), dimension(ndim,ndim), intent(out)}]{ensemble\+\_\+ret}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacelyap__vectors_a081fa2db33f0a55e2639c558d39b3b24}{}\label{namespacelyap__vectors_a081fa2db33f0a55e2639c558d39b3b24}
+
+
+Routine that returns the current global propagator and ensemble of lyapunov vectors. 
+
+
+
+Definition at line 127 of file lyap\+\_\+vectors.\+f90.
+
+
+\begin{DoxyCode}
+127      \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(ndim,ndim)},\textcolor{keywordtype}{INTENT(OUT)} :: prop\_ret,ensemble\_ret
+128      prop\_ret=prop
+129      ensemble\_ret=ensemble
+\end{DoxyCode}
+\index{lyap\+\_\+vectors@{lyap\+\_\+vectors}!init\+\_\+lyap@{init\+\_\+lyap}}
+\index{init\+\_\+lyap@{init\+\_\+lyap}!lyap\+\_\+vectors@{lyap\+\_\+vectors}}
+\subsubsection[{\texorpdfstring{init\+\_\+lyap}{init_lyap}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine, public lyap\+\_\+vectors\+::init\+\_\+lyap (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacelyap__vectors_a72d9b0b0cb5933542de34def4cdef516}{}\label{namespacelyap__vectors_a72d9b0b0cb5933542de34def4cdef516}
+
+
+Initialize Lyapunov computation (possibly also vectors in later version) and initializes also a random orthogonal matrix for the matrix ensemble. 
+
+
+
+Definition at line 69 of file lyap\+\_\+vectors.\+f90.
+
+
+\begin{DoxyCode}
+69     \textcolor{keywordtype}{INTEGER} :: allocstat,ilaenv,info
+70     lwork=ilaenv(1,\textcolor{stringliteral}{"dgeqrf"},\textcolor{stringliteral}{" "},ndim,ndim,ndim,-1)
+71     lwork=ndim*lwork
+72     \textcolor{keyword}{ALLOCATE}(prop\_buf(ndim,ndim),lyapunov(ndim),loclyap(ndim),ensemble(ndim,ndim),tau(ndim),prop(ndim,ndim)
+      , &
+73     & work2(ndim),work(lwork),\hyperlink{namespacestat}{stat}=allocstat) 
+74     \textcolor{keywordflow}{IF} (allocstat /= 0) stop \textcolor{stringliteral}{"*** Not enough memory ! ***"}
+75 
+76     lyapunov=0.0d0
+77     loclyap=0.0d0
+78     \textcolor{keyword}{CALL }init\_one(prop)
+79     \textcolor{keyword}{CALL }random\_number(ensemble)
+80     ensemble=2*(ensemble-0.5)
+81     \textcolor{keyword}{CALL }dgeqrf(ndim,ndim,ensemble,ndim,tau,work,lwork, info) \textcolor{comment}{! qr decomposition}
+\end{DoxyCode}
+\index{lyap\+\_\+vectors@{lyap\+\_\+vectors}!multiply\+\_\+prop@{multiply\+\_\+prop}}
+\index{multiply\+\_\+prop@{multiply\+\_\+prop}!lyap\+\_\+vectors@{lyap\+\_\+vectors}}
+\subsubsection[{\texorpdfstring{multiply\+\_\+prop(prop\+\_\+mul)}{multiply_prop(prop_mul)}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine, public lyap\+\_\+vectors\+::multiply\+\_\+prop (
+\begin{DoxyParamCaption}
+\item[{real(kind=8), dimension(ndim,ndim), intent(in)}]{prop\+\_\+mul}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacelyap__vectors_aec560ddebe1222a0df44b49125bf6d7b}{}\label{namespacelyap__vectors_aec560ddebe1222a0df44b49125bf6d7b}
+
+
+Multiplies prop\+\_\+mul from the left with the prop matrix defined in this module and saves the result to prop\+\_\+mul. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prop\+\_\+mul} & local propagator to multiply with the global one \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 88 of file lyap\+\_\+vectors.\+f90.
+
+
+\begin{DoxyCode}
+88     \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(ndim,ndim)},\textcolor{keywordtype}{INTENT(IN)} :: prop\_mul
+89     prop\_buf=prop    
+90     \textcolor{keyword}{CALL }dgemm (\textcolor{stringliteral}{'n'}, \textcolor{stringliteral}{'n'}, ndim, ndim, ndim, 1.0d0, prop\_mul, ndim,prop\_buf, ndim,0.0d0, prop, ndim)
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\index{lyap\+\_\+vectors@{lyap\+\_\+vectors}!ensemble@{ensemble}}
+\index{ensemble@{ensemble}!lyap\+\_\+vectors@{lyap\+\_\+vectors}}
+\subsubsection[{\texorpdfstring{ensemble}{ensemble}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8), dimension(\+:,\+:), allocatable, public lyap\+\_\+vectors\+::ensemble}\hypertarget{namespacelyap__vectors_a23c35fd358f7646818d0637993f0078b}{}\label{namespacelyap__vectors_a23c35fd358f7646818d0637993f0078b}
+
+
+Buffer containing the QR decompsoition of the ensemble. 
+
+
+
+Definition at line 42 of file lyap\+\_\+vectors.\+f90.
+
+
+\begin{DoxyCode}
+42   \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(:,:)}, \textcolor{keywordtype}{ALLOCATABLE} :: ensemble\textcolor{comment}{ !< Buffer containing the QR decompsoition of the
+       ensemble}
+\end{DoxyCode}
+\index{lyap\+\_\+vectors@{lyap\+\_\+vectors}!loclyap@{loclyap}}
+\index{loclyap@{loclyap}!lyap\+\_\+vectors@{lyap\+\_\+vectors}}
+\subsubsection[{\texorpdfstring{loclyap}{loclyap}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8), dimension(\+:), allocatable, public lyap\+\_\+vectors\+::loclyap}\hypertarget{namespacelyap__vectors_a85e15a0071ac9c6857316d72152be731}{}\label{namespacelyap__vectors_a85e15a0071ac9c6857316d72152be731}
+
+
+Buffer containing the local Lyapunov exponent. 
+
+
+
+Definition at line 40 of file lyap\+\_\+vectors.\+f90.
+
+
+\begin{DoxyCode}
+40   \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(:)}, \textcolor{keywordtype}{ALLOCATABLE} :: loclyap\textcolor{comment}{    !< Buffer containing the local Lyapunov exponent}
+\end{DoxyCode}
+\index{lyap\+\_\+vectors@{lyap\+\_\+vectors}!lwork@{lwork}}
+\index{lwork@{lwork}!lyap\+\_\+vectors@{lyap\+\_\+vectors}}
+\subsubsection[{\texorpdfstring{lwork}{lwork}}]{\setlength{\rightskip}{0pt plus 5cm}integer lyap\+\_\+vectors\+::lwork\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespacelyap__vectors_a217e531a819065ea8ebc1548ca82d5e1}{}\label{namespacelyap__vectors_a217e531a819065ea8ebc1548ca82d5e1}
+
+
+Definition at line 45 of file lyap\+\_\+vectors.\+f90.
+
+
+\begin{DoxyCode}
+45   \textcolor{keywordtype}{INTEGER} :: lwork
+\end{DoxyCode}
+\index{lyap\+\_\+vectors@{lyap\+\_\+vectors}!lyapunov@{lyapunov}}
+\index{lyapunov@{lyapunov}!lyap\+\_\+vectors@{lyap\+\_\+vectors}}
+\subsubsection[{\texorpdfstring{lyapunov}{lyapunov}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8), dimension(\+:), allocatable, public lyap\+\_\+vectors\+::lyapunov}\hypertarget{namespacelyap__vectors_a9bf23b3cf7aebbfe17422bbd63e95bab}{}\label{namespacelyap__vectors_a9bf23b3cf7aebbfe17422bbd63e95bab}
+
+
+Buffer containing the averaged Lyapunov exponent. 
+
+
+
+Definition at line 41 of file lyap\+\_\+vectors.\+f90.
+
+
+\begin{DoxyCode}
+41   \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(:)}, \textcolor{keywordtype}{ALLOCATABLE} :: lyapunov\textcolor{comment}{   !< Buffer containing the averaged Lyapunov exponent}
+\end{DoxyCode}
+\index{lyap\+\_\+vectors@{lyap\+\_\+vectors}!prop@{prop}}
+\index{prop@{prop}!lyap\+\_\+vectors@{lyap\+\_\+vectors}}
+\subsubsection[{\texorpdfstring{prop}{prop}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8), dimension(\+:,\+:), allocatable lyap\+\_\+vectors\+::prop\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespacelyap__vectors_a64ed59283a3d1411d14735b924b5794b}{}\label{namespacelyap__vectors_a64ed59283a3d1411d14735b924b5794b}
+
+
+Buffer holding the propagator matrix. 
+
+
+
+Definition at line 43 of file lyap\+\_\+vectors.\+f90.
+
+
+\begin{DoxyCode}
+43   \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(:,:)}, \textcolor{keywordtype}{ALLOCATABLE} :: prop\textcolor{comment}{     !< Buffer holding the propagator matrix}
+\end{DoxyCode}
+\index{lyap\+\_\+vectors@{lyap\+\_\+vectors}!prop\+\_\+buf@{prop\+\_\+buf}}
+\index{prop\+\_\+buf@{prop\+\_\+buf}!lyap\+\_\+vectors@{lyap\+\_\+vectors}}
+\subsubsection[{\texorpdfstring{prop\+\_\+buf}{prop_buf}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8), dimension(\+:,\+:), allocatable lyap\+\_\+vectors\+::prop\+\_\+buf\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespacelyap__vectors_ac3665710ab2b402b9e952fa3311d2517}{}\label{namespacelyap__vectors_ac3665710ab2b402b9e952fa3311d2517}
+
+
+Buffer holding the local propagator matrix. 
+
+
+
+Definition at line 49 of file lyap\+\_\+vectors.\+f90.
+
+
+\begin{DoxyCode}
+49   \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(:,:)}, \textcolor{keywordtype}{ALLOCATABLE} :: prop\_buf\textcolor{comment}{ !< Buffer holding the local propagator matrix}
+\end{DoxyCode}
+\index{lyap\+\_\+vectors@{lyap\+\_\+vectors}!tau@{tau}}
+\index{tau@{tau}!lyap\+\_\+vectors@{lyap\+\_\+vectors}}
+\subsubsection[{\texorpdfstring{tau}{tau}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8), dimension(\+:), allocatable lyap\+\_\+vectors\+::tau\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespacelyap__vectors_a336c0490ac0927589648b33fe7abc733}{}\label{namespacelyap__vectors_a336c0490ac0927589648b33fe7abc733}
+
+
+Temporary buffer for QR decomposition. 
+
+
+
+Definition at line 48 of file lyap\+\_\+vectors.\+f90.
+
+
+\begin{DoxyCode}
+48   \textcolor{keywordtype}{REAL(kind=8)}, \textcolor{keywordtype}{DIMENSION(:)}, \textcolor{keywordtype}{ALLOCATABLE} :: tau\textcolor{comment}{        !< Temporary buffer for QR decomposition}
+\end{DoxyCode}
+\index{lyap\+\_\+vectors@{lyap\+\_\+vectors}!work@{work}}
+\index{work@{work}!lyap\+\_\+vectors@{lyap\+\_\+vectors}}
+\subsubsection[{\texorpdfstring{work}{work}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8), dimension(\+:), allocatable lyap\+\_\+vectors\+::work\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespacelyap__vectors_ac6e7ade9ca919e7183c90eb20f820ce4}{}\label{namespacelyap__vectors_ac6e7ade9ca919e7183c90eb20f820ce4}
+
+
+Temporary buffer for QR decomposition. 
+
+
+
+Definition at line 46 of file lyap\+\_\+vectors.\+f90.
+
+
+\begin{DoxyCode}
+46   \textcolor{keywordtype}{REAL(kind=8)}, \textcolor{keywordtype}{DIMENSION(:)}, \textcolor{keywordtype}{ALLOCATABLE} :: work\textcolor{comment}{       !< Temporary buffer for QR decomposition}
+\end{DoxyCode}
+\index{lyap\+\_\+vectors@{lyap\+\_\+vectors}!work2@{work2}}
+\index{work2@{work2}!lyap\+\_\+vectors@{lyap\+\_\+vectors}}
+\subsubsection[{\texorpdfstring{work2}{work2}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8), dimension(\+:), allocatable lyap\+\_\+vectors\+::work2\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespacelyap__vectors_a1575bc16fe4704466132dea4aeb2d067}{}\label{namespacelyap__vectors_a1575bc16fe4704466132dea4aeb2d067}
+
+
+Temporary buffer for QR decomposition. 
+
+
+
+Definition at line 47 of file lyap\+\_\+vectors.\+f90.
+
+
+\begin{DoxyCode}
+47   \textcolor{keywordtype}{REAL(kind=8)}, \textcolor{keywordtype}{DIMENSION(:)}, \textcolor{keywordtype}{ALLOCATABLE} :: work2\textcolor{comment}{      !< Temporary buffer for QR decomposition}
+\end{DoxyCode}

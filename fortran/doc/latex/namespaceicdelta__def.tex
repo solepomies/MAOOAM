@@ -1,0 +1,177 @@
+\hypertarget{namespaceicdelta__def}{}\section{icdelta\+\_\+def Module Reference}
+\label{namespaceicdelta__def}\index{icdelta\+\_\+def@{icdelta\+\_\+def}}
+
+
+Module to load the perturbation initial condition.  
+
+
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine, public \hyperlink{namespaceicdelta__def_a7be926b74337687f36be5d971a4e02a2}{load\+\_\+icdelta}
+\begin{DoxyCompactList}\small\item\em Subroutine to load the initial condition if I\+Cdelta.\+nml exists. If it does not, then write I\+Cdelta.\+nml with random initial condition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+logical \hyperlink{namespaceicdelta__def_a3d6fe1a548a46a14b09fd3313b9e3546}{exists}
+\begin{DoxyCompactList}\small\item\em Boolean to test for file existence. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable, public \hyperlink{namespaceicdelta__def_a1ced9e0fa24222e5dc2f79996864b7da}{icdelta}
+\begin{DoxyCompactList}\small\item\em Initial condition vector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module to load the perturbation initial condition. 
+
+\begin{DoxyCopyright}{Copyright}
+2016 Lesley De Cruz \& Jonathan Demaeyer. See \hyperlink{LICENSE_8txt}{L\+I\+C\+E\+N\+S\+E.\+txt} for license information. 
+\end{DoxyCopyright}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\index{icdelta\+\_\+def@{icdelta\+\_\+def}!load\+\_\+icdelta@{load\+\_\+icdelta}}
+\index{load\+\_\+icdelta@{load\+\_\+icdelta}!icdelta\+\_\+def@{icdelta\+\_\+def}}
+\subsubsection[{\texorpdfstring{load\+\_\+icdelta}{load_icdelta}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine, public icdelta\+\_\+def\+::load\+\_\+icdelta (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespaceicdelta__def_a7be926b74337687f36be5d971a4e02a2}{}\label{namespaceicdelta__def_a7be926b74337687f36be5d971a4e02a2}
+
+
+Subroutine to load the initial condition if I\+Cdelta.\+nml exists. If it does not, then write I\+Cdelta.\+nml with random initial condition. 
+
+
+
+Definition at line 32 of file icdelta\+\_\+def.\+f90.
+
+
+\begin{DoxyCode}
+32     \textcolor{keywordtype}{INTEGER} :: i,allocstat
+33     \textcolor{keywordtype}{CHARACTER(len=20)} :: fm
+34     \textcolor{keywordtype}{REAL(KIND=8)} :: size\_of\_random\_noise
+35     \textcolor{keywordtype}{CHARACTER(LEN=4)} :: init\_type 
+36     namelist /iclist/ icdelta
+37     namelist /rand/ init\_type,size\_of\_random\_noise 
+38 
+39 
+40 
+41     fm(1:6)=\textcolor{stringliteral}{'(F3.1)'}
+42    
+43     \textcolor{keywordflow}{IF} (ndim == 0) stop \textcolor{stringliteral}{"*** Number of dimensions is 0! ***"}
+44     \textcolor{keyword}{ALLOCATE}(icdelta(0:ndim), \hyperlink{namespacestat}{stat}=allocstat)
+45     \textcolor{keywordflow}{IF} (allocstat /= 0) stop \textcolor{stringliteral}{"*** Not enough memory ! ***"}
+46 
+47     \textcolor{keyword}{INQUIRE}(file=\textcolor{stringliteral}{'./ICdelta.nml'},exist=exists)
+48 
+49     \textcolor{keywordflow}{IF} (exists) \textcolor{keywordflow}{THEN}
+50        \textcolor{keyword}{OPEN}(8, file=\textcolor{stringliteral}{"ICdelta.nml"}, status=\textcolor{stringliteral}{'OLD'}, recl=80, delim=\textcolor{stringliteral}{'APOSTROPHE'})
+51        \textcolor{keyword}{READ}(8,nml=iclist)
+52        \textcolor{keyword}{READ}(8,nml=rand)
+53        \textcolor{keywordflow}{SELECT CASE} (init\_type)
+54          \textcolor{keywordflow}{CASE} (\textcolor{stringliteral}{'rand'})
+55            \textcolor{keyword}{CALL }random\_number(icdelta)
+56            icdelta=2*(icdelta-0.5)
+57            icdelta=icdelta*size\_of\_random\_noise*10.d0
+58            icdelta(0)=1.0d0
+59            \textcolor{keyword}{WRITE}(6,*) \textcolor{stringliteral}{"*** ICdelta.nml namelist written. Starting with random initial condition !***"}
+60          \textcolor{keywordflow}{CASE} (\textcolor{stringliteral}{'zero'})
+61            icdelta=0
+62            icdelta(0)=1.0d0
+63            \textcolor{keyword}{WRITE}(6,*) \textcolor{stringliteral}{"*** ICdelta.nml namelist written. Starting with initial condition in ICdelta.nml
+       !***"}
+64          \textcolor{keywordflow}{CASE} (\textcolor{stringliteral}{'read'})
+65            \textcolor{comment}{!nothing has to be done ICdelta has already the right values}
+66            \textcolor{keyword}{WRITE}(6,*) \textcolor{stringliteral}{"*** ICdelta.nml namelist written. Starting with initial condition in ICdelta.nml
+       !***"}
+67 \textcolor{keywordflow}{       END SELECT}
+68        \textcolor{keyword}{CLOSE}(8)
+69     \textcolor{keywordflow}{ELSE}
+70        \textcolor{keyword}{CALL }random\_number(icdelta)
+71        icdelta=2*(icdelta-0.5)
+72        size\_of\_random\_noise=1.d-3
+73        icdelta=icdelta*size\_of\_random\_noise*10.d0
+74        icdelta(0)=1.0d0
+75        init\_type=\textcolor{stringliteral}{"rand"}
+76        \textcolor{keyword}{WRITE}(6,*) \textcolor{stringliteral}{"*** ICdelta.nml namelist written. Starting with 0 as initial condition !***"}
+77 
+78 \textcolor{keywordflow}{    END IF}
+79     \textcolor{keyword}{OPEN}(8, file=\textcolor{stringliteral}{"ICdelta.nml"}, status=\textcolor{stringliteral}{'REPLACE'})
+80     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a)'}) \textcolor{stringliteral}{"!------------------------------------------------------------------------------!"}
+81     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a)'}) \textcolor{stringliteral}{"! Namelist file :                                                              !"}
+82     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a)'}) \textcolor{stringliteral}{"! Initial condition.                                                           !"}
+83     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a)'}) \textcolor{stringliteral}{"!------------------------------------------------------------------------------!"}
+84     \textcolor{keyword}{WRITE}(8,*) \textcolor{stringliteral}{""}
+85     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a)'}) \textcolor{stringliteral}{"&ICLIST"}
+86     \textcolor{keyword}{WRITE}(8,*) \textcolor{stringliteral}{" ! psi variables"}
+87     \textcolor{keywordflow}{DO} i=1,natm
+88        \textcolor{keyword}{WRITE}(8,*) \textcolor{stringliteral}{" ICdelta("}//trim(str(i))//\textcolor{stringliteral}{") = "},icdelta(i+natm),\textcolor{stringliteral}{"   ! typ= "}&
+89             &//awavenum(i)%typ//\textcolor{stringliteral}{", Nx= "}//trim(rstr(awavenum(i)&
+90             &%Nx,fm))//\textcolor{stringliteral}{", Ny= "}//trim(rstr(awavenum(i)%Ny,fm))
+91 \textcolor{keywordflow}{    END DO}
+92     \textcolor{keyword}{WRITE}(8,*) \textcolor{stringliteral}{" ! theta variables"}
+93     \textcolor{keywordflow}{DO} i=1,natm
+94        \textcolor{keyword}{WRITE}(8,*) \textcolor{stringliteral}{" ICdelta("}//trim(str(i+natm))//\textcolor{stringliteral}{") = "},icdelta(i+natm),\textcolor{stringliteral}{"   ! typ= "}&
+95             &//awavenum(i)%typ//\textcolor{stringliteral}{", Nx= "}//trim(rstr(awavenum(i)&
+96             &%Nx,fm))//\textcolor{stringliteral}{", Ny= "}//trim(rstr(awavenum(i)%Ny,fm))
+97 \textcolor{keywordflow}{    END DO}
+98 
+99     \textcolor{keyword}{WRITE}(8,*) \textcolor{stringliteral}{" ! A variables"}
+100     \textcolor{keywordflow}{DO} i=1,noc
+101        \textcolor{keyword}{WRITE}(8,*) \textcolor{stringliteral}{" ICdelta("}//trim(str(i+2*natm))//\textcolor{stringliteral}{") = "},icdelta(i+2*natm),\textcolor{stringliteral}{"   ! Nx&}
+102 \textcolor{stringliteral}{}\textcolor{stringliteral}{            &= "}//trim(rstr(owavenum(i)%Nx,fm))//\textcolor{stringliteral}{", Ny= "}&
+103             &//trim(rstr(owavenum(i)%Ny,fm))
+104 \textcolor{keywordflow}{    END DO}
+105     \textcolor{keyword}{WRITE}(8,*) \textcolor{stringliteral}{" ! T variables"}
+106     \textcolor{keywordflow}{DO} i=1,noc
+107        \textcolor{keyword}{WRITE}(8,*) \textcolor{stringliteral}{" ICdelta("}//trim(str(i+noc+2*natm))//\textcolor{stringliteral}{") = "},icdelta(i+2*natm+noc),\textcolor{stringliteral}{"   &}
+108 \textcolor{stringliteral}{}\textcolor{stringliteral}{            &! Nx= "}//trim(rstr(owavenum(i)%Nx,fm))//\textcolor{stringliteral}{", Ny= "}&
+109             &//trim(rstr(owavenum(i)%Ny,fm))
+110 \textcolor{keywordflow}{    END DO}
+111 
+112     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a)'}) \textcolor{stringliteral}{"&END"}
+113     \textcolor{keyword}{WRITE}(8,*) \textcolor{stringliteral}{""}
+114     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a)'}) \textcolor{stringliteral}{"!------------------------------------------------------------------------------!"}
+115     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a)'}) \textcolor{stringliteral}{"! Initialisation type.                                                         !"}
+116     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a)'}) \textcolor{stringliteral}{"!------------------------------------------------------------------------------!"}
+117     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a)'}) \textcolor{stringliteral}{"! type = 'read': use ICdelta; 'rand': random state; 'zero': zero condition "}
+118     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a)'}) \textcolor{stringliteral}{"! The seed is specified in IC.nml"}
+119     \textcolor{keyword}{WRITE}(8,*) \textcolor{stringliteral}{""}
+120     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a)'}) \textcolor{stringliteral}{"&RAND"}
+121     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a)'}) \textcolor{stringliteral}{"  init\_type= '"}//init\_type//\textcolor{stringliteral}{"'"} 
+122     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a,d15.7)'}) \textcolor{stringliteral}{"  size\_of\_random\_noise = "},size\_of\_random\_noise
+123     \textcolor{keyword}{WRITE}(8,\textcolor{stringliteral}{'(a)'}) \textcolor{stringliteral}{"&END"}
+124     \textcolor{keyword}{WRITE}(8,*) \textcolor{stringliteral}{""}
+125     \textcolor{keyword}{CLOSE}(8)
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\index{icdelta\+\_\+def@{icdelta\+\_\+def}!exists@{exists}}
+\index{exists@{exists}!icdelta\+\_\+def@{icdelta\+\_\+def}}
+\subsubsection[{\texorpdfstring{exists}{exists}}]{\setlength{\rightskip}{0pt plus 5cm}logical icdelta\+\_\+def\+::exists\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespaceicdelta__def_a3d6fe1a548a46a14b09fd3313b9e3546}{}\label{namespaceicdelta__def_a3d6fe1a548a46a14b09fd3313b9e3546}
+
+
+Boolean to test for file existence. 
+
+
+
+Definition at line 21 of file icdelta\+\_\+def.\+f90.
+
+
+\begin{DoxyCode}
+21   \textcolor{keywordtype}{LOGICAL} :: exists\textcolor{comment}{ !< Boolean to test for file existence.}
+\end{DoxyCode}
+\index{icdelta\+\_\+def@{icdelta\+\_\+def}!icdelta@{icdelta}}
+\index{icdelta@{icdelta}!icdelta\+\_\+def@{icdelta\+\_\+def}}
+\subsubsection[{\texorpdfstring{icdelta}{icdelta}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8), dimension(\+:), allocatable, public icdelta\+\_\+def\+::icdelta}\hypertarget{namespaceicdelta__def_a1ced9e0fa24222e5dc2f79996864b7da}{}\label{namespaceicdelta__def_a1ced9e0fa24222e5dc2f79996864b7da}
+
+
+Initial condition vector. 
+
+
+
+Definition at line 23 of file icdelta\+\_\+def.\+f90.
+
+
+\begin{DoxyCode}
+23   \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(:)}, \textcolor{keywordtype}{ALLOCATABLE}, \textcolor{keywordtype}{PUBLIC} :: icdelta\textcolor{comment}{ !< Initial condition vector}
+\end{DoxyCode}

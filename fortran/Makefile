@@ -68,9 +68,9 @@ endif
 .SUFFIXES:
 .SUFFIXES: .f90 .o .mod .out .test
 
-PROGRAMS = maooam test_tl_ad
+PROGRAMS = maooam_lyap maooam test_tl_ad maooam_lyap maooam_lyap_div tr_jacob_mat
 
-MODULES = util.mod params.mod inprod_analytic$(ST).mod aotensor_def.mod ic_def.mod $(INTEGRATOR).mod stat.mod tensor.mod tl_ad_tensor.mod $(TL_AD_INTEGRATOR).mod $(IFPORT)
+MODULES = util.mod params.mod inprod_analytic$(ST).mod aotensor_def.mod ic_def.mod $(INTEGRATOR).mod stat.mod tensor.mod tl_ad_tensor.mod $(TL_AD_INTEGRATOR).mod icdelta_def.mod lyap_vectors.mod lyap_stat.mod 
 MODULE_OBJECTS = $(MODULES:.mod=.o)
 
 TEST_PROGRAMS = test_inprod_analytic test_aotensor
@@ -109,6 +109,7 @@ $(INTEGRATOR).mod: aotensor_def.mod
 ic_def.mod: util.mod aotensor_def.mod
 stat.mod: params.mod
 tl_ad_tensor.mod: aotensor_def.mod
+lyap_vectors.mod: params.mod
 $(TL_AD_INTEGRATOR).mod: tl_ad_tensor.mod
 util.mod: $(IFPORT)
 
