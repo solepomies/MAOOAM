@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ic_def &#8212; MAOOAM  documentation</title>
+    <title>ic_def &mdash; MAOOAM  documentation</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -37,8 +37,8 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">MAOOAM  documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">MAOOAM  documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -48,7 +48,7 @@
           <div class="body" role="main">
             
   <h1>Source code for ic_def</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initial conditions generator module</span>
 <span class="sd">    ===================================</span>
 
@@ -86,8 +86,8 @@
 <span class="sd">    Functions in the module :</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">params_maooam</span> <span class="k">import</span> <span class="n">natm</span><span class="p">,</span> <span class="n">noc</span><span class="p">,</span> <span class="n">ndim</span><span class="p">,</span> <span class="n">t_trans</span><span class="p">,</span> <span class="n">t_run</span>
-<span class="kn">from</span> <span class="nn">inprod_analytic</span> <span class="k">import</span> <span class="n">awavenum</span><span class="p">,</span> <span class="n">owavenum</span><span class="p">,</span> <span class="n">init_inprod</span>
+<span class="kn">from</span> <span class="nn">params_maooam</span> <span class="kn">import</span> <span class="n">natm</span><span class="p">,</span> <span class="n">noc</span><span class="p">,</span> <span class="n">ndim</span><span class="p">,</span> <span class="n">t_trans</span><span class="p">,</span> <span class="n">t_run</span>
+<span class="kn">from</span> <span class="nn">inprod_analytic</span> <span class="kn">import</span> <span class="n">awavenum</span><span class="p">,</span> <span class="n">owavenum</span><span class="p">,</span> <span class="n">init_inprod</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 
 
@@ -95,10 +95,10 @@
     <span class="sd">&quot;&quot;&quot; Check if ic.py exists, if not creates it with good dimensions and</span>
 <span class="sd">    zero initial conditions &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">exit</span><span class="p">(</span><span class="s1">&#39;Number of dimensions is 0!&#39;</span><span class="p">)</span>
+        <span class="nb">exit</span><span class="p">(</span><span class="s1">&#39;Number of dimensions is 0!&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;ic.py&#39;</span><span class="p">):</span>
         <span class="c1"># no need to create one</span>
-        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;ic already defined&quot;</span><span class="p">)</span>
+        <span class="k">print</span> <span class="p">(</span><span class="s2">&quot;Initial conditions already defined&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># init_inprod()</span>
         <span class="n">fichier</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;ic.py&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
@@ -166,11 +166,14 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -186,13 +189,13 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">MAOOAM  documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">MAOOAM  documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2017, Maxime Tondeur, Jonathan Demaeyer.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+        &copy; Copyright 2017, Maxime Tondeur, Jonathan Demaeyer.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
   </body>
 </html>

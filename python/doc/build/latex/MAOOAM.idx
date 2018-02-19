@@ -21,7 +21,7 @@
 \indexentry{calculate\_N() (inprod\_analytic.ocean\_tensors method)|hyperpage}{18}
 \indexentry{calculate\_O() (inprod\_analytic.ocean\_tensors method)|hyperpage}{18}
 \indexentry{calculate\_W() (inprod\_analytic.ocean\_tensors method)|hyperpage}{18}
-\indexentry{ocean\_wavenum (class in inprod\_analytic)|hyperpage}{19}
+\indexentry{ocean\_wavenum (class in inprod\_analytic)|hyperpage}{18}
 \indexentry{integrator (module)|hyperpage}{21}
 \indexentry{sparse\_mul3() (in module integrator)|hyperpage}{22}
 \indexentry{sparse\_mul3\_py() (in module integrator)|hyperpage}{22}

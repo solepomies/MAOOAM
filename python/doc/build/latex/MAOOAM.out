@@ -1,18 +1,18 @@
-\BOOKMARK [0][-]{chapter.1}{\376\377\000S\000y\000n\000o\000p\000s\000i\000s}{}% 1
-\BOOKMARK [0][-]{chapter.2}{\376\377\000M\000o\000t\000i\000v\000a\000t\000i\000o\000n}{}% 2
-\BOOKMARK [0][-]{chapter.3}{\376\377\000I\000n\000s\000t\000a\000l\000l\000a\000t\000i\000o\000n}{}% 3
-\BOOKMARK [0][-]{chapter.4}{\376\377\000G\000e\000t\000t\000i\000n\000g\000\040\000s\000t\000a\000r\000t\000e\000d}{}% 4
-\BOOKMARK [0][-]{chapter.5}{\376\377\000D\000e\000s\000c\000r\000i\000p\000t\000i\000o\000n\000\040\000o\000f\000\040\000t\000h\000e\000\040\000f\000i\000l\000e\000s}{}% 5
-\BOOKMARK [0][-]{chapter.6}{\376\377\000C\000o\000n\000t\000e\000n\000t\000s}{}% 6
-\BOOKMARK [1][-]{section.6.1}{\376\377\000P\000a\000r\000a\000m\000e\000t\000e\000r\000s\000\040\000m\000o\000d\000u\000l\000e}{chapter.6}% 7
-\BOOKMARK [1][-]{section.6.2}{\376\377\000I\000n\000i\000t\000i\000a\000l\000\040\000c\000o\000n\000d\000i\000t\000i\000o\000n\000s\000\040\000g\000e\000n\000e\000r\000a\000t\000o\000r\000\040\000m\000o\000d\000u\000l\000e}{chapter.6}% 8
-\BOOKMARK [1][-]{section.6.3}{\376\377\000I\000n\000i\000t\000i\000a\000l\000\040\000c\000o\000n\000d\000i\000t\000i\000o\000n\000s\000\040\000f\000i\000l\000e}{chapter.6}% 9
-\BOOKMARK [1][-]{section.6.4}{\376\377\000I\000n\000n\000e\000r\000\040\000p\000r\000o\000d\000u\000c\000t\000s\000\040\000m\000o\000d\000u\000l\000e}{chapter.6}% 10
-\BOOKMARK [1][-]{section.6.5}{\376\377\000T\000e\000n\000s\000o\000r\000\040\000c\000o\000m\000p\000u\000t\000a\000t\000i\000o\000n\000\040\000m\000o\000d\000u\000l\000e}{chapter.6}% 11
-\BOOKMARK [1][-]{section.6.6}{\376\377\000I\000n\000t\000e\000g\000r\000a\000t\000i\000o\000n\000\040\000m\000o\000d\000u\000l\000e}{chapter.6}% 12
-\BOOKMARK [1][-]{section.6.7}{\376\377\000P\000r\000i\000n\000c\000i\000p\000a\000l\000\040\000m\000o\000d\000u\000l\000e}{chapter.6}% 13
-\BOOKMARK [0][-]{chapter.7}{\376\377\000C\000o\000n\000t\000r\000i\000b\000u\000t\000o\000r\000s}{}% 14
-\BOOKMARK [0][-]{chapter.8}{\376\377\000L\000i\000c\000e\000n\000s\000e}{}% 15
-\BOOKMARK [0][-]{chapter.9}{\376\377\000I\000n\000d\000i\000c\000e\000s\000\040\000a\000n\000d\000\040\000t\000a\000b\000l\000e\000s}{}% 16
-\BOOKMARK [0][-]{section*.41}{\376\377\000P\000y\000t\000h\000o\000n\000\040\000M\000o\000d\000u\000l\000e\000\040\000I\000n\000d\000e\000x}{}% 17
-\BOOKMARK [0][-]{section*.42}{\376\377\000I\000n\000d\000e\000x}{}% 18
+\BOOKMARK [0][-]{chapter.1}{Synopsis}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Motivation}{}% 2
+\BOOKMARK [0][-]{chapter.3}{Installation}{}% 3
+\BOOKMARK [0][-]{chapter.4}{Getting started}{}% 4
+\BOOKMARK [0][-]{chapter.5}{Description of the files}{}% 5
+\BOOKMARK [0][-]{chapter.6}{Contents}{}% 6
+\BOOKMARK [1][-]{section.6.1}{Parameters module}{chapter.6}% 7
+\BOOKMARK [1][-]{section.6.2}{Initial conditions generator module}{chapter.6}% 8
+\BOOKMARK [1][-]{section.6.3}{Initial conditions file}{chapter.6}% 9
+\BOOKMARK [1][-]{section.6.4}{Inner products module}{chapter.6}% 10
+\BOOKMARK [1][-]{section.6.5}{Tensor computation module}{chapter.6}% 11
+\BOOKMARK [1][-]{section.6.6}{Integration module}{chapter.6}% 12
+\BOOKMARK [1][-]{section.6.7}{Principal module}{chapter.6}% 13
+\BOOKMARK [0][-]{chapter.7}{Contributors}{}% 14
+\BOOKMARK [0][-]{chapter.8}{License}{}% 15
+\BOOKMARK [0][-]{chapter.9}{Indices and tables}{}% 16
+\BOOKMARK [0][-]{section*.41}{Python Module Index}{}% 17
+\BOOKMARK [0][-]{section*.42}{Index}{}% 18

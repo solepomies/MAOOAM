@@ -43,6 +43,7 @@ local atmos = inprod.atmos
 local a, b, c, d, g, s = atmos.a, atmos.b, atmos.c, atmos.d, atmos.g, atmos.s
 local kd, betp = m.kd, m.betp
 local kdp, sig0 = m.kdp, m.sig0
+local nuap,nuop = m.nuap or 0, m.nuop or 0
 local Cpa, Lpa, SBpa, SBpo, sc = m.Cpa, m.Lpa, m.SBpa, m.SBpo, m.sc
 
 coeff(theta(1),0,0, (Cpa/(1 - a[1][1]*sig0))) -- constant forcing
@@ -50,7 +51,7 @@ coeff(theta(1),0,0, (Cpa/(1 - a[1][1]*sig0))) -- constant forcing
 for i=1,natm do
   for j=1,natm do
     -- psi_j
-    coeff(psi(i),psi(j),0,-((c[i][j]*betp)/a[i][i]) - (kd*kdelta(i, j))/2)
+    coeff(psi(i),psi(j),0,-((c[i][j]*betp)/a[i][i]) - (kd*kdelta(i, j))/2 + a[i][j]*nuap)
     coeff(theta(i),psi(j),0, (a[i][j]*kd*sig0)/(-2 + 2*a[i][i]*sig0))
     -- theta_j
     coeff(psi(i),theta(j),0, (kd*kdelta(i, j))/2)
@@ -90,7 +91,7 @@ for i=1,noc do
     coeff(A(i),theta(j), 0, -K[i][j]*dp / (M[i][i]+G))
   end
   for j=1,noc do   -- A_j
-    coeff(A(i),A(j),   0, -(N[i][j]*betp + M[i][i]*(rp+dp)*kdelta(i,j))/(M[i][i]+G))
+    coeff(A(i),A(j),   0, -(N[i][j]*betp + M[i][i]*(rp+dp)*kdelta(i,j) - M[i][j]^2*nuop)/(M[i][i]+G))
     for k=1,noc do -- A_j x A_k
       coeff(A(i),A(j),A(k), -C[i][j][k]/(M[i][i]+G))
     end

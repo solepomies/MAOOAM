@@ -153,6 +153,24 @@ Functions/Subroutines</h2></td></tr>
 </p>
 <p>.  <a href="namespacetensor.html#a364522b80ab0f4785c331eb74fa1ba04">More...</a><br /></td></tr>
 <tr class="separator:a364522b80ab0f4785c331eb74fa1ba04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f144457b3535357ab582fc3ff0da3a0"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetensor.html#a7f144457b3535357ab582fc3ff0da3a0">tensor::add_elem</a> (t, i, j, k, v)</td></tr>
+<tr class="memdesc:a7f144457b3535357ab582fc3ff0da3a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subroutine to add element to a coolist.  <a href="namespacetensor.html#a7f144457b3535357ab582fc3ff0da3a0">More...</a><br /></td></tr>
+<tr class="separator:a7f144457b3535357ab582fc3ff0da3a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac86b7b23b35e64127e04b31d7cfc7ae9"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetensor.html#ac86b7b23b35e64127e04b31d7cfc7ae9">tensor::add_check</a> (t, i, j, k, v, dst)</td></tr>
+<tr class="memdesc:ac86b7b23b35e64127e04b31d7cfc7ae9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subroutine to add element to a coolist and check for overflow. Once the t buffer tensor is full, add it to the destination buffer.  <a href="namespacetensor.html#ac86b7b23b35e64127e04b31d7cfc7ae9">More...</a><br /></td></tr>
+<tr class="separator:ac86b7b23b35e64127e04b31d7cfc7ae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad7cd55f3a4cec4676cc7ca34b05f1a8"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetensor.html#aad7cd55f3a4cec4676cc7ca34b05f1a8">tensor::add_to_tensor</a> (src, dst)</td></tr>
+<tr class="memdesc:aad7cd55f3a4cec4676cc7ca34b05f1a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to add a rank-3 tensor to another one.  <a href="namespacetensor.html#aad7cd55f3a4cec4676cc7ca34b05f1a8">More...</a><br /></td></tr>
+<tr class="separator:aad7cd55f3a4cec4676cc7ca34b05f1a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fbaf180beb7fe8ab83ade2f576db80f"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetensor.html#a1fbaf180beb7fe8ab83ade2f576db80f">tensor::print_tensor</a> (t, s)</td></tr>
+<tr class="memdesc:a1fbaf180beb7fe8ab83ade2f576db80f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to print a rank 3 tensor coolist.  <a href="namespacetensor.html#a1fbaf180beb7fe8ab83ade2f576db80f">More...</a><br /></td></tr>
+<tr class="separator:a1fbaf180beb7fe8ab83ade2f576db80f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9cef88cb38333ed2c063cdf08f28060"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetensor.html#ab9cef88cb38333ed2c063cdf08f28060">tensor::write_tensor_to_file</a> (s, t)</td></tr>
+<tr class="memdesc:ab9cef88cb38333ed2c063cdf08f28060"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load a rank-4 tensor coolist from a file definition.  <a href="namespacetensor.html#ab9cef88cb38333ed2c063cdf08f28060">More...</a><br /></td></tr>
+<tr class="separator:ab9cef88cb38333ed2c063cdf08f28060"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4c6ebce7aee73aebac2514e45f7cc78"><td class="memItemLeft" align="right" valign="top">subroutine, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetensor.html#ac4c6ebce7aee73aebac2514e45f7cc78">tensor::load_tensor_from_file</a> (s, t)</td></tr>
+<tr class="memdesc:ac4c6ebce7aee73aebac2514e45f7cc78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load a rank-4 tensor coolist from a file definition.  <a href="namespacetensor.html#ac4c6ebce7aee73aebac2514e45f7cc78">More...</a><br /></td></tr>
+<tr class="separator:ac4c6ebce7aee73aebac2514e45f7cc78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -163,7 +181,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 5 2017 15:58:39 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 19 2018 16:12:32 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

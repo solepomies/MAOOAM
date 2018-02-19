@@ -60,7 +60,7 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 
-print (bcolors.OKBLUE + "Model MAOOAM v1.2" + bcolors.ENDC)
+print (bcolors.OKBLUE + "Model MAOOAM v1.3" + bcolors.ENDC)
 print (bcolors.OKBLUE + "Initialization ..." + bcolors.ENDC)
 
 ic_def.load_IC()
