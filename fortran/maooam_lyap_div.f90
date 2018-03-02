@@ -15,7 +15,7 @@ PROGRAM maooam_lyap_div
   USE params, only: ndim, dt, tw, t_trans, t_run, writeout, rescaling_time
   USE aotensor_def, only: init_aotensor
   USE IC_def, only: load_IC, IC
-  USE rk2_integrator, only: init_integrator,step
+  USE integrator, only: init_integrator,step
   USE stat
   IMPLICIT NONE
 

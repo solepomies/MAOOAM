@@ -15,8 +15,8 @@ PROGRAM maooam_lyap
   USE aotensor_def, only: init_aotensor
   USE tl_ad_tensor, only: init_tltensor
   USE IC_def, only: load_IC, IC
-  USE rk2_integrator, only: init_integrator,step
-  USE rk2_tl_ad_integrator, only: init_tl_ad_integrator,prop_step
+  USE integrator, only: init_integrator,step
+  USE tl_ad_integrator, only: init_tl_ad_integrator,prop_step
   USE lyap_vectors, only: lyapunov,loclyap,init_lyap,multiply_prop,benettin_step
   USE stat
   USE lyap_stat
