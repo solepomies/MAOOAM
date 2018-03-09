@@ -154,8 +154,15 @@ CONTAINS
           natm=natm+2
        ENDIF
     ENDDO
-    s=shape(oms)
-    noc=s(1)
+
+    noc=0
+    DO i=1,nboc
+       IF (oms(i,1)==1) THEN
+          noc=noc+3
+       ELSE
+          noc=noc+2
+       ENDIF
+    ENDDO
 
     ndim=2*natm+2*noc
 
