@@ -28,7 +28,7 @@ MODULE inprod_analytic
   !                                                     !
   !-----------------------------------------------------!
 
-  USE params, only: nbatm, nboc, natm, noc, n, oms, ams, pi
+  USE params, only: nbatm, nboc, nball, natm, noc, nall, n, oms, ams, allms, pi, Hamax, Pamax, Homax, Pomax
   USE util, only: isin,piksrt
   IMPLICIT NONE
 
@@ -57,6 +57,9 @@ MODULE inprod_analytic
   TYPE(all_wavenum), DIMENSION(:), ALLOCATABLE, PUBLIC :: owavenum 
   !> All blocks specification
   TYPE(all_wavenum), DIMENSION(:), ALLOCATABLE, PUBLIC :: allwavenum 
+
+  INTEGER, DIMENSION(:), ALLOCATABLE, PUBLIC :: correspatm  !< This list will give where to find the i-th atmospheric basis function in the list of all basis functions
+  INTEGER, DIMENSION(:), ALLOCATABLE, PUBLIC :: correspoc   !< This list will give where to find the i-th oceanic basis function in the list of all basis functions
 
   !> Atmospheric tensors
   TYPE(atm_tensors), PUBLIC :: atmos
@@ -276,6 +279,7 @@ CONTAINS
   SUBROUTINE init_inprod
     INTEGER :: i,j
     INTEGER :: AllocStat
+    INTEGER :: H,P
 
     IF (natm == 0 ) THEN
        STOP "*** Problem : natm==0 ! ***"
@@ -368,45 +372,75 @@ CONTAINS
 
     ENDDO
 
+    ALLOCATE(allwavenum(nall), correspatm(natm), correspoc(noc), STAT=AllocStat)
+    IF (AllocStat /= 0) STOP "*** Not enough memory ! ***"
+
     j=0
     DO i=1,nball
-       IF (allms(i,1)==1) THEN
+       H=allms(i,1)
+       P=allms(i,2)
+       IF (H==1) THEN
           allwavenum(j+1)%typ='A'
           allwavenum(j+2)%typ='K'
           allwavenum(j+3)%typ='L'
 
-          allwavenum(j+1)%P=allms(i,2)
-          allwavenum(j+2)%M=allms(i,1)
-          allwavenum(j+2)%P=allms(i,2)
-          allwavenum(j+3)%H=allms(i,1)
-          allwavenum(j+3)%P=allms(i,2)
+          allwavenum(j+1)%P=P
+          allwavenum(j+2)%M=H
+          allwavenum(j+2)%P=P
+          allwavenum(j+3)%H=H
+          allwavenum(j+3)%P=P
 
-          allwavenum(j+1)%Ny=REAL(allms(i,2))
-          allwavenum(j+2)%Nx=REAL(allms(i,1))
-          allwavenum(j+2)%Ny=REAL(allms(i,2))
-          allwavenum(j+3)%Nx=REAL(allms(i,1))
-          allwavenum(j+3)%Ny=REAL(allms(i,2))
+          allwavenum(j+1)%Ny=REAL(P)
+          allwavenum(j+2)%Nx=REAL(H)
+          allwavenum(j+2)%Ny=REAL(P)
+          allwavenum(j+3)%Nx=REAL(H)
+          allwavenum(j+3)%Ny=REAL(P)
+
+          IF (P .le. Pamax) THEN
+             correspatm((P-1)*3+1)=j+1
+             correspatm((P-1)*3+2)=j+2
+             correspatm((P-1)*3+3)=j+3
+          ENDIF
+
+          IF (allms(i,2) .le. Pomax) THEN
+             correspoc((P-1)*3+1)=j+1
+             correspoc((P-1)*3+2)=j+2
+             correspoc((P-1)*3+3)=j+3
+          ENDIF
 
           j=j+3
        ELSE
           allwavenum(j+1)%typ='K'
           allwavenum(j+2)%typ='L'
 
-          allwavenum(j+1)%M=allms(i,1)
-          allwavenum(j+1)%P=allms(i,2)
-          allwavenum(j+2)%H=allms(i,1)
-          allwavenum(j+2)%P=allms(i,2)
+          allwavenum(j+1)%M=H
+          allwavenum(j+1)%P=P
+          allwavenum(j+2)%H=H
+          allwavenum(j+2)%P=P
 
-          allwavenum(j+1)%Nx=REAL(allms(i,1))
-          allwavenum(j+1)%Ny=REAL(allms(i,2))
-          allwavenum(j+2)%Nx=REAL(allms(i,1))
-          allwavenum(j+2)%Ny=REAL(allms(i,2))
+          allwavenum(j+1)%Nx=REAL(H)
+          allwavenum(j+1)%Ny=REAL(P)
+          allwavenum(j+2)%Nx=REAL(H)
+          allwavenum(j+2)%Ny=REAL(P)
+
+          IF ((H .le. Hamax) .AND. (P .le. Pamax)) THEN
+             correspatm((3+2*(H-2))*Pamax+(P-1)*2+1)=j+1
+             correspatm((3+2*(H-2))*Pamax+(P-1)*2+2)=j+2
+          ENDIF
+
+          IF ((H .le. Homax) .AND. (P .le. Pomax)) THEN
+             correspoc((3+2*(H-2))*Pomax+(P-1)*2+1)=j+1
+             correspoc((3+2*(H-2))*Pomax+(P-1)*2+2)=j+2
+          ENDIF
 
           j=j+2
 
        ENDIF
 
     ENDDO
+
+    print*,correspatm
+    print*,correspoc
 
     ! Pointing to the inner products functions
 
