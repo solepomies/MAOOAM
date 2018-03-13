@@ -80,11 +80,20 @@ MODULE params
   
   INTEGER :: nboc   !< Number of atmospheric blocks
   INTEGER :: nbatm  !< Number of oceanic blocks
+  INTEGER :: nball  !< Number of blocks
   INTEGER :: natm=0 !< Number of atmospheric basis functions
   INTEGER :: noc=0  !< Number of oceanic basis functions
+  INTEGER :: nall=0 !< Number of basis functions
+
+  INTEGER :: Hamax !< Highest zonal wavenumber for the atmosphere
+  INTEGER :: Pamax !< Highest meridional wavenumber for the atmosphere
+  INTEGER :: Homax !< Highest zonal wavenumber for the ocean
+  INTEGER :: Pomax !< Highest meridional wavenumber for the ocean
+
   INTEGER :: ndim   !< Number of variables (dimension of the model)
   INTEGER, DIMENSION(:,:), ALLOCATABLE :: oms   !< Ocean mode selection array
   INTEGER, DIMENSION(:,:), ALLOCATABLE :: ams   !< Atmospheric mode selection array
+  INTEGER, DIMENSION(:,:), ALLOCATABLE :: allms !< All modes selection array
 
   PRIVATE :: init_nml
 
@@ -135,9 +144,62 @@ CONTAINS
 
   !> Parameters initialisation routine 
   SUBROUTINE init_params
-    INTEGER, DIMENSION(2) :: s
-    INTEGER :: i
+    INTEGER :: AllocStat
+    INTEGER :: i,j
+    INTEGER :: Pmax
+    INTEGER, DIMENSION(2) :: wavenumMaxA, wavenumMaxO
     CALL init_nml
+
+    !---------------------------------------------------------!
+    !                                                         !
+    !         Creation of the list of all components          !
+    !                                                         !
+    !---------------------------------------------------------!
+
+    wavenumMaxA=MAXVAL(ams, 2)
+    wavenumMaxO=MAXVAL(oms, 2)
+    Hamax=wavenumMaxA(1)
+    Pamax=wavenumMaxA(2)
+    Homax=wavenumMaxO(1)
+    Pomax=wavenumMaxO(2)
+
+    Pmax=max(Pamax,Pomax)
+
+    nball=Hamax*Pamax+Homax*Pomax-min(Hamax,Homax)*min(Pamax,Pomax)
+
+    ALLOCATE(allms(nball,2), STAT=AllocStat)
+    IF (AllocStat /= 0) STOP "*** Not enough memory ! ***"
+
+    IF (Homax .gt. Hamax) THEN
+       DO i=1,Hamax
+          DO j=1,Pmax
+             allms((i-1)*Pmax+j,1)=i
+             allms((i-1)*Pmax+j,2)=j
+          ENDDO
+       ENDDO
+       DO i=Hamax+1,Homax
+          DO j=1,Pomax
+             allms(Hamax*Pmax+(i-1)*Pomax+j,1)=i
+             allms(Hamax*Pmax+(i-1)*Pomax+j,2)=j
+          ENDDO
+       ENDDO
+    ELSE
+       DO i=1,Homax
+          DO j=1,Pmax
+             allms((i-1)*Pmax+j,1)=i
+             allms((i-1)*Pmax+j,2)=j
+          ENDDO
+       ENDDO
+       DO i=Homax+1,Hamax
+          DO j=1,Pamax
+             allms(Homax*Pmax+(i-1)*Pamax+j,1)=i
+             allms(Homax*Pmax+(i-1)*Pamax+j,2)=j
+          ENDDO
+       ENDDO
+    ENDIF
+
+    print*,allms
+       
 
     !---------------------------------------------------------!
     !                                                         !
@@ -161,6 +223,15 @@ CONTAINS
           noc=noc+3
        ELSE
           noc=noc+2
+       ENDIF
+    ENDDO
+
+    nall=0
+    DO i=1,nball
+       IF (allms(i,1)==1) THEN
+          nall=nall+3
+       ELSE
+          nall=nall+2
        ENDIF
     ENDDO
 
