@@ -107,7 +107,8 @@ CONTAINS
 
     NAMELIST /aoscale/  scale,f0,n,rra,phi0_npi
     NAMELIST /oparams/  gp,r,H,d,nuo
-    NAMELIST /aparams/  k,kp,sig0,nua
+!    NAMELIST /aparams/  k,kp,sig0,nua
+    NAMELIST /aparams/  k,kp,sigma,nua !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     NAMELIST /toparams/ Go,Co,To0
     NAMELIST /taparams/ Ga,Ca,epsa,Ta0
     NAMELIST /otparams/ sc,lambda,RR,sB
@@ -251,6 +252,8 @@ CONTAINS
     dp=d/abs(f0) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
     kd=k*2
     kdp=kp
+
+    sig0=sigma*50000*50000/(2*(l**2)*(f0**2)) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SIGMA
 
     !-----------------------------------------------------!
     !                                                     !
