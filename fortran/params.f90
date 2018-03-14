@@ -156,8 +156,8 @@ CONTAINS
     !                                                         !
     !---------------------------------------------------------!
 
-    wavenumMaxA=MAXVAL(ams, 2)
-    wavenumMaxO=MAXVAL(oms, 2)
+    wavenumMaxA=MAXVAL(ams, 1)
+    wavenumMaxO=MAXVAL(oms, 1)
     Hamax=wavenumMaxA(1)
     Pamax=wavenumMaxA(2)
     Homax=wavenumMaxO(1)
@@ -179,8 +179,8 @@ CONTAINS
        ENDDO
        DO i=Hamax+1,Homax
           DO j=1,Pomax
-             allms(Hamax*Pmax+(i-1)*Pomax+j,1)=i
-             allms(Hamax*Pmax+(i-1)*Pomax+j,2)=j
+             allms(Hamax*Pmax+(i-Hamax-1)*Pomax+j,1)=i
+             allms(Hamax*Pmax+(i-Hamax-1)*Pomax+j,2)=j
           ENDDO
        ENDDO
     ELSE
@@ -192,13 +192,11 @@ CONTAINS
        ENDDO
        DO i=Homax+1,Hamax
           DO j=1,Pamax
-             allms(Homax*Pmax+(i-1)*Pamax+j,1)=i
-             allms(Homax*Pmax+(i-1)*Pamax+j,2)=j
+             allms(Homax*Pmax+(i-Homax-1)*Pamax+j,1)=i
+             allms(Homax*Pmax+(i-Homax-1)*Pamax+j,2)=j
           ENDDO
        ENDDO
     ENDIF
-
-    print*,allms
        
 
     !---------------------------------------------------------!
@@ -248,9 +246,9 @@ CONTAINS
     phi0=phi0_npi*pi
     LR=sqrt(gp*H)/f0
     G=-L**2/LR**2
-    betp=L/rra*cos(phi0)/sin(phi0)
-    rp=r/f0
-    dp=d/f0
+    betp=L/rra*cos(phi0)/abs(sin(phi0)) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(sin(phi0))
+    rp=r/abs(f0) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
+    dp=d/abs(f0) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
     kd=k*2
     kdp=kp
 
@@ -260,16 +258,16 @@ CONTAINS
     !                                                     !
     !-----------------------------------------------------!
 
-    Cpo=Co/(Go*f0) * RR/(f0**2*L**2)
-    Lpo=lambda/(Go*f0)
-    Cpa=Ca/(Ga*f0) * RR/(f0**2*L**2)/2 ! Cpa acts on psi1-psi3, not on theta
-    Lpa=lambda/(Ga*f0)
-    sBpo=4*sB*To0**3/(Go*f0) ! long wave radiation lost by ocean to atmosphere space
-    sBpa=8*epsa*sB*Ta0**3/(Go*f0) ! long wave radiation from atmosphere absorbed by ocean
-    LSBpo=2*epsa*sB*To0**3/(Ga*f0) ! long wave radiation from ocean absorbed by atmosphere
-    LSBpa=8*epsa*sB*Ta0**3/(Ga*f0) ! long wave radiation lost by atmosphere to space & ocea
-    nuap=nua/(f0*L**2)
-    nuop=nuo/(f0*L**2)
+    Cpo=Co/(Go*abs(f0)) * RR/(f0**2*L**2) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
+    Lpo=lambda/(Go*abs(f0)) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
+    Cpa=Ca/(Ga*abs(f0)) * RR/(f0**2*L**2)/2 ! Cpa acts on psi1-psi3, not on theta !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
+    Lpa=lambda/(Ga*abs(f0)) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
+    sBpo=4*sB*To0**3/(Go*abs(f0)) ! long wave radiation lost by ocean to atmosphere space !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
+    sBpa=8*epsa*sB*Ta0**3/(Go*abs(f0)) ! long wave radiation from atmosphere absorbed by ocean !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
+    LSBpo=2*epsa*sB*To0**3/(Ga*abs(f0)) ! long wave radiation from ocean absorbed by atmosphere !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
+    LSBpa=8*epsa*sB*Ta0**3/(Ga*abs(f0)) ! long wave radiation lost by atmosphere to space & ocean !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
+    nuap=nua/(abs(f0)*L**2) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
+    nuop=nuo/(abs(f0)*L**2) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
 
   END SUBROUTINE init_params
 END MODULE params
