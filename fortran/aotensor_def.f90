@@ -143,7 +143,7 @@ CONTAINS
     DO i = 1, natm
        DO j = 1, natm
           CALL func(psi(i),psi(j),0,-(((atmos%c(correspatm(i),correspatm(j)) * betp) / atmos%a(correspatm(i),correspatm(i)))) -&
-               &(kd * kdelta(i,j)) / 2 + atmos%a(i,j)*nuap) ! le dernier terme est un terme de dissipation qui n'est pas mentionné dans le papier
+               &(kd * kdelta(i,j)) / 2 + atmos%a(correspatm(i),correspatm(j))*nuap) ! le dernier terme est un terme de dissipation qui n'est pas mentionné dans le papier
           CALL func(theta(i),psi(j),0,(atmos%a(correspatm(i),correspatm(j)) * kd * sig0) / (-2 + 2 * atmos%a(correspatm(i),&
                &correspatm(i)) * sig0)) ! ok
           CALL func(psi(i),theta(j),0,(kd * kdelta(i,j)) / 2) ! ok
