@@ -396,13 +396,13 @@ CONTAINS
           allwavenum(j+3)%Nx=REAL(H)
           allwavenum(j+3)%Ny=REAL(P)
 
-          IF (P .le. Pamax) THEN
+          IF ((H .le. Hamax) .AND. (P .le. Pamax)) THEN
              correspatm((P-1)*3+1)=j+1
              correspatm((P-1)*3+2)=j+2
              correspatm((P-1)*3+3)=j+3
           ENDIF
 
-          IF (allms(i,2) .le. Pomax) THEN
+          IF ((H .le. Homax) .AND. (P .le. Pomax)) THEN
              correspoc((P-1)*3+1)=j+1
              correspoc((P-1)*3+2)=j+2
              correspoc((P-1)*3+3)=j+3
@@ -438,9 +438,6 @@ CONTAINS
        ENDIF
 
     ENDDO
-
-    print*,correspatm
-    print*,correspoc
 
     ! Pointing to the inner products functions
 
