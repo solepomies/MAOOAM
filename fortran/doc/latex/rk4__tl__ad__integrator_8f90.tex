@@ -8,16 +8,40 @@ module \hyperlink{namespacetl__ad__integrator}{tl\+\_\+ad\+\_\+integrator}
 \subsection*{Functions/\+Subroutines}
 \begin{DoxyCompactItemize}
 \item 
+subroutine \hyperlink{namespacetl__ad__integrator_aa03be9677761cfa373b15c85cccdc424}{tl\+\_\+ad\+\_\+integrator\+::tendencies} (t, y, res)
+\begin{DoxyCompactList}\small\item\em Routine computing the tendencies of the nonlinear model. \end{DoxyCompactList}\item 
 subroutine, public \hyperlink{namespacetl__ad__integrator_aeef5ff45fe5f9b73ceb8d72c195dc381}{tl\+\_\+ad\+\_\+integrator\+::init\+\_\+tl\+\_\+ad\+\_\+integrator}
 \begin{DoxyCompactList}\small\item\em Routine to initialise the integration buffers. \end{DoxyCompactList}\item 
 subroutine, public \hyperlink{namespacetl__ad__integrator_a708ece5eac01486e65e889d19073fd19}{tl\+\_\+ad\+\_\+integrator\+::ad\+\_\+step} (y, ystar, t, dt, res)
 \begin{DoxyCompactList}\small\item\em Routine to perform an integration step (Heun algorithm) of the adjoint model. The incremented time is returned. \end{DoxyCompactList}\item 
+subroutine, public \hyperlink{namespacetl__ad__integrator_abc53f72486953af9fa4ced620eee226f}{tl\+\_\+ad\+\_\+integrator\+::evolve\+\_\+ad\+\_\+step} (y, deltay, t, dt, ynew, deltaynew)
+\begin{DoxyCompactList}\small\item\em Routine to perform a simultaneous integration step (R\+K4 algorithm) of the nonlinear and adjoint together. The incremented time is returned. \end{DoxyCompactList}\item 
 subroutine, public \hyperlink{namespacetl__ad__integrator_ac88b155557d4fc0bae70007fde3aef06}{tl\+\_\+ad\+\_\+integrator\+::tl\+\_\+step} (y, ystar, t, dt, res)
-\begin{DoxyCompactList}\small\item\em Routine to perform an integration step (Heun algorithm) of the tangent linear model. The incremented time is returned. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Routine to perform an integration step (Heun algorithm) of the tangent linear model. The incremented time is returned. \end{DoxyCompactList}\item 
+subroutine, public \hyperlink{namespacetl__ad__integrator_a9fb60b4a88b0c5d6ca27b58440a32f74}{tl\+\_\+ad\+\_\+integrator\+::evolve\+\_\+tl\+\_\+step} (y, deltay, t, dt, ynew, deltaynew)
+\begin{DoxyCompactList}\small\item\em Routine to perform a simultaneous integration step (R\+K4 algorithm) of the nonlinear and the tangent linear model together. The incremented time is returned. \end{DoxyCompactList}\item 
+subroutine, public \hyperlink{namespacetl__ad__integrator_a76538a8bd594899e94228abaa34b48cd}{tl\+\_\+ad\+\_\+integrator\+::prop\+\_\+step} (y, propagator, t, dt, ynew, adjoint)
+\begin{DoxyCompactList}\small\item\em Routine to perform a simultaneously an integration step (Heun algorithm) of the nonlinear and computes the Heun tangent linear propagator. The boolean variable adjoint allows for an adjoint forward integration. The incremented time is returned. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
 real(kind=8), dimension(\+:), allocatable \hyperlink{namespacetl__ad__integrator_a879cc86c1e268775237b6776a4ff7d32}{tl\+\_\+ad\+\_\+integrator\+::buf\+\_\+ka}
 \begin{DoxyCompactList}\small\item\em Buffer to hold tendencies in the R\+K4 scheme for the tangent linear model. \end{DoxyCompactList}\item 
 real(kind=8), dimension(\+:), allocatable \hyperlink{namespacetl__ad__integrator_abd6a1c209bc0120ea4e1e473e067a902}{tl\+\_\+ad\+\_\+integrator\+::buf\+\_\+kb}
+\begin{DoxyCompactList}\small\item\em Buffer to hold tendencies in the R\+K4 scheme for the tangent linear model. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacetl__ad__integrator_a1cf59efa7229b47e580202dfe4bd4fd6}{tl\+\_\+ad\+\_\+integrator\+::buf\+\_\+kc}
+\begin{DoxyCompactList}\small\item\em Buffer to hold tendencies in the R\+K4 scheme for the tangent linear model. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacetl__ad__integrator_a3b72ebc24a7e0eb44e22e6489ac81ed3}{tl\+\_\+ad\+\_\+integrator\+::buf\+\_\+kd}
+\begin{DoxyCompactList}\small\item\em Buffer to hold tendencies in the R\+K4 scheme for the tangent linear model. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:,\+:), allocatable \hyperlink{namespacetl__ad__integrator_afb500987b643ce33b2a549ba213221fc}{tl\+\_\+ad\+\_\+integrator\+::buf\+\_\+j3}
+\begin{DoxyCompactList}\small\item\em Buffer to hold jacobians in the R\+K4 scheme for the tangent linear model. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:,\+:), allocatable \hyperlink{namespacetl__ad__integrator_a853bee458e7337f1556f19370dcbc9d6}{tl\+\_\+ad\+\_\+integrator\+::buf\+\_\+j4}
+\begin{DoxyCompactList}\small\item\em Buffer to hold jacobians in the R\+K4 scheme for the tangent linear model. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:,\+:), allocatable \hyperlink{namespacetl__ad__integrator_a9ead2c02f871be0e94e91278fa71337c}{tl\+\_\+ad\+\_\+integrator\+::buf\+\_\+j3h}
+\begin{DoxyCompactList}\small\item\em Buffer to hold jacobians in the R\+K4 scheme for the tangent linear model. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:,\+:), allocatable \hyperlink{namespacetl__ad__integrator_a99c2747c1997b622f4ab6170e3a8f23d}{tl\+\_\+ad\+\_\+integrator\+::buf\+\_\+j4h}
+\begin{DoxyCompactList}\small\item\em Buffer to hold jacobians in the R\+K4 scheme for the tangent linear model. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacetl__ad__integrator_a24b147c589eb6bdb6175c56657aff5ae}{tl\+\_\+ad\+\_\+integrator\+::buf\+\_\+kaa}
+\begin{DoxyCompactList}\small\item\em Buffer to hold tendencies in the R\+K4 scheme for the tangent linear model. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacetl__ad__integrator_a68ad95731421a7e0c9f37668631e279c}{tl\+\_\+ad\+\_\+integrator\+::buf\+\_\+kbb}
 \begin{DoxyCompactList}\small\item\em Buffer to hold tendencies in the R\+K4 scheme for the tangent linear model. \end{DoxyCompactList}\end{DoxyCompactItemize}

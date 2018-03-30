@@ -1,0 +1,255 @@
+\hypertarget{namespacelyap__stat}{}\section{lyap\+\_\+stat Module Reference}
+\label{namespacelyap__stat}\index{lyap\+\_\+stat@{lyap\+\_\+stat}}
+
+
+Statistics accumulators for the Lyapunov exponents.  
+
+
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine, public \hyperlink{namespacelyap__stat_a0db1853a990b21e68d094e08e9786271}{lyap\+\_\+init\+\_\+stat}
+\begin{DoxyCompactList}\small\item\em Initialise the accumulators. \end{DoxyCompactList}\item 
+subroutine, public \hyperlink{namespacelyap__stat_ae5925eda9d281c9f5d3b5bf51a342d75}{lyap\+\_\+acc} (x)
+\begin{DoxyCompactList}\small\item\em Accumulate one state. \end{DoxyCompactList}\item 
+real(kind=8) function, dimension(0\+:ndim), public \hyperlink{namespacelyap__stat_a05e8e9da3a46e83279e088b44f940d6e}{lyap\+\_\+mean} ()
+\begin{DoxyCompactList}\small\item\em Function returning the mean. \end{DoxyCompactList}\item 
+real(kind=8) function, dimension(0\+:ndim), public \hyperlink{namespacelyap__stat_a74c10391cac36f4ea668a2ab24047eca}{lyap\+\_\+var} ()
+\begin{DoxyCompactList}\small\item\em Function returning the variance. \end{DoxyCompactList}\item 
+integer function, public \hyperlink{namespacelyap__stat_a455a24b2f34307a219de05297857d216}{lyap\+\_\+iter} ()
+\begin{DoxyCompactList}\small\item\em Function returning the number of data accumulated. \end{DoxyCompactList}\item 
+subroutine, public \hyperlink{namespacelyap__stat_a464af579adb8b49dcd16abc1e251e1bc}{lyap\+\_\+reset}
+\begin{DoxyCompactList}\small\item\em Routine resetting the accumulators. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+integer \hyperlink{namespacelyap__stat_ae22963543caef680f536738ad6018008}{i} =0
+\begin{DoxyCompactList}\small\item\em Number of stats accumulated. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacelyap__stat_a99687dc4df185df56e841e0d87d1faae}{m}
+\begin{DoxyCompactList}\small\item\em Vector storing the inline mean. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacelyap__stat_ad4c65ab53e8f6e8d6a967fd7bc0caa60}{mprev}
+\begin{DoxyCompactList}\small\item\em Previous mean vector. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacelyap__stat_a7cc5265a7fac9300755528c599fb08fb}{v}
+\begin{DoxyCompactList}\small\item\em Vector storing the inline variance. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacelyap__stat_a72cd3ecc682d386dbe39e331afa90f9f}{mtmp}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Statistics accumulators for the Lyapunov exponents. 
+
+\begin{DoxyCopyright}{Copyright}
+2015 Lesley De Cruz \& Jonathan Demaeyer. See \hyperlink{LICENSE_8txt}{L\+I\+C\+E\+N\+S\+E.\+txt} for license information. 
+\end{DoxyCopyright}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\index{lyap\+\_\+stat@{lyap\+\_\+stat}!lyap\+\_\+acc@{lyap\+\_\+acc}}
+\index{lyap\+\_\+acc@{lyap\+\_\+acc}!lyap\+\_\+stat@{lyap\+\_\+stat}}
+\subsubsection[{\texorpdfstring{lyap\+\_\+acc(x)}{lyap_acc(x)}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine, public lyap\+\_\+stat\+::lyap\+\_\+acc (
+\begin{DoxyParamCaption}
+\item[{real(kind=8), dimension(0\+:ndim), intent(in)}]{x}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacelyap__stat_ae5925eda9d281c9f5d3b5bf51a342d75}{}\label{namespacelyap__stat_ae5925eda9d281c9f5d3b5bf51a342d75}
+
+
+Accumulate one state. 
+
+
+
+Definition at line 48 of file lyap\+\_\+stat.\+f90.
+
+
+\begin{DoxyCode}
+48       \textcolor{keywordtype}{IMPLICIT NONE}
+49       \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(0:ndim)}, \textcolor{keywordtype}{INTENT(IN)} :: x
+50       i=i+1
+51       mprev=m+(x-m)/i
+52       mtmp=mprev
+53       mprev=m
+54       m=mtmp
+55       v=v+(x-mprev)*(x-m)
+\end{DoxyCode}
+\index{lyap\+\_\+stat@{lyap\+\_\+stat}!lyap\+\_\+init\+\_\+stat@{lyap\+\_\+init\+\_\+stat}}
+\index{lyap\+\_\+init\+\_\+stat@{lyap\+\_\+init\+\_\+stat}!lyap\+\_\+stat@{lyap\+\_\+stat}}
+\subsubsection[{\texorpdfstring{lyap\+\_\+init\+\_\+stat}{lyap_init_stat}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine, public lyap\+\_\+stat\+::lyap\+\_\+init\+\_\+stat (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacelyap__stat_a0db1853a990b21e68d094e08e9786271}{}\label{namespacelyap__stat_a0db1853a990b21e68d094e08e9786271}
+
+
+Initialise the accumulators. 
+
+
+
+Definition at line 35 of file lyap\+\_\+stat.\+f90.
+
+
+\begin{DoxyCode}
+35       \textcolor{keywordtype}{INTEGER} :: allocstat
+36       
+37       \textcolor{keyword}{ALLOCATE}(m(0:ndim),mprev(0:ndim),v(0:ndim),mtmp(0:ndim), \hyperlink{namespacestat}{stat}=allocstat\textcolor{comment}{)}
+38 \textcolor{comment}{      }\textcolor{keywordflow}{IF} (allocstat /= 0) stop \textcolor{stringliteral}{'*** Not enough memory ***'}
+39       m=0.d0
+40       mprev=0.d0
+41       v=0.d0
+42       mtmp=0.d0
+43       
+\end{DoxyCode}
+\index{lyap\+\_\+stat@{lyap\+\_\+stat}!lyap\+\_\+iter@{lyap\+\_\+iter}}
+\index{lyap\+\_\+iter@{lyap\+\_\+iter}!lyap\+\_\+stat@{lyap\+\_\+stat}}
+\subsubsection[{\texorpdfstring{lyap\+\_\+iter()}{lyap_iter()}}]{\setlength{\rightskip}{0pt plus 5cm}integer function, public lyap\+\_\+stat\+::lyap\+\_\+iter (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacelyap__stat_a455a24b2f34307a219de05297857d216}{}\label{namespacelyap__stat_a455a24b2f34307a219de05297857d216}
+
+
+Function returning the number of data accumulated. 
+
+
+
+Definition at line 72 of file lyap\+\_\+stat.\+f90.
+
+
+\begin{DoxyCode}
+72       \textcolor{keywordtype}{INTEGER} :: lyap\_iter
+73       lyap\_iter=i
+\end{DoxyCode}
+\index{lyap\+\_\+stat@{lyap\+\_\+stat}!lyap\+\_\+mean@{lyap\+\_\+mean}}
+\index{lyap\+\_\+mean@{lyap\+\_\+mean}!lyap\+\_\+stat@{lyap\+\_\+stat}}
+\subsubsection[{\texorpdfstring{lyap\+\_\+mean()}{lyap_mean()}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8) function, dimension(0\+:ndim), public lyap\+\_\+stat\+::lyap\+\_\+mean (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacelyap__stat_a05e8e9da3a46e83279e088b44f940d6e}{}\label{namespacelyap__stat_a05e8e9da3a46e83279e088b44f940d6e}
+
+
+Function returning the mean. 
+
+
+
+Definition at line 60 of file lyap\+\_\+stat.\+f90.
+
+
+\begin{DoxyCode}
+60       \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(0:ndim)} :: lyap\_mean
+61       lyap\_mean=m
+\end{DoxyCode}
+\index{lyap\+\_\+stat@{lyap\+\_\+stat}!lyap\+\_\+reset@{lyap\+\_\+reset}}
+\index{lyap\+\_\+reset@{lyap\+\_\+reset}!lyap\+\_\+stat@{lyap\+\_\+stat}}
+\subsubsection[{\texorpdfstring{lyap\+\_\+reset}{lyap_reset}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine, public lyap\+\_\+stat\+::lyap\+\_\+reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacelyap__stat_a464af579adb8b49dcd16abc1e251e1bc}{}\label{namespacelyap__stat_a464af579adb8b49dcd16abc1e251e1bc}
+
+
+Routine resetting the accumulators. 
+
+
+
+Definition at line 78 of file lyap\+\_\+stat.\+f90.
+
+
+\begin{DoxyCode}
+78       m=0.d0
+79       mprev=0.d0
+80       v=0.d0
+81       i=0
+\end{DoxyCode}
+\index{lyap\+\_\+stat@{lyap\+\_\+stat}!lyap\+\_\+var@{lyap\+\_\+var}}
+\index{lyap\+\_\+var@{lyap\+\_\+var}!lyap\+\_\+stat@{lyap\+\_\+stat}}
+\subsubsection[{\texorpdfstring{lyap\+\_\+var()}{lyap_var()}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8) function, dimension(0\+:ndim), public lyap\+\_\+stat\+::lyap\+\_\+var (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacelyap__stat_a74c10391cac36f4ea668a2ab24047eca}{}\label{namespacelyap__stat_a74c10391cac36f4ea668a2ab24047eca}
+
+
+Function returning the variance. 
+
+
+
+Definition at line 66 of file lyap\+\_\+stat.\+f90.
+
+
+\begin{DoxyCode}
+66       \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(0:ndim)} :: lyap\_var
+67       lyap\_var=v/(i-1)
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\index{lyap\+\_\+stat@{lyap\+\_\+stat}!i@{i}}
+\index{i@{i}!lyap\+\_\+stat@{lyap\+\_\+stat}}
+\subsubsection[{\texorpdfstring{i}{i}}]{\setlength{\rightskip}{0pt plus 5cm}integer lyap\+\_\+stat\+::i =0\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespacelyap__stat_ae22963543caef680f536738ad6018008}{}\label{namespacelyap__stat_ae22963543caef680f536738ad6018008}
+
+
+Number of stats accumulated. 
+
+
+
+Definition at line 20 of file lyap\+\_\+stat.\+f90.
+
+
+\begin{DoxyCode}
+20   \textcolor{keywordtype}{INTEGER} :: i=0\textcolor{comment}{ !< Number of stats accumulated}
+\end{DoxyCode}
+\index{lyap\+\_\+stat@{lyap\+\_\+stat}!m@{m}}
+\index{m@{m}!lyap\+\_\+stat@{lyap\+\_\+stat}}
+\subsubsection[{\texorpdfstring{m}{m}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8), dimension(\+:), allocatable lyap\+\_\+stat\+::m\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespacelyap__stat_a99687dc4df185df56e841e0d87d1faae}{}\label{namespacelyap__stat_a99687dc4df185df56e841e0d87d1faae}
+
+
+Vector storing the inline mean. 
+
+
+
+Definition at line 23 of file lyap\+\_\+stat.\+f90.
+
+
+\begin{DoxyCode}
+23   \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(:)}, \textcolor{keywordtype}{ALLOCATABLE} :: m\textcolor{comment}{       !< Vector storing the inline mean}
+\end{DoxyCode}
+\index{lyap\+\_\+stat@{lyap\+\_\+stat}!mprev@{mprev}}
+\index{mprev@{mprev}!lyap\+\_\+stat@{lyap\+\_\+stat}}
+\subsubsection[{\texorpdfstring{mprev}{mprev}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8), dimension(\+:), allocatable lyap\+\_\+stat\+::mprev\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespacelyap__stat_ad4c65ab53e8f6e8d6a967fd7bc0caa60}{}\label{namespacelyap__stat_ad4c65ab53e8f6e8d6a967fd7bc0caa60}
+
+
+Previous mean vector. 
+
+
+
+Definition at line 24 of file lyap\+\_\+stat.\+f90.
+
+
+\begin{DoxyCode}
+24   \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(:)}, \textcolor{keywordtype}{ALLOCATABLE} :: mprev\textcolor{comment}{   !< Previous mean vector}
+\end{DoxyCode}
+\index{lyap\+\_\+stat@{lyap\+\_\+stat}!mtmp@{mtmp}}
+\index{mtmp@{mtmp}!lyap\+\_\+stat@{lyap\+\_\+stat}}
+\subsubsection[{\texorpdfstring{mtmp}{mtmp}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8), dimension(\+:), allocatable lyap\+\_\+stat\+::mtmp\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespacelyap__stat_a72cd3ecc682d386dbe39e331afa90f9f}{}\label{namespacelyap__stat_a72cd3ecc682d386dbe39e331afa90f9f}
+
+
+Definition at line 26 of file lyap\+\_\+stat.\+f90.
+
+
+\begin{DoxyCode}
+26   \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(:)}, \textcolor{keywordtype}{ALLOCATABLE} :: mtmp  
+\end{DoxyCode}
+\index{lyap\+\_\+stat@{lyap\+\_\+stat}!v@{v}}
+\index{v@{v}!lyap\+\_\+stat@{lyap\+\_\+stat}}
+\subsubsection[{\texorpdfstring{v}{v}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8), dimension(\+:), allocatable lyap\+\_\+stat\+::v\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{namespacelyap__stat_a7cc5265a7fac9300755528c599fb08fb}{}\label{namespacelyap__stat_a7cc5265a7fac9300755528c599fb08fb}
+
+
+Vector storing the inline variance. 
+
+
+
+Definition at line 25 of file lyap\+\_\+stat.\+f90.
+
+
+\begin{DoxyCode}
+25   \textcolor{keywordtype}{REAL(KIND=8)}, \textcolor{keywordtype}{DIMENSION(:)}, \textcolor{keywordtype}{ALLOCATABLE} :: v\textcolor{comment}{       !< Vector storing the inline variance}
+\end{DoxyCode}

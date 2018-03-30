@@ -1,0 +1,35 @@
+\hypertarget{lyap__stat_8f90}{}\section{lyap\+\_\+stat.\+f90 File Reference}
+\label{lyap__stat_8f90}\index{lyap\+\_\+stat.\+f90@{lyap\+\_\+stat.\+f90}}
+\subsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+module \hyperlink{namespacelyap__stat}{lyap\+\_\+stat}
+\begin{DoxyCompactList}\small\item\em Statistics accumulators for the Lyapunov exponents. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine, public \hyperlink{namespacelyap__stat_a0db1853a990b21e68d094e08e9786271}{lyap\+\_\+stat\+::lyap\+\_\+init\+\_\+stat}
+\begin{DoxyCompactList}\small\item\em Initialise the accumulators. \end{DoxyCompactList}\item 
+subroutine, public \hyperlink{namespacelyap__stat_ae5925eda9d281c9f5d3b5bf51a342d75}{lyap\+\_\+stat\+::lyap\+\_\+acc} (x)
+\begin{DoxyCompactList}\small\item\em Accumulate one state. \end{DoxyCompactList}\item 
+real(kind=8) function, dimension(0\+:ndim), public \hyperlink{namespacelyap__stat_a05e8e9da3a46e83279e088b44f940d6e}{lyap\+\_\+stat\+::lyap\+\_\+mean} ()
+\begin{DoxyCompactList}\small\item\em Function returning the mean. \end{DoxyCompactList}\item 
+real(kind=8) function, dimension(0\+:ndim), public \hyperlink{namespacelyap__stat_a74c10391cac36f4ea668a2ab24047eca}{lyap\+\_\+stat\+::lyap\+\_\+var} ()
+\begin{DoxyCompactList}\small\item\em Function returning the variance. \end{DoxyCompactList}\item 
+integer function, public \hyperlink{namespacelyap__stat_a455a24b2f34307a219de05297857d216}{lyap\+\_\+stat\+::lyap\+\_\+iter} ()
+\begin{DoxyCompactList}\small\item\em Function returning the number of data accumulated. \end{DoxyCompactList}\item 
+subroutine, public \hyperlink{namespacelyap__stat_a464af579adb8b49dcd16abc1e251e1bc}{lyap\+\_\+stat\+::lyap\+\_\+reset}
+\begin{DoxyCompactList}\small\item\em Routine resetting the accumulators. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+integer \hyperlink{namespacelyap__stat_ae22963543caef680f536738ad6018008}{lyap\+\_\+stat\+::i} =0
+\begin{DoxyCompactList}\small\item\em Number of stats accumulated. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacelyap__stat_a99687dc4df185df56e841e0d87d1faae}{lyap\+\_\+stat\+::m}
+\begin{DoxyCompactList}\small\item\em Vector storing the inline mean. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacelyap__stat_ad4c65ab53e8f6e8d6a967fd7bc0caa60}{lyap\+\_\+stat\+::mprev}
+\begin{DoxyCompactList}\small\item\em Previous mean vector. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacelyap__stat_a7cc5265a7fac9300755528c599fb08fb}{lyap\+\_\+stat\+::v}
+\begin{DoxyCompactList}\small\item\em Vector storing the inline variance. \end{DoxyCompactList}\item 
+real(kind=8), dimension(\+:), allocatable \hyperlink{namespacelyap__stat_a72cd3ecc682d386dbe39e331afa90f9f}{lyap\+\_\+stat\+::mtmp}
+\end{DoxyCompactItemize}

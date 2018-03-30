@@ -115,6 +115,8 @@ real(kind=8) \hyperlink{namespaceparams_a0955c0296092bb15d2dcd120d72ad479}{tw}
 \begin{DoxyCompactList}\small\item\em Write all variables every tw time units. \end{DoxyCompactList}\item 
 logical \hyperlink{namespaceparams_affc7b423a975c0e92b62e67ed04edea5}{writeout}
 \begin{DoxyCompactList}\small\item\em Write to file boolean. \end{DoxyCompactList}\item 
+real(kind=8) \hyperlink{namespaceparams_a9abc30794d97348ca8f129e052f50630}{rescaling\+\_\+time}
+\begin{DoxyCompactList}\small\item\em Rescaling time for the Lyapunov computation. \end{DoxyCompactList}\item 
 integer \hyperlink{namespaceparams_a54123b5a947703d21d0c882dec6780ac}{nboc}
 \begin{DoxyCompactList}\small\item\em Number of atmospheric blocks. \end{DoxyCompactList}\item 
 integer \hyperlink{namespaceparams_aa5dc201b0a59d8bb25a5dc52d2ed3cac}{nbatm}
@@ -156,47 +158,49 @@ Read the basic parameters and mode selection from the namelist.
 
 
 
-Definition at line 97 of file params.\+f90.
+Definition at line 99 of file params.\+f90.
 
 
 \begin{DoxyCode}
-97     \textcolor{keywordtype}{INTEGER} :: allocstat
-98 
-99     namelist /aoscale/  scale,f0,n,rra,phi0\_npi
-100     namelist /oparams/  gp,r,h,d,nuo
-101     namelist /aparams/  k,kp,sig0,nua
-102     namelist /toparams/ go,co,to0
-103     namelist /taparams/ ga,ca,epsa,ta0
-104     namelist /otparams/ sc,lambda,rr,sb
-105 
-106     namelist /modeselection/ oms,ams
-107     namelist /numblocs/ nboc,nbatm
-108 
-109     namelist /int\_params/ t\_trans,t\_run,dt,tw,writeout
+99     \textcolor{keywordtype}{INTEGER} :: allocstat
+100 
+101     namelist /aoscale/  scale,f0,n,rra,phi0\_npi
+102     namelist /oparams/  gp,r,h,d,nuo
+103     namelist /aparams/  k,kp,sig0,nua
+104     namelist /toparams/ go,co,to0
+105     namelist /taparams/ ga,ca,epsa,ta0
+106     namelist /otparams/ sc,lambda,rr,sb
+107 
+108     namelist /modeselection/ oms,ams
+109     namelist /numblocs/ nboc,nbatm
 110 
-111     \textcolor{keyword}{OPEN}(8, file=\textcolor{stringliteral}{"params.nml"}, status=\textcolor{stringliteral}{'OLD'}, recl=80, delim=\textcolor{stringliteral}{'APOSTROPHE'})
-112 
-113     \textcolor{keyword}{READ}(8,nml=aoscale)
-114     \textcolor{keyword}{READ}(8,nml=oparams)
-115     \textcolor{keyword}{READ}(8,nml=aparams)
-116     \textcolor{keyword}{READ}(8,nml=toparams)
-117     \textcolor{keyword}{READ}(8,nml=taparams)
-118     \textcolor{keyword}{READ}(8,nml=otparams)
-119 
-120     \textcolor{keyword}{CLOSE}(8)
-121 
-122     \textcolor{keyword}{OPEN}(8, file=\textcolor{stringliteral}{"modeselection.nml"}, status=\textcolor{stringliteral}{'OLD'}, recl=80, delim=\textcolor{stringliteral}{'APOSTROPHE'})
-123     \textcolor{keyword}{READ}(8,nml=numblocs)
+111     namelist /int\_params/ t\_trans,t\_run,dt,tw,writeout
+112     namelist /lyap\_params/ rescaling\_time
+113 
+114     \textcolor{keyword}{OPEN}(8, file=\textcolor{stringliteral}{"params.nml"}, status=\textcolor{stringliteral}{'OLD'}, recl=80, delim=\textcolor{stringliteral}{'APOSTROPHE'})
+115 
+116     \textcolor{keyword}{READ}(8,nml=aoscale)
+117     \textcolor{keyword}{READ}(8,nml=oparams)
+118     \textcolor{keyword}{READ}(8,nml=aparams)
+119     \textcolor{keyword}{READ}(8,nml=toparams)
+120     \textcolor{keyword}{READ}(8,nml=taparams)
+121     \textcolor{keyword}{READ}(8,nml=otparams)
+122 
+123     \textcolor{keyword}{CLOSE}(8)
 124 
-125     \textcolor{keyword}{ALLOCATE}(oms(nboc,2),ams(nbatm,2), \hyperlink{namespacestat}{stat}=allocstat)
-126     \textcolor{keywordflow}{IF} (allocstat /= 0) stop \textcolor{stringliteral}{"*** Not enough memory ! ***"}
+125     \textcolor{keyword}{OPEN}(8, file=\textcolor{stringliteral}{"modeselection.nml"}, status=\textcolor{stringliteral}{'OLD'}, recl=80, delim=\textcolor{stringliteral}{'APOSTROPHE'})
+126     \textcolor{keyword}{READ}(8,nml=numblocs)
 127 
-128     \textcolor{keyword}{READ}(8,nml=modeselection)
-129     \textcolor{keyword}{CLOSE}(8)
+128     \textcolor{keyword}{ALLOCATE}(oms(nboc,2),ams(nbatm,2), \hyperlink{namespacestat}{stat}=allocstat)
+129     \textcolor{keywordflow}{IF} (allocstat /= 0) stop \textcolor{stringliteral}{"*** Not enough memory ! ***"}
 130 
-131     \textcolor{keyword}{OPEN}(8, file=\textcolor{stringliteral}{"int\_params.nml"}, status=\textcolor{stringliteral}{'OLD'}, recl=80, delim=\textcolor{stringliteral}{'APOSTROPHE'})
-132     \textcolor{keyword}{READ}(8,nml=int\_params)
+131     \textcolor{keyword}{READ}(8,nml=modeselection)
+132     \textcolor{keyword}{CLOSE}(8)
 133 
+134     \textcolor{keyword}{OPEN}(8, file=\textcolor{stringliteral}{"int\_params.nml"}, status=\textcolor{stringliteral}{'OLD'}, recl=80, delim=\textcolor{stringliteral}{'APOSTROPHE'})
+135     \textcolor{keyword}{READ}(8,nml=int\_params)
+136     \textcolor{keyword}{READ}(8,nml=lyap\_params)
+137 
 \end{DoxyCode}
 \index{params@{params}!init\+\_\+params@{init\+\_\+params}}
 \index{init\+\_\+params@{init\+\_\+params}!params@{params}}
@@ -211,68 +215,68 @@ Parameters initialisation routine.
 
 
 
-Definition at line 138 of file params.\+f90.
+Definition at line 142 of file params.\+f90.
 
 
 \begin{DoxyCode}
-138     \textcolor{keywordtype}{INTEGER}, \textcolor{keywordtype}{DIMENSION(2)} :: s
-139     \textcolor{keywordtype}{INTEGER} :: i
-140     \textcolor{keyword}{CALL }init\_nml
-141 
-142     \textcolor{comment}{!---------------------------------------------------------!}
-143     \textcolor{comment}{!                                                         !}
-144     \textcolor{comment}{! Computation of the dimension of the atmospheric         !}
-145     \textcolor{comment}{! and oceanic components                                  !}
-146     \textcolor{comment}{!                                                         !}
-147     \textcolor{comment}{!---------------------------------------------------------!}
-148 
-149     natm=0
-150     \textcolor{keywordflow}{DO} i=1,nbatm
-151        \textcolor{keywordflow}{IF} (ams(i,1)==1) \textcolor{keywordflow}{THEN}
-152           natm=natm+3
-153        \textcolor{keywordflow}{ELSE}
-154           natm=natm+2
-155 \textcolor{keywordflow}{       ENDIF}
-156 \textcolor{keywordflow}{    ENDDO}
-157     s=shape(oms)
-158     noc=s(1)
-159 
-160     ndim=2*natm+2*noc
-161 
-162     \textcolor{comment}{!---------------------------------------------------------!}
-163     \textcolor{comment}{!                                                         !}
-164     \textcolor{comment}{! Some general parameters (Domain, beta, gamma, coupling) !}
-165     \textcolor{comment}{!                                                         !}
+142     \textcolor{keywordtype}{INTEGER}, \textcolor{keywordtype}{DIMENSION(2)} :: s
+143     \textcolor{keywordtype}{INTEGER} :: i
+144     \textcolor{keyword}{CALL }init\_nml
+145 
+146     \textcolor{comment}{!---------------------------------------------------------!}
+147     \textcolor{comment}{!                                                         !}
+148     \textcolor{comment}{! Computation of the dimension of the atmospheric         !}
+149     \textcolor{comment}{! and oceanic components                                  !}
+150     \textcolor{comment}{!                                                         !}
+151     \textcolor{comment}{!---------------------------------------------------------!}
+152 
+153     natm=0
+154     \textcolor{keywordflow}{DO} i=1,nbatm
+155        \textcolor{keywordflow}{IF} (ams(i,1)==1) \textcolor{keywordflow}{THEN}
+156           natm=natm+3
+157        \textcolor{keywordflow}{ELSE}
+158           natm=natm+2
+159 \textcolor{keywordflow}{       ENDIF}
+160 \textcolor{keywordflow}{    ENDDO}
+161     s=shape(oms)
+162     noc=s(1)
+163 
+164     ndim=2*natm+2*noc
+165 
 166     \textcolor{comment}{!---------------------------------------------------------!}
-167 
-168     pi=dacos(-1.d0)
-169     l=scale/pi
-170     phi0=phi0\_npi*pi
-171     lr=sqrt(gp*h)/f0
-172     g=-l**2/lr**2
-173     betp=l/rra*cos(phi0)/sin(phi0)
-174     rp=r/f0
-175     dp=d/f0
-176     kd=k*2
-177     kdp=kp
-178 
-179     \textcolor{comment}{!-----------------------------------------------------!}
-180     \textcolor{comment}{!                                                     !}
-181     \textcolor{comment}{! DERIVED QUANTITIES                                  !}
-182     \textcolor{comment}{!                                                     !}
+167     \textcolor{comment}{!                                                         !}
+168     \textcolor{comment}{! Some general parameters (Domain, beta, gamma, coupling) !}
+169     \textcolor{comment}{!                                                         !}
+170     \textcolor{comment}{!---------------------------------------------------------!}
+171 
+172     pi=dacos(-1.d0)
+173     l=scale/pi
+174     phi0=phi0\_npi*pi
+175     lr=sqrt(gp*h)/f0
+176     g=-l**2/lr**2
+177     betp=l/rra*cos(phi0)/sin(phi0)
+178     rp=r/f0
+179     dp=d/f0
+180     kd=k*2
+181     kdp=kp
+182 
 183     \textcolor{comment}{!-----------------------------------------------------!}
-184 
-185     cpo=co/(go*f0) * rr/(f0**2*l**2)
-186     lpo=lambda/(go*f0)
-187     cpa=ca/(ga*f0) * rr/(f0**2*l**2)/2 \textcolor{comment}{! Cpa acts on psi1-psi3, not on theta}
-188     lpa=lambda/(ga*f0)
-189     sbpo=4*sb*to0**3/(go*f0) \textcolor{comment}{! long wave radiation lost by ocean to atmosphere space}
-190     sbpa=8*epsa*sb*ta0**3/(go*f0) \textcolor{comment}{! long wave radiation from atmosphere absorbed by ocean}
-191     lsbpo=2*epsa*sb*to0**3/(ga*f0) \textcolor{comment}{! long wave radiation from ocean absorbed by atmosphere}
-192     lsbpa=8*epsa*sb*ta0**3/(ga*f0) \textcolor{comment}{! long wave radiation lost by atmosphere to space & ocea}
-193     nuap=nua/(f0*l**2)
-194     nuop=nuo/(f0*l**2)
-195 
+184     \textcolor{comment}{!                                                     !}
+185     \textcolor{comment}{! DERIVED QUANTITIES                                  !}
+186     \textcolor{comment}{!                                                     !}
+187     \textcolor{comment}{!-----------------------------------------------------!}
+188 
+189     cpo=co/(go*f0) * rr/(f0**2*l**2)
+190     lpo=lambda/(go*f0)
+191     cpa=ca/(ga*f0) * rr/(f0**2*l**2)/2 \textcolor{comment}{! Cpa acts on psi1-psi3, not on theta}
+192     lpa=lambda/(ga*f0)
+193     sbpo=4*sb*to0**3/(go*f0) \textcolor{comment}{! long wave radiation lost by ocean to atmosphere space}
+194     sbpa=8*epsa*sb*ta0**3/(go*f0) \textcolor{comment}{! long wave radiation from atmosphere absorbed by ocean}
+195     lsbpo=2*epsa*sb*to0**3/(ga*f0) \textcolor{comment}{! long wave radiation from ocean absorbed by atmosphere}
+196     lsbpa=8*epsa*sb*ta0**3/(ga*f0) \textcolor{comment}{! long wave radiation lost by atmosphere to space & ocea}
+197     nuap=nua/(f0*l**2)
+198     nuop=nuo/(f0*l**2)
+199 
 \end{DoxyCode}
 
 
@@ -286,11 +290,11 @@ Atmospheric mode selection array.
 
 
 
-Definition at line 87 of file params.\+f90.
+Definition at line 89 of file params.\+f90.
 
 
 \begin{DoxyCode}
-87   \textcolor{keywordtype}{INTEGER}, \textcolor{keywordtype}{DIMENSION(:,:)}, \textcolor{keywordtype}{ALLOCATABLE} :: ams\textcolor{comment}{   !< Atmospheric mode selection array}
+89   \textcolor{keywordtype}{INTEGER}, \textcolor{keywordtype}{DIMENSION(:,:)}, \textcolor{keywordtype}{ALLOCATABLE} :: ams\textcolor{comment}{   !< Atmospheric mode selection array}
 \end{DoxyCode}
 \index{params@{params}!betp@{betp}}
 \index{betp@{betp}!params@{params}}
@@ -714,11 +718,11 @@ Number of atmospheric basis functions.
 
 
 
-Definition at line 83 of file params.\+f90.
+Definition at line 85 of file params.\+f90.
 
 
 \begin{DoxyCode}
-83   \textcolor{keywordtype}{INTEGER} :: natm=0\textcolor{comment}{ !< Number of atmospheric basis functions}
+85   \textcolor{keywordtype}{INTEGER} :: natm=0\textcolor{comment}{ !< Number of atmospheric basis functions}
 \end{DoxyCode}
 \index{params@{params}!nbatm@{nbatm}}
 \index{nbatm@{nbatm}!params@{params}}
@@ -729,11 +733,11 @@ Number of oceanic blocks.
 
 
 
-Definition at line 82 of file params.\+f90.
+Definition at line 84 of file params.\+f90.
 
 
 \begin{DoxyCode}
-82   \textcolor{keywordtype}{INTEGER} :: nbatm\textcolor{comment}{  !< Number of oceanic blocks}
+84   \textcolor{keywordtype}{INTEGER} :: nbatm\textcolor{comment}{  !< Number of oceanic blocks}
 \end{DoxyCode}
 \index{params@{params}!nboc@{nboc}}
 \index{nboc@{nboc}!params@{params}}
@@ -744,11 +748,11 @@ Number of atmospheric blocks.
 
 
 
-Definition at line 81 of file params.\+f90.
+Definition at line 83 of file params.\+f90.
 
 
 \begin{DoxyCode}
-81   \textcolor{keywordtype}{INTEGER} :: nboc\textcolor{comment}{   !< Number of atmospheric blocks}
+83   \textcolor{keywordtype}{INTEGER} :: nboc\textcolor{comment}{   !< Number of atmospheric blocks}
 \end{DoxyCode}
 \index{params@{params}!ndim@{ndim}}
 \index{ndim@{ndim}!params@{params}}
@@ -759,11 +763,11 @@ Number of variables (dimension of the model)
 
 
 
-Definition at line 85 of file params.\+f90.
+Definition at line 87 of file params.\+f90.
 
 
 \begin{DoxyCode}
-85   \textcolor{keywordtype}{INTEGER} :: ndim\textcolor{comment}{   !< Number of variables (dimension of the model)}
+87   \textcolor{keywordtype}{INTEGER} :: ndim\textcolor{comment}{   !< Number of variables (dimension of the model)}
 \end{DoxyCode}
 \index{params@{params}!noc@{noc}}
 \index{noc@{noc}!params@{params}}
@@ -774,11 +778,11 @@ Number of oceanic basis functions.
 
 
 
-Definition at line 84 of file params.\+f90.
+Definition at line 86 of file params.\+f90.
 
 
 \begin{DoxyCode}
-84   \textcolor{keywordtype}{INTEGER} :: noc=0\textcolor{comment}{  !< Number of oceanic basis functions}
+86   \textcolor{keywordtype}{INTEGER} :: noc=0\textcolor{comment}{  !< Number of oceanic basis functions}
 \end{DoxyCode}
 \index{params@{params}!nua@{nua}}
 \index{nua@{nua}!params@{params}}
@@ -849,11 +853,11 @@ Ocean mode selection array.
 
 
 
-Definition at line 86 of file params.\+f90.
+Definition at line 88 of file params.\+f90.
 
 
 \begin{DoxyCode}
-86   \textcolor{keywordtype}{INTEGER}, \textcolor{keywordtype}{DIMENSION(:,:)}, \textcolor{keywordtype}{ALLOCATABLE} :: oms\textcolor{comment}{   !< Ocean mode selection array}
+88   \textcolor{keywordtype}{INTEGER}, \textcolor{keywordtype}{DIMENSION(:,:)}, \textcolor{keywordtype}{ALLOCATABLE} :: oms\textcolor{comment}{   !< Ocean mode selection array}
 \end{DoxyCode}
 \index{params@{params}!phi0@{phi0}}
 \index{phi0@{phi0}!params@{params}}
@@ -914,6 +918,21 @@ Definition at line 30 of file params.\+f90.
 
 \begin{DoxyCode}
 30   \textcolor{keywordtype}{REAL(KIND=8)} :: r\textcolor{comment}{         !< Frictional coefficient at the bottom of the ocean.}
+\end{DoxyCode}
+\index{params@{params}!rescaling\+\_\+time@{rescaling\+\_\+time}}
+\index{rescaling\+\_\+time@{rescaling\+\_\+time}!params@{params}}
+\subsubsection[{\texorpdfstring{rescaling\+\_\+time}{rescaling_time}}]{\setlength{\rightskip}{0pt plus 5cm}real(kind=8) params\+::rescaling\+\_\+time}\hypertarget{namespaceparams_a9abc30794d97348ca8f129e052f50630}{}\label{namespaceparams_a9abc30794d97348ca8f129e052f50630}
+
+
+Rescaling time for the Lyapunov computation. 
+
+
+
+Definition at line 81 of file params.\+f90.
+
+
+\begin{DoxyCode}
+81   \textcolor{keywordtype}{REAL(KIND=8)} :: rescaling\_time\textcolor{comment}{ !< Rescaling time for the Lyapunov computation}
 \end{DoxyCode}
 \index{params@{params}!rp@{rp}}
 \index{rp@{rp}!params@{params}}

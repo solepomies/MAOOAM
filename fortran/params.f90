@@ -77,6 +77,8 @@ MODULE params
   REAL(KIND=8) :: dt        !< Integration time step
   REAL(KIND=8) :: tw        !< Write all variables every tw time units
   LOGICAL :: writeout       !< Write to file boolean
+
+  REAL(KIND=8) :: rescaling_time !< Rescaling time for the Lyapunov computation
   
   INTEGER :: nboc   !< Number of atmospheric blocks
   INTEGER :: nbatm  !< Number of oceanic blocks
@@ -117,6 +119,7 @@ CONTAINS
     NAMELIST /numblocs/ nboc,nbatm
 
     NAMELIST /int_params/ t_trans,t_run,dt,tw,writeout
+    NAMELIST /lyap_params/ rescaling_time
 
     OPEN(8, file="params.nml", status='OLD', recl=80, delim='APOSTROPHE')
 
@@ -140,6 +143,7 @@ CONTAINS
 
     OPEN(8, file="int_params.nml", status='OLD', recl=80, delim='APOSTROPHE')
     READ(8,nml=int_params)
+    READ(8,nml=lyap_params)
 
   END SUBROUTINE init_nml
 

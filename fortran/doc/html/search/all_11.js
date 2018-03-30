@@ -12,13 +12,13 @@ var searchData=
   ['scale',['scale',['../namespaceparams.html#a7803126847c2e1b2b4aced941ec9257b',1,'params']]],
   ['sig0',['sig0',['../namespaceparams.html#a9115211e1d9169ad56a3fa924c5f7ef3',1,'params']]],
   ['simplify',['simplify',['../namespacetensor.html#a364522b80ab0f4785c331eb74fa1ba04',1,'tensor']]],
-  ['so',['so',['../LICENSE_8txt.html#ab05c0f0392781fce452b91e1ede41d90',1,'LICENSE.txt']]],
-  ['software',['Software',['../LICENSE_8txt.html#a22a1529885b3e9d66b0c72fe604fc3dc',1,'LICENSE.txt']]],
+  ['so',['so',['../LICENSE_8txt.html#a24a909263a383e389f43dbaea954a90b',1,'LICENSE.txt']]],
+  ['software',['Software',['../LICENSE_8txt.html#a5972617605af8d0ee35a18608e832e08',1,'LICENSE.txt']]],
   ['sparse_5fmul2',['sparse_mul2',['../namespacetensor.html#a70230d57c615d9548905bc023f5fc01d',1,'tensor']]],
   ['sparse_5fmul3',['sparse_mul3',['../namespacetensor.html#a11054027a386918658f8948231af53b1',1,'tensor']]],
   ['stat',['stat',['../namespacestat.html',1,'']]],
   ['stat_2ef90',['stat.f90',['../stat_8f90.html',1,'']]],
   ['step',['step',['../namespaceintegrator.html#adaf5baacd0ff1905f334ce824cdcd58e',1,'integrator']]],
   ['str',['str',['../namespaceutil.html#a1df36d0696c9183ceb6bb770f1d88111',1,'util']]],
-  ['sublicense',['sublicense',['../LICENSE_8txt.html#af9fad5470a0b4e968d19b11b7c643fdb',1,'LICENSE.txt']]]
+  ['sublicense',['sublicense',['../LICENSE_8txt.html#a2d02ad98d8bbfd91a923533c6d2e3bec',1,'LICENSE.txt']]]
 ];

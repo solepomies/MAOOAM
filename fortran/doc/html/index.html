@@ -86,8 +86,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Modular arbitrary-order ocean-atmosphere model: MAOOAM -- Fortran implementation </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2>About</h2>
-<p>(c) 2013-2016 Lesley De Cruz and Jonathan Demaeyer</p>
+<div class="textblock"><h2>Lyapunov exponents computation version</h2>
+<hr/>
+<h2>About</h2>
+<p>(c) 2013-2016 Lesley De Cruz, Jonathan Demaeyer and Sebastian Schubert</p>
 <p>See <a href="../LICENSE.txt">LICENSE.txt</a> for license information.</p>
 <p>This software is provided as supplementary material with:</p>
 <ul>
@@ -97,6 +99,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>The authors would appreciate it if you could also send a reprint of your paper to <a href="#" onclick="location.href='mai'+'lto:'+'les'+'le'+'y.d'+'ec'+'ruz'+'@m'+'ete'+'o.'+'be'; return false;">lesle<span style="display: none;">.nosp@m.</span>y.de<span style="display: none;">.nosp@m.</span>cruz@<span style="display: none;">.nosp@m.</span>mete<span style="display: none;">.nosp@m.</span>o.be</a>, <a href="#" onclick="location.href='mai'+'lto:'+'jon'+'at'+'han'+'.d'+'ema'+'ey'+'er@'+'me'+'teo'+'.b'+'e'; return false;">jonat<span style="display: none;">.nosp@m.</span>han.<span style="display: none;">.nosp@m.</span>demae<span style="display: none;">.nosp@m.</span>yer@<span style="display: none;">.nosp@m.</span>meteo<span style="display: none;">.nosp@m.</span>.be</a> and <a href="#" onclick="location.href='mai'+'lto:'+'svn'+'@m'+'ete'+'o.'+'be'; return false;">svn@m<span style="display: none;">.nosp@m.</span>eteo<span style="display: none;">.nosp@m.</span>.be</a>.</p>
 <p>Consult the MAOOAM <a href="http://www.github.com/Climdyn/MAOOAM">code repository</a> for updates, and <a href="http://climdyn.meteo.be">our website</a> for additional resources.</p>
 <p>A pdf version of this manual is available <a href="../latex/Reference_manual.pdf">here</a>. </p><hr/>
+<h2>Note on the Lyapunov exponents computation</h2>
+<p>This version of the code allows for the computation of the backward Lyapunov exponents. The method used is described in</p>
+<ul>
+<li>Benettin, G., Galgani, L., Giorgilli, A., and Strelcyn, J. M. : Lyapunov characteristic exponents for smooth dynamical systems; a method for computing all of them. Part 2: Numerical application. Meccanica, 15, 21-30, <a href="http://dx.doi.org/10.1007/BF02128237">doi:10.1007/BF02128237</a>, 1980.</li>
+</ul>
+<p>This version has been used to compute the Lyapunov exponents of MAOOAM in the following manuscript:</p>
+<ul>
+<li>De Cruz, L., Schubert, S., Demaeyer, J., Lucarini, V., and Vannitsem, S.: Exploring the Lyapunov instability properties of high-dimensional atmospheric and climate models, Nonlin. Processes Geophys. Discuss., <a href="https://doi.org/10.5194/npg-2017-76">doi:10.5194/npg-2017-76</a>, in review, 2018. <hr/>
+</li>
+</ul>
 <h2>Installation</h2>
 <p>The program can be installed with Makefile. We provide configuration files for two compilers : gfortran and ifort.</p>
 <p>By default, gfortran is selected. To select one or the other, simply modify the Makefile accordingly or pass the COMPILER flag to <code>make</code>. If gfortran is selected, the code should be compiled with gfortran 4.7+ (allows for allocatable arrays in namelists). If ifort is selected, the code has been tested with the version 14.0.2 and we do not guarantee compatibility with older compiler version.</p>
@@ -110,7 +122,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>The model tendencies are represented through a tensor called aotensor which includes all the coefficients. This tensor is computed once at the program initialization.</p>
 <ul>
 <li><a class="el" href="maooam_8f90.html">maooam.f90</a> : Main program.</li>
+<li><a class="el" href="maooam__lyap_8f90.html">maooam_lyap.f90</a> : Version of the main program with the computation of the Lyapunov exponents.</li>
+<li><a class="el" href="maooam__lyap__div_8f90.html">maooam_lyap_div.f90</a> : Version of the main program with the computation of the first Lyapunov exponents with the divergence method.</li>
 <li><a class="el" href="aotensor__def_8f90.html">aotensor_def.f90</a> : Tensor aotensor computation module.</li>
+<li><a class="el" href="lyap__vectors_8f90.html">lyap_vectors.f90</a> : Module for the computation of Lyapunov exponents and vectors</li>
 <li>IC_def.f90 : A module which loads the user specified initial condition.</li>
 <li><a class="el" href="inprod__analytic_8f90.html">inprod_analytic.f90</a> : Inner products computation module.</li>
 <li><a class="el" href="rk2__integrator_8f90.html">rk2_integrator.f90</a> : A module which contains the Heun integrator for the model equations.</li>
@@ -133,6 +148,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <hr/>
 <h2>Usage</h2>
 <p>The user first has to fill the params.nml and int_params.nml namelist files according to their needs. Indeed, model and integration parameters can be specified respectively in the params.nml and int_params.nml namelist files. Some examples related to already published article are available in the params folder.</p>
+<p>The parameters related to the Lyapunov exponents computation are located in the int_params.nml namelist file.</p>
 <p>The modeselection.nml namelist can then be filled :</p><ul>
 <li>NBOC and NBATM specify the number of blocks that will be used in respectively the ocean and the atmosphere. Each block corresponds to a given x and y wavenumber.</li>
 <li>The OMS and AMS arrays are integer arrays which specify which wavenumbers of the spectral decomposition will be used in respectively the ocean and the atmosphere. Their shapes are OMS(NBOC,2) and AMS(NBATM,2).</li>
@@ -141,14 +157,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>Note that the variables of the model are numbered according to the chosen order of the blocks.</li>
 </ul>
 <p>The Makefile allows to change the integrator being used for the time evolution. The user should modify it according to its need. By default a RK2 scheme is selected.</p>
-<p>Finally, the IC.nml file specifying the initial condition should be defined. To obtain an example of this configuration file corresponding to the model you have previously defined, simply delete the current IC.nml file (if it exists) and run the program : </p><pre class="fragment">./maooam
+<p>Finally, the IC.nml file specifying the initial condition should be defined. To obtain an example of this configuration file corresponding to the model you have previously defined, simply delete the current IC.nml file (if it exists) and run the main program : </p><pre class="fragment">./maooam
 </pre><p>It will generate a new one and start with the 0 initial condition. If you want another initial condition, stop the program, fill the newly generated file and restart : </p><pre class="fragment">./maooam
 </pre><p>It will generate two files :</p><ul>
 <li>evol_field.dat : the recorded time evolution of the variables.</li>
 <li>mean_field.dat : the mean field (the climatology)</li>
 </ul>
 <p>The tangent linear and adjoint models of MAOOAM are provided in the <a class="el" href="namespacetl__ad__tensor.html" title="Tangent Linear (TL) and Adjoint (AD) model versions of MAOOAM. Tensors definition module...">tl_ad_tensor</a>, rk2_tl_ad_integrator and rk4_tl_ad_integrator modules. It is documented <a href="./md_doc_tl_ad_doc.html">here</a>.</p>
-<hr/>
+<p>The computation of the Lyapunov exponents can be done by running the program : </p><pre class="fragment">./maooam_lyap
+</pre><p>It will generate four files:</p><ul>
+<li>evol_field.dat : the recorded time evolution of the variables.</li>
+<li>mean_field.dat : the mean field (the climatology)</li>
+<li>lyapunov_exponents.dat : the recorded time evolution of the Lyapunov exponents</li>
+<li>mean_lyapunov.dat : the mean Lyapunov exponents as well as their variance.</li>
+</ul>
+<p>Alternatively, the first Lyapunov exponent can be computed by the divergence method, by running :</p>
+<p>./maooam_lyap_div</p>
+<p>It will generate three files :</p><ul>
+<li>evol_field.dat : the recorded time evolution of the variables.</li>
+<li>mean_field.dat : the mean field (the climatology)</li>
+<li>lyapunov_exponents_div.dat : the recorded time evolution of the first Lyapunov exponent <hr/>
+</li>
+</ul>
 <h2>Implementation notes</h2>
 <p>As the system of differential equations is at most bilinear in \(y_j\) ( \(j=1..n\)), \(\boldsymbol{y}\) being the array of variables, it can be expressed as a tensor contraction :</p>
 <p class="formulaDsp">
@@ -170,7 +200,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 19 2018 16:12:32 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 19 2018 18:11:22 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

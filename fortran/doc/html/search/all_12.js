@@ -4,7 +4,8 @@ var searchData=
   ['t_5frun',['t_run',['../namespaceparams.html#a923cab407956c82921069b7ec0e69eb9',1,'params']]],
   ['t_5ftrans',['t_trans',['../namespaceparams.html#aabf0943afa2272a8bbbd58c49ad0db38',1,'params']]],
   ['ta0',['ta0',['../namespaceparams.html#af3fdd8c130a667bca95de5ebf9e5f492',1,'params']]],
-  ['tendencies',['tendencies',['../namespaceintegrator.html#ae8158ec5bb2be4dca1daadb1a906ba96',1,'integrator']]],
+  ['tau',['tau',['../namespacelyap__vectors.html#a336c0490ac0927589648b33fe7abc733',1,'lyap_vectors']]],
+  ['tendencies',['tendencies',['../namespaceintegrator.html#ae8158ec5bb2be4dca1daadb1a906ba96',1,'integrator::tendencies()'],['../namespacetl__ad__integrator.html#aa03be9677761cfa373b15c85cccdc424',1,'tl_ad_integrator::tendencies()']]],
   ['tensor',['tensor',['../namespacetensor.html',1,'']]],
   ['tensor_2ef90',['tensor.f90',['../tensor_8f90.html',1,'']]],
   ['test_5faotensor',['test_aotensor',['../test__aotensor_8f90.html#a608f764acdf5e6432f7b8783e71680cf',1,'test_aotensor.f90']]],
@@ -23,6 +24,8 @@ var searchData=
   ['tl_5fstep',['tl_step',['../namespacetl__ad__integrator.html#ac88b155557d4fc0bae70007fde3aef06',1,'tl_ad_integrator']]],
   ['tltensor',['tltensor',['../namespacetl__ad__tensor.html#a6180cfcc4d4ad119ef93266ea955903c',1,'tl_ad_tensor']]],
   ['to0',['to0',['../namespaceparams.html#ad880ab6d5fab6c7a095b526383e75404',1,'params']]],
+  ['tr_5fjacob_5fmat',['tr_jacob_mat',['../tr__jacob__mat_8f90.html#afa9797f045c57950dcd8fb4250cf84e6',1,'tr_jacob_mat.f90']]],
+  ['tr_5fjacob_5fmat_2ef90',['tr_jacob_mat.f90',['../tr__jacob__mat_8f90.html',1,'']]],
   ['tw',['tw',['../namespaceparams.html#a0955c0296092bb15d2dcd120d72ad479',1,'params']]],
   ['typ',['typ',['../structinprod__analytic_1_1atm__wavenum.html#a1c12be211e96c5a773aae4c2146a3792',1,'inprod_analytic::atm_wavenum']]]
 ];
