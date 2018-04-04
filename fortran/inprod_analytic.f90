@@ -204,6 +204,7 @@ CONTAINS
     a(2)=j
     a(3)=k
 
+    par=0.D0
     val=0.D0
 
     IF ((Ti%typ == "L") .AND. (Tj%typ == "L") .AND. (Tk%typ == "L")) THEN
