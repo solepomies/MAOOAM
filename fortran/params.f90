@@ -76,6 +76,7 @@ MODULE params
   REAL(KIND=8) :: t_run     !< Effective intergration time (length of the generated trajectory)
   REAL(KIND=8) :: dt        !< Integration time step
   REAL(KIND=8) :: tw        !< Write all variables every tw time units
+  REAL(KIND=8) :: tw_snap   !< Write a snapshot every tw_snap time units
   LOGICAL :: writeout       !< Write to file boolean
   
   INTEGER :: nboc   !< Number of atmospheric blocks
@@ -106,7 +107,7 @@ CONTAINS
     NAMELIST /modeselection/ oms,ams
     NAMELIST /numblocs/ nboc,nbatm
 
-    NAMELIST /int_params/ t_trans,t_run,dt,tw,writeout
+    NAMELIST /int_params/ t_trans,t_run,dt,tw,tw_snap,writeout
 
     OPEN(8, file="params.nml", status='OLD', recl=80, delim='APOSTROPHE')
 
