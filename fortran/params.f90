@@ -25,6 +25,7 @@ MODULE params
   REAL(KIND=8) :: phi0      !< Latitude in radian
   REAL(KIND=8) :: rra       !< Earth radius
   REAL(KIND=8) :: sig0      !< \f$\sigma_0\f$ - Non-dimensional static stability of the atmosphere.
+!  REAL(KIND=8) :: sigma     !< \f$\sigma_0\f$ - static stability of the atmosphere.
   REAL(KIND=8) :: k         !< Bottom atmospheric friction coefficient.
   REAL(KIND=8) :: kp        !< \f$k'\f$ - Internal atmospheric friction coefficient.
   REAL(KIND=8) :: r         !< Frictional coefficient at the bottom of the ocean.
@@ -76,6 +77,7 @@ MODULE params
   REAL(KIND=8) :: t_run     !< Effective intergration time (length of the generated trajectory)
   REAL(KIND=8) :: dt        !< Integration time step
   REAL(KIND=8) :: tw        !< Write all variables every tw time units
+  REAL(KIND=8) :: tw_snap   !< Write a snapshot every tw_snap time units
   LOGICAL :: writeout       !< Write to file boolean
 
   REAL(KIND=8) :: rescaling_time !< Rescaling time for the Lyapunov computation
@@ -109,8 +111,8 @@ CONTAINS
 
     NAMELIST /aoscale/  scale,f0,n,rra,phi0_npi
     NAMELIST /oparams/  gp,r,H,d,nuo
-!    NAMELIST /aparams/  k,kp,sig0,nua
-    NAMELIST /aparams/  k,kp,sigma,nua !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    NAMELIST /aparams/  k,kp,sig0,nua
+!    NAMELIST /aparams/  k,kp,sigma,nua !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     NAMELIST /toparams/ Go,Co,To0
     NAMELIST /taparams/ Ga,Ca,epsa,Ta0
     NAMELIST /otparams/ sc,lambda,RR,sB
@@ -118,8 +120,8 @@ CONTAINS
     NAMELIST /modeselection/ oms,ams
     NAMELIST /numblocs/ nboc,nbatm
 
-    NAMELIST /int_params/ t_trans,t_run,dt,tw,writeout
     NAMELIST /lyap_params/ rescaling_time
+    NAMELIST /int_params/ t_trans,t_run,dt,tw,tw_snap,writeout
 
     OPEN(8, file="params.nml", status='OLD', recl=80, delim='APOSTROPHE')
 
@@ -251,13 +253,13 @@ CONTAINS
     phi0=phi0_npi*pi
     LR=sqrt(gp*H)/f0
     G=-L**2/LR**2
-    betp=L/rra*cos(phi0)/abs(sin(phi0)) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(sin(phi0))
-    rp=r/abs(f0) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
-    dp=d/abs(f0) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
+    betp=L/rra*cos(phi0)/abs(sin(phi0))
+    rp=r/abs(f0)
+    dp=d/abs(f0)
     kd=k*2
     kdp=kp
 
-    sig0=sigma*50000*50000/(2*(l**2)*(f0**2)) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SIGMA
+!    sig0=sigma*50000*50000/(2*(l**2)*(f0**2)) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SIGMA
 
     !-----------------------------------------------------!
     !                                                     !
@@ -265,16 +267,16 @@ CONTAINS
     !                                                     !
     !-----------------------------------------------------!
 
-    Cpo=Co/(Go*abs(f0)) * RR/(f0**2*L**2) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
-    Lpo=lambda/(Go*abs(f0)) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
-    Cpa=Ca/(Ga*abs(f0)) * RR/(f0**2*L**2)/2 ! Cpa acts on psi1-psi3, not on theta !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
-    Lpa=lambda/(Ga*abs(f0)) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
-    sBpo=4*sB*To0**3/(Go*abs(f0)) ! long wave radiation lost by ocean to atmosphere space !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
-    sBpa=8*epsa*sB*Ta0**3/(Go*abs(f0)) ! long wave radiation from atmosphere absorbed by ocean !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
-    LSBpo=2*epsa*sB*To0**3/(Ga*abs(f0)) ! long wave radiation from ocean absorbed by atmosphere !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
-    LSBpa=8*epsa*sB*Ta0**3/(Ga*abs(f0)) ! long wave radiation lost by atmosphere to space & ocean !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
-    nuap=nua/(abs(f0)*L**2) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
-    nuop=nuo/(abs(f0)*L**2) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!abs(f0)
+    Cpo=Co/(Go*abs(f0)) * RR/(f0**2*L**2)
+    Lpo=lambda/(Go*abs(f0))
+    Cpa=Ca/(Ga*abs(f0)) * RR/(f0**2*L**2)/2 ! Cpa acts on psi1-psi3, not on theta
+    Lpa=lambda/(Ga*abs(f0))
+    sBpo=4*sB*To0**3/(Go*abs(f0)) ! long wave radiation lost by ocean to atmosphere space
+    sBpa=8*epsa*sB*Ta0**3/(Go*abs(f0)) ! long wave radiation from atmosphere absorbed by ocean
+    LSBpo=2*epsa*sB*To0**3/(Ga*abs(f0)) ! long wave radiation from ocean absorbed by atmosphere
+    LSBpa=8*epsa*sB*Ta0**3/(Ga*abs(f0)) ! long wave radiation lost by atmosphere to space & ocean
+    nuap=nua/(abs(f0)*L**2)
+    nuop=nuo/(abs(f0)*L**2)
 
   END SUBROUTINE init_params
 END MODULE params
