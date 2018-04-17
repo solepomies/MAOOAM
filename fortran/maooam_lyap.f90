@@ -11,7 +11,7 @@
 !---------------------------------------------------------------------------!
 
 PROGRAM maooam_lyap
-  USE params, only: ndim, dt, tw, t_trans, t_run, writeout, rescaling_time
+  USE params, only: ndim, dt, tw, tw_snap, t_trans, t_run, writeout, rescaling_time
   USE aotensor_def, only: init_aotensor
   USE tl_ad_tensor, only: init_tltensor
   USE IC_def, only: load_IC, IC
@@ -29,10 +29,24 @@ PROGRAM maooam_lyap
   REAL(KIND=8) :: t_up
   INTEGER :: IndexBen,WRSTAT
   CHARACTER(LEN=19) :: FMTX
+  INTEGER :: i, next, IndexSnap, WRSTAT2
+  CHARACTER(LEN=9) :: arg
+  LOGICAL :: cont_evol    !< True if the initial state is to be read in snapshot_trans.dat (i.e. the previous evolution is to be continued)
+  LOGICAL :: ex
 
   PRINT*, 'Model MAOOAM v1.0'
   PRINT*, '      - with computation of the Lyapunov spectrum'
   PRINT*, 'Loading information...'
+
+  ! Initializing cont_evol
+  cont_evol=.FALSE.
+  arg='arg'
+  i=0
+  DO WHILE ((.NOT. cont_evol) .AND. LEN_TRIM(arg) /= 0)
+     CALL get_command_argument(i, arg)
+     IF (TRIM(arg)=='continue') cont_evol=.TRUE.
+     i=i+1
+  END DO
 
   CALL init_aotensor    ! Compute the tensors
   CALL init_tltensor   
@@ -51,13 +65,32 @@ PROGRAM maooam_lyap
 
   ALLOCATE(X(0:ndim),Xnew(0:ndim),prop_buf(ndim,ndim))
   X=IC
+  IF (cont_evol) THEN
+     INQUIRE(FILE='snapshots_trans.dat',EXIST=ex,NEXTREC=next)
+     IF (ex) THEN
+        OPEN(12,file='snapshots_trans.dat')
+        READ(12,REC=next-1) X
+        CLOSE(12)
+     END IF
+  END IF
+
+  IF (writeout) OPEN(12,file='snapshots_trans.dat',status='replace',form='UNFORMATTED',access='DIRECT',recl=8*ndim)
+
+
   PRINT*, 'Starting the transient time evolution... t_trans = ',t_trans
 
+  IndexSnap=0
   DO WHILE (t<t_trans)
      CALL step(X,t,dt,Xnew)
      X=Xnew
      IF (mod(t/t_trans*100.D0,0.1)<t_up) WRITE(*,'(" Progress ",F6.1," %",A,$)') t/t_trans*100.D0,char(13)
+     IF (writeout .AND. mod(t,tw_snap)<dt) THEN
+        IndexSnap=IndexSnap+1
+        WRITE(12,rec=IndexSnap,iostat=WRSTAT2) X
+     END IF
   END DO
+
+  IF (writeout) CLOSE(12)
 
   PRINT*, 'Starting the time evolution... t_run = ',t_run
 
