@@ -41,7 +41,8 @@ CONTAINS
     fm(1:6)='(F3.1)'
 
     CALL random_seed(size=j)
-   
+    WRITE(6,*) "j="
+    WRITE(6,*) j
     IF (ndim == 0) STOP "*** Number of dimensions is 0! ***"
     ALLOCATE(IC(0:ndim),seed(j), STAT=AllocStat)
     IF (AllocStat /= 0) STOP "*** Not enough memory ! ***"
@@ -87,8 +88,8 @@ CONTAINS
        CALL random_seed(get=seed)
        IC=0
        IC(0)=1.0D0
-       init_type="zero"
-       size_of_random_noise=0.D0
+       init_type="rand"!"zero"
+       size_of_random_noise=1.D-8!0.D0
        WRITE(6,*) "*** IC.nml namelist written. Starting with 0 as initial condition !***"
     END IF
     OPEN(8, file="IC.nml", status='REPLACE')
