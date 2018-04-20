@@ -19,6 +19,7 @@ PROGRAM maooam
   IMPLICIT NONE
 
   REAL(KIND=8), DIMENSION(:), ALLOCATABLE :: X       !< State variable in the model
+  REAL(KIND=8), DIMENSION(:), ALLOCATABLE :: Xwrite  !< Copy to be written
   REAL(KIND=8), DIMENSION(:), ALLOCATABLE :: Xnew    !< Updated state variable
   REAL(KIND=8) :: t=0.D0                             !< Time variable
   REAL(KIND=8) :: t_up
@@ -92,7 +93,11 @@ PROGRAM maooam
      CALL step(X,t,dt,Xnew)
      X=Xnew
      IF (mod(t,tw)<dt) THEN
-        IF (writeout) WRITE(10,*) t,X(1:ndim)
+        Xwrite=X
+        DO i=1,ndim
+           IF (abs(Xwrite(i))<1.D-50) Xwrite(i)=0
+        END DO
+        IF (writeout) WRITE(10,*) t,Xwrite(1:ndim)
         CALL acc(X)
      END IF
      IF (mod(t/t_run*100.D0,0.1)<t_up) WRITE(*,'(" Progress ",F6.1," %",A,$)') t/t_run*100.D0,char(13)
