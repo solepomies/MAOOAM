@@ -23,6 +23,7 @@ PROGRAM maooam_lyap
   IMPLICIT NONE
 
   REAL(KIND=8), DIMENSION(:), ALLOCATABLE :: X          !< State variable in the model
+  REAL(KIND=8), DIMENSION(:), ALLOCATABLE :: Xwrite     !< Copy of the latter to be written
   REAL(KIND=8), DIMENSION(:), ALLOCATABLE :: Xnew       !< Updated state variable
   REAL(KIND=8), DIMENSION(:,:), ALLOCATABLE :: prop_buf !< Buffer for the propagator
   REAL(KIND=8) :: t=0.D0                                !< Time variable
@@ -110,7 +111,11 @@ PROGRAM maooam_lyap
      END IF
      IF (mod(t,tw)<dt) THEN
         CALL acc(X)
-        IF (writeout) WRITE(10,FMTX) t,X(1:ndim)
+        Xwrite=X
+        DO i=1,ndim
+           IF (abs(Xwrite(i))<1.D-50) Xwrite(i)=0
+        END DO
+        IF (writeout) WRITE(10,FMTX) t,Xwrite(1:ndim)
         IndexBen=IndexBen+1
         IF (writeout) WRITE(11,rec=IndexBen,iostat=WRSTAT) loclyap
      END IF
