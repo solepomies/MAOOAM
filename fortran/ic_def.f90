@@ -41,8 +41,6 @@ CONTAINS
     fm(1:6)='(F3.1)'
 
     CALL random_seed(size=j)
-    WRITE(6,*) "j="
-    WRITE(6,*) j
     IF (ndim == 0) STOP "*** Number of dimensions is 0! ***"
     ALLOCATE(IC(0:ndim),seed(j), STAT=AllocStat)
     IF (AllocStat /= 0) STOP "*** Not enough memory ! ***"
