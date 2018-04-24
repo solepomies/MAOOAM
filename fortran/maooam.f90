@@ -51,7 +51,7 @@ PROGRAM maooam
 
   IF (writeout) OPEN(10,file='evol_field.dat')
 
-  ALLOCATE(X(0:ndim),Xnew(0:ndim))
+  ALLOCATE(X(0:ndim),Xwrite(0:ndim),Xnew(0:ndim))
 
   X=IC
   IF (cont_evol) THEN
