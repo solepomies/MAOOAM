@@ -64,7 +64,7 @@ PROGRAM maooam_lyap
      OPEN(11,file='lyapunov_exponents.dat',status='replace',form='UNFORMATTED',access='DIRECT',recl=8*ndim)
   END IF
 
-  ALLOCATE(X(0:ndim),Xnew(0:ndim),prop_buf(ndim,ndim))
+  ALLOCATE(X(0:ndim),Xwrite(0:ndim),Xnew(0:ndim),prop_buf(ndim,ndim))
   X=IC
   IF (cont_evol) THEN
      INQUIRE(FILE='snapshots_trans.dat',EXIST=ex,NEXTREC=next)
