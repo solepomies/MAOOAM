@@ -20,13 +20,17 @@ endif
 IFORT_COMPILER_FLAGS = -assume byterecl -O2
 IFORT_LD_FLAGS = -mkl
 GCC_COMPILER_FLAGS = -O2 -Wall
-#GCC_LD_FLAGS = -llapack -lblas
+GCC_LD_FLAGS = -llapack -lblas
 # Debug Case:
 IFORT_COMPILER_FLAGS_DBG = -O0 -check all -traceback -fpe0 -check bounds -debug all -check uninit -ftrapuv -assume byterecl
-#IFORT_LD_FLAGS_DBG = -llapack -lblas
 IFORT_LD_FLAGS_DBG = -mkl
 GCC_COMPILER_FLAGS_DBG = -g -O0 -fbounds-check -Wall -Wextra -Wconversion -pedantic -ffpe-trap=zero,overflow,underflow 
-#GCC_LD_FLAGS_DBG = -llapack -lblas
+GCC_LD_FLAGS_DBG = -llapack -lblas
+# Profile Case:
+IFORT_COMPILER_FLAGS_PRF = -g -O2 -assume byterecl
+IFORT_LD_FLAGS_PRF = -mkl
+GCC_COMPILER_FLAGS_PRF = -g -O2 -Wall
+GCC_LD_FLAGS_PRF = -llapack -lblas
 
 
 SHELL = /bin/sh
@@ -55,6 +59,8 @@ ifeq ($(COMPILER),gfortran)
   LD_FLAGS = $(GCC_LD_FLAGS)
   COMPILER_FLAGS_DBG = $(GCC_COMPILER_FLAGS_DBG)
   LD_FLAGS_DBG = $(GCC_LD_FLAGS_DBG)
+  COMPILER_FLAGS_PRF = $(GCC_COMPILER_FLAGS_PRF)
+  LD_FLAGS_PRF = $(GCC_LD_FLAGS_PRF)
   IFPORT = ifport.mod
 else ifeq ($(COMPILER),ifort)
   $(warning This code was optimized for ifort >= 14.0.2 and has not been tested with other compilers)
@@ -62,6 +68,8 @@ else ifeq ($(COMPILER),ifort)
   LD_FLAGS = $(IFORT_LD_FLAGS)
   COMPILER_FLAGS_DBG = $(IFORT_COMPILER_FLAGS_DBG)
   LD_FLAGS_DBG = $(IFORT_LD_FLAGS_DBG)
+  COMPILER_FLAGS_PRF = $(IFORT_COMPILER_FLAGS_PRF)
+  LD_FLAGS_PRF = $(IFORT_LD_FLAGS_PRF)
 else
   $(warning This code was optimized for gfortran >= 4.6.0 and ifort >= 14.0.2 and has not been tested with other compilers)
 endif
@@ -86,6 +94,10 @@ debug: all
 test: COMPILER_FLAGS = $(COMPILER_FLAGS_DBG) 
 test: LD_FLAGS = $(LD_FLAGS_DBG)
 test: $(TESTS)
+
+profile: COMPILER_FLAGS = $(COMPILER_FLAGS_PRF) 
+profile: LD_FLAGS = $(LD_FLAGS_PRF)
+profile: all
 
 test_inprod_analytic.test: test_inprod_analytic
 	./$< |sort  > tests/$<.out
