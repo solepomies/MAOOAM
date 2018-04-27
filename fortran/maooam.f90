@@ -24,6 +24,7 @@ PROGRAM maooam
   REAL(KIND=8) :: t=0.D0                             !< Time variable
   REAL(KIND=8) :: t_up
   INTEGER :: i, next, IndexSnap, WRSTAT
+  CHARACTER(LEN=19) :: FMTX
   CHARACTER(LEN=9) :: arg
   LOGICAL :: cont_evol    !< True if the initial state is to be read in snapshot_trans.dat (i.e. the previous evolution is to be continued)
   LOGICAL :: ex
@@ -46,6 +47,8 @@ PROGRAM maooam
   CALL load_IC          ! Load the initial condition
 
   CALL init_integrator  ! Initialize the integrator
+
+  write(FMTX,'(A10,i3,A6)') '(F12.2,4x,',ndim,'E15.5)'
 
   t_up=dt/t_trans*100.D0
 
@@ -97,7 +100,7 @@ PROGRAM maooam
         DO i=1,ndim
            IF (abs(Xwrite(i))<1.D-50) Xwrite(i)=0
         END DO
-        IF (writeout) WRITE(10,*) t,Xwrite(1:ndim)
+        IF (writeout) WRITE(10,FMTX) t,Xwrite(1:ndim)
         CALL acc(X)
      END IF
      IF (mod(t/t_run*100.D0,0.1)<t_up) WRITE(*,'(" Progress ",F6.1," %",A,$)') t/t_run*100.D0,char(13)
