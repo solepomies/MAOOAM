@@ -25,7 +25,6 @@ MODULE params
   REAL(KIND=8) :: phi0      !< Latitude in radian
   REAL(KIND=8) :: rra       !< Earth radius
   REAL(KIND=8) :: sig0      !< \f$\sigma_0\f$ - Non-dimensional static stability of the atmosphere.
-!  REAL(KIND=8) :: sigma     !< \f$\sigma_0\f$ - static stability of the atmosphere.
   REAL(KIND=8) :: k         !< Bottom atmospheric friction coefficient.
   REAL(KIND=8) :: kp        !< \f$k'\f$ - Internal atmospheric friction coefficient.
   REAL(KIND=8) :: r         !< Frictional coefficient at the bottom of the ocean.
@@ -112,7 +111,6 @@ CONTAINS
     NAMELIST /aoscale/  scale,f0,n,rra,phi0_npi
     NAMELIST /oparams/  gp,r,H,d,nuo
     NAMELIST /aparams/  k,kp,sig0,nua
-!    NAMELIST /aparams/  k,kp,sigma,nua !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     NAMELIST /toparams/ Go,Co,To0
     NAMELIST /taparams/ Ga,Ca,epsa,Ta0
     NAMELIST /otparams/ sc,lambda,RR,sB
@@ -256,10 +254,9 @@ CONTAINS
     betp=L/rra*cos(phi0)/abs(sin(phi0))
     rp=r/abs(f0)
     dp=d/abs(f0)
-    kd=k*2
-    kdp=kp
+    kd=sign(k,f0)*2
+    kdp=sign(kp,f0)
 
-!    sig0=sigma*50000*50000/(2*(l**2)*(f0**2)) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SIGMA
 
     !-----------------------------------------------------!
     !                                                     !
