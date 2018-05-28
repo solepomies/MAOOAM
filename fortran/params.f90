@@ -254,8 +254,8 @@ CONTAINS
     betp=L/rra*cos(phi0)/abs(sin(phi0))
     rp=r/abs(f0)
     dp=d/abs(f0)
-    kd=sign(k,f0)*2
-    kdp=sign(kp,f0)
+    kd=k*2
+    kdp=kp
 
 
     !-----------------------------------------------------!
