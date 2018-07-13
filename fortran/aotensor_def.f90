@@ -138,57 +138,57 @@ CONTAINS
        END SUBROUTINE func
     END INTERFACE
     INTEGER :: i,j,k
-    CALL func(theta(1),0,0,(Cpa / (1 - atmos%a(1,1) * sig0))) ! ok
-    CALL func(T(1),0,0,Cpo) ! je l'ai déplacé car il n'est plus non nul qu'en i = 1 ; les autres termes de la même "ligne" seront-ils bien initialisés à 0, ou a-t-on vraiment besoin d'une itération sur j avec la fonction de Kronecker ?
+    CALL func(theta(1),0,0,(Cpa / (1 - atmos%a(1,1) * sig0)))
+    CALL func(T(1),0,0,Cpo)
     DO i = 1, natm
        DO j = 1, natm
           CALL func(psi(i),psi(j),0,-(((atmos%c(correspatm(i),correspatm(j)) * betp) / atmos%a(correspatm(i),correspatm(i)))) -&
-               &(kd * kdelta(i,j)) / 2 + atmos%a(correspatm(i),correspatm(j))*nuap) ! le dernier terme est un terme de dissipation qui n'est pas mentionné dans le papier
+               &(kd * kdelta(i,j)) / 2 + atmos%a(correspatm(i),correspatm(j))*nuap)
           CALL func(theta(i),psi(j),0,(atmos%a(correspatm(i),correspatm(j)) * kd * sig0) / (-2 + 2 * atmos%a(correspatm(i),&
-               &correspatm(i)) * sig0)) ! ok
-          CALL func(psi(i),theta(j),0,(kd * kdelta(i,j)) / 2) ! ok
+               &correspatm(i)) * sig0))
+          CALL func(psi(i),theta(j),0,(kd * kdelta(i,j)) / 2)
           CALL func(theta(i),theta(j),0,(-(sig0 * (2. * atmos%c(correspatm(i),correspatm(j)) * betp +&
                & atmos%a(correspatm(i),correspatm(j)) * (kd + 4. * kdp))) + 2. * (LSBpa + sc * Lpa) &
-               &* kdelta(i,j)) / (-2. + 2. * atmos%a(correspatm(i),correspatm(i)) * sig0)) ! le facteur sc vient de la différence entre la température moyenne de l'atmosphère et sa température à la surface de l'océan : dans l'équation d'évolution de la température de l'atmosphère, on écrira plutôt le terme proportionnel à la différence des températures comme étant proportionnel à la différence entre la température océanique et sc*(la température atmosphérique)
+               &* kdelta(i,j)) / (-2. + 2. * atmos%a(correspatm(i),correspatm(i)) * sig0))
           DO k = 1, natm
              CALL func(psi(i),psi(j),psi(k),-((atmos%b(correspatm(i),correspatm(j),correspatm(k)) / atmos%a(correspatm(i),&
-                  &correspatm(i))))) ! ok
+                  &correspatm(i)))))
              CALL func(psi(i),theta(j),theta(k),-((atmos%b(correspatm(i),correspatm(j),correspatm(k)) / atmos%a(correspatm(i),&
-                  &correspatm(i))))) ! ok
+                  &correspatm(i)))))
              CALL func(theta(i),psi(j),theta(k),(atmos%g(correspatm(i),correspatm(j),correspatm(k)) -&
                   & atmos%b(correspatm(i),correspatm(j),correspatm(k)) * sig0) / (-1 + atmos%a(correspatm(i),correspatm(i)) *&
-                  & sig0)) ! ok
+                  & sig0))
              CALL func(theta(i),theta(j),psi(k),(atmos%b(correspatm(i),correspatm(j),correspatm(k)) * sig0) / (1 -&
-                  & atmos%a(correspatm(i),correspatm(i)) * sig0)) ! ok
+                  & atmos%a(correspatm(i),correspatm(i)) * sig0))
           END DO
        END DO
        DO j = 1, noc
-          CALL func(psi(i),A(j),0,kd * atmos%a(correspatm(i),correspoc(j)) / (2 * atmos%a(correspatm(i),correspatm(i)))) ! ok
+          CALL func(psi(i),A(j),0,kd * atmos%a(correspatm(i),correspoc(j)) / (2 * atmos%a(correspatm(i),correspatm(i))))
           CALL func(theta(i),A(j),0,kd * (atmos%a(correspatm(i),correspoc(j)) * sig0) / (2 - 2 * atmos%a(correspatm(i),&
-               &correspatm(i)) * sig0)) ! ok
-          CALL func(theta(i),T(j),0,kdelta(i,j) * (2 * LSBpo + Lpa) / (2 - 2 * atmos%a(correspatm(i),correspatm(i)) * sig0)) ! ok
+               &correspatm(i)) * sig0))
+          CALL func(theta(i),T(j),0,kdelta(i,j) * (2 * LSBpo + Lpa) / (2 - 2 * atmos%a(correspatm(i),correspatm(i)) * sig0))
        END DO
     END DO
     DO i = 1, noc
        DO j = 1, natm
-          CALL func(A(i),psi(j),0,atmos%a(correspoc(i),correspatm(j)) * dp / (atmos%a(correspoc(i),correspoc(i)) + G)) ! ok
-          CALL func(A(i),theta(j),0,-(atmos%a(correspoc(i),correspatm(j))) * dp / (atmos%a(correspoc(i),correspoc(i)) + G)) ! ok
+          CALL func(A(i),psi(j),0,atmos%a(correspoc(i),correspatm(j)) * dp / (atmos%a(correspoc(i),correspoc(i)) + G))
+          CALL func(A(i),theta(j),0,-(atmos%a(correspoc(i),correspatm(j))) * dp / (atmos%a(correspoc(i),correspoc(i)) + G))
        END DO
        DO j = 1, noc
           CALL func(A(i),A(j),0,-((atmos%c(correspoc(i),correspoc(j)) * betp + atmos%a(correspoc(i),correspoc(i)) * (rp + dp) *&
-               & kdelta(i,j) - atmos%a(correspoc(i),correspoc(j))**2*nuop)) / (atmos%a(correspoc(i),correspoc(i)) + G)) ! le dernier terme est un terme de dissipation qui n'est pas mentionné dans le papier
+               & kdelta(i,j) - atmos%a(correspoc(i),correspoc(j))**2*nuop)) / (atmos%a(correspoc(i),correspoc(i)) + G))
           DO k = 1, noc
              CALL func(A(i),A(j),A(k),-(atmos%b(correspoc(i),correspoc(j),correspoc(k))) / (atmos%a(correspoc(i),correspoc(i)) +&
-                  & G)) ! ok
+                  & G))
           END DO
        END DO
     END DO
     DO i = 1, noc       
-       CALL func(T(i),theta(i),0,(2 * sc * Lpo + sBpa)) ! le facteur sc vient de la modification de l'équation d'évolution de la température atmosphérique mentionnée plus haut
+       CALL func(T(i),theta(i),0,(2 * sc * Lpo + sBpa))
        DO j = 1, noc
-          CALL func(T(i),T(j),0,-((Lpo + sBpo)) * kdelta(i,j)) ! ok
+          CALL func(T(i),T(j),0,-((Lpo + sBpo)) * kdelta(i,j))
           DO k = 1, noc
-             CALL func(T(i),A(j),T(k),-(atmos%g(correspoc(i),correspoc(j),correspoc(k)))) ! ok
+             CALL func(T(i),A(j),T(k),-(atmos%g(correspoc(i),correspoc(j),correspoc(k))))
           END DO
        END DO
     END DO
