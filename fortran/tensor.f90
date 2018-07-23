@@ -239,7 +239,8 @@ CONTAINS
          ENDDO
       ENDDO
       n=tensor(i)%nelems
-      DO li=1,n
+      li=1
+      DO WHILE (li<=tensor(i)%nelems)
          ! Clear new "almost" zero entries and shift rest of the items one place down.
          ! Make sure not to skip any entries while shifting!
          DO WHILE (ABS(tensor(i)%elems(li)%v) < real_eps)
@@ -253,6 +254,7 @@ CONTAINS
                EXIT
             ENDIF
          ENDDO
+         li=li+1
       ENDDO
 
       n=tensor(i)%nelems
