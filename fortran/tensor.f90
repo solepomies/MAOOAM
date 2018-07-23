@@ -102,13 +102,17 @@ CONTAINS
     REAL(KIND=8), DIMENSION(0:ndim), INTENT(OUT) :: res
     INTEGER :: i,j,k,n
     res=0.D0
+
+! Scheduling and condition on ndim? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!$omp parallel do private(j, k) shared(coolist_ijk, arr_j, arr_k, res) schedule(dynamic, 5) if(ndim > 39)
     DO i=1,ndim
        DO n=1,coolist_ijk(i)%nelems
          j=coolist_ijk(i)%elems(n)%j
          k=coolist_ijk(i)%elems(n)%k
          res(i) = res(i) + coolist_ijk(i)%elems(n)%v * arr_j(j)*arr_k(k)
-      END DO
-   END DO
+       END DO
+    END DO
+!$omp end parallel do
   END SUBROUTINE sparse_mul3
 
   !> Sparse multiplication of two tensors to determine the Jacobian:
